@@ -190,6 +190,7 @@ const statusDetail = (item: (typeof projects)[number]) => {
     .featured-card,
     .support-card,
     .capability-card {
+      min-width: 0;
       padding: 20px;
       border-radius: var(--radius-md);
       border: 1px solid rgba(29, 36, 48, 0.08);
@@ -204,7 +205,10 @@ const statusDetail = (item: (typeof projects)[number]) => {
     }
 
     .coverage-label,
-    .portfolio-meta {
+    .portfolio-meta,
+    .support-card p,
+    .featured-card p {
+      min-width: 0;
       margin: 8px 0 0;
       color: var(--muted);
       max-width: none;
