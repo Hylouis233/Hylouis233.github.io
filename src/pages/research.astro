@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { currentFocus, researchApproach, researchThemes, selectedHighlights } from '../data/research';
+---
+<BaseLayout title="Hong Liu | Research">
+  <div class="grid">
+    <section class="panel span-7">
+      <h2 class="section-title">Research themes</h2>
+      <p class="section-subtitle">These themes summarize the research directions that are already underway in my current work, while keeping future doctoral plans distinct from completed or ongoing master-stage outputs.</p>
+      <div class="list">
+        {researchThemes.map((theme) => (
+          <article class="card">
+            <h3>{theme.title.en}</h3>
+            <p>{theme.body.en}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="panel span-5">
+      <h2 class="section-title">Current directions</h2>
+      <p class="section-subtitle">The current phase combines active master-stage modelling topics, representative evidence, and a clear boundary between ongoing work and future doctoral plans.</p>
+      <p>{currentFocus.en}</p>
+      <div class="card">
+        <h3>Selected highlights</h3>
+        <div class="list">
+          {selectedHighlights.map((item) => (
+            <p>{item.en}</p>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="panel span-12">
+      <h2 class="section-title">Research approach</h2>
+      <p class="section-subtitle">Methodologically, I try to connect data sources, model structure, interpretation, and reproducible implementation while also distinguishing current evidence from forward-looking doctoral agenda items.</p>
+      <div class="grid research-approach-grid">
+        {researchApproach.map((item) => (
+          <article class="panel span-4 nested-panel">
+            <h3>{item.title.en}</h3>
+            <p>{item.body.en}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  </div>
+</BaseLayout>

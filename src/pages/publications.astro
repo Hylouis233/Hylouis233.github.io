@@ -1,0 +1,345 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { profile } from '../data/profile';
+import { publicationGroups, publications, projects } from '../data/academic';
+
+const groupedPublications = publicationGroups
+  .map((group) => ({
+    ...group,
+    items: publications
+      .filter((item) => item.category === group.key)
+      .sort((a, b) => b.year - a.year),
+  }))
+  .filter((group) => group.items.length > 0);
+
+const featuredPublications = publications.filter((item) => item.featured);
+const publicationStats = {
+  published: publications.filter((item) => item.category === 'publication').length,
+  firstAuthor: publications.filter((item) => item.authorshipRank === 'lead').length,
+  software: projects.filter((item) => item.repoUrl).length,
+};
+
+const getRelatedProjects = (publicationKeyList?: string[]) =>
+  publicationKeyList
+    ?.map((key) => projects.find((project) => project.key === key))
+    .filter(Boolean) ?? [];
+---
+<BaseLayout title="Hong Liu | Publications">
+  <div class="publications-page">
+    <section class="panel-primary publications-intro">
+      <div class="section-header">
+        <div>
+          <h1 class="section-title">Publications and manuscripts</h1>
+          <p class="section-subtitle">This page distinguishes first-author and lead work from collaborative publications while keeping all statuses aligned with the documented record.</p>
+        </div>
+      </div>
+      <div class="stats-grid publication-stats">
+        <article class="stat-card stat-card-primary">
+          <p class="stat-value">{publicationStats.firstAuthor}</p>
+          <p class="stat-label">First-author studies</p>
+        </article>
+        <article class="stat-card">
+          <p class="stat-value">{publicationStats.published}</p>
+          <p class="stat-label">Published papers</p>
+        </article>
+        <article class="stat-card">
+          <p class="stat-value">{publicationStats.software}</p>
+          <p class="stat-label">Public code repositories</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel selected-section">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Selected outputs</h2>
+          <p class="section-subtitle">Only first-author and currently led work is highlighted here before the full grouped record, so the main scholarly signal appears first.</p>
+        </div>
+      </div>
+      <div class="selected-grid">
+        {featuredPublications.map((item) => {
+          const relatedProjects = getRelatedProjects(item.relatedProjectKeys);
+          return (
+            <article class="selected-card">
+              <div class="selected-header">
+                <p class="item-kicker">{item.year} · {item.venue.en}</p>
+                {item.authorship && <span class="authorship-badge">{item.authorship.en}</span>}
+              </div>
+              <h3>{item.title.en}</h3>
+              <p class="selected-meta">{item.status.en}</p>
+              <p>{item.note.en}</p>
+              {relatedProjects.length > 0 && (
+                <div class="linked-output-block">
+                  <p class="meta-label">Related systems</p>
+                  <div class="chip-row compact-row">
+                    {relatedProjects.map((project) => (
+                      <span class="chip badge-muted">{project!.name.en}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
+              <div class="pub-links compact-links">
+                {item.url && (
+                  <a href={item.url} target="_blank" rel="noreferrer">View record</a>
+                )}
+                {item.doi && <span>DOI: {item.doi}</span>}
+                {item.manuscriptId && <span>Manuscript ID: {item.manuscriptId}</span>}
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </section>
+
+    <section class="panel publications-main">
+      {groupedPublications.map((group) => (
+        <section class="pub-group">
+          <h2 class="group-title">{group.title.en}</h2>
+          <div class="pub-list">
+            {group.items.map((item) => {
+              const relatedProjects = getRelatedProjects(item.relatedProjectKeys);
+              return (
+                <article class:list={["pub-item", item.authorshipRank === 'lead' && 'pub-item-lead']}>
+                  <div class="pub-heading-row">
+                    <div>
+                      <h3 class="pub-title">{item.title.en}</h3>
+                      <p class="pub-meta-line">{item.venue.en} · {item.year} · {item.status.en}</p>
+                    </div>
+                    {item.authorship && (
+                      <span class:list={["authorship-badge", item.authorshipRank !== 'lead' && 'authorship-badge-muted']}>
+                        {item.authorship.en}
+                      </span>
+                    )}
+                  </div>
+                  <p class="pub-note">{item.note.en}</p>
+                  {relatedProjects.length > 0 && (
+                    <div class="related-inline">
+                      <span class="meta-label">Related systems</span>
+                      <div class="chip-row compact-row">
+                        {relatedProjects.map((project) => (
+                          <span class="chip badge-muted">{project!.name.en}</span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  {(item.url || item.doi || item.manuscriptId) && (
+                    <div class="pub-links">
+                      {item.url && (
+                        <a href={item.url} target="_blank" rel="noreferrer">View record</a>
+                      )}
+                      {item.doi && <span>DOI: {item.doi}</span>}
+                      {item.manuscriptId && <span>Manuscript ID: {item.manuscriptId}</span>}
+                    </div>
+                  )}
+                </article>
+              );
+            })}
+          </div>
+        </section>
+      ))}
+    </section>
+
+    <section class="panel-secondary publications-secondary">
+      <h2 class="section-title">Research software and projects</h2>
+      <p class="section-subtitle">Software records are separated from papers but linked where they directly support manuscripts, models, or analytical systems.</p>
+      <div class="project-list">
+        {projects.map((item) => (
+          <article class="project-item">
+            <div>
+              <div class="project-title-row">
+                <h3>{item.name.en}</h3>
+                <span class="badge badge-muted">{item.status.en}</span>
+              </div>
+              <p>{item.summary.en}</p>
+              {item.relatedPublicationTitles && item.relatedPublicationTitles.length > 0 && (
+                <p class="project-meta">Related output: {item.relatedPublicationTitles.join('; ')}</p>
+              )}
+            </div>
+            {item.repoUrl ? (
+              <a href={item.repoUrl} target="_blank" rel="noreferrer">Repository</a>
+            ) : (
+              <span class="project-meta">No public repository link</span>
+            )}
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="panel-secondary publications-secondary">
+      <h2 class="section-title">Profile links</h2>
+      <p class="section-subtitle">External profile pages remain entry points only; this site is the maintained record for the publication grouping and status language shown here.</p>
+      <div class="profile-links">
+        {profile.links.map((link) => (
+          <a href={link.href} target="_blank" rel="noreferrer">{link.label}</a>
+        ))}
+      </div>
+    </section>
+  </div>
+
+  <style>
+    .publications-page {
+      display: grid;
+      gap: 22px;
+    }
+
+    .publication-stats,
+    .selected-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .stat-card,
+    .selected-card {
+      padding: 20px;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(29, 36, 48, 0.08);
+      background: rgba(255, 255, 255, 0.62);
+    }
+
+    .stat-card-primary {
+      background: linear-gradient(180deg, rgba(220, 231, 241, 0.7), rgba(255, 255, 255, 0.8));
+      border-color: rgba(22, 50, 79, 0.14);
+    }
+
+    .stat-value {
+      margin: 0;
+      font-size: 2rem;
+      line-height: 1;
+      color: var(--accent);
+    }
+
+    .stat-label,
+    .selected-meta,
+    .project-meta {
+      margin: 8px 0 0;
+      color: var(--muted);
+    }
+
+    .selected-header,
+    .pub-heading-row,
+    .project-title-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: flex-start;
+    }
+
+    .selected-card h3,
+    .pub-title,
+    .project-item h3 {
+      margin: 8px 0 0;
+      line-height: 1.45;
+    }
+
+    .authorship-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.88rem;
+      white-space: nowrap;
+    }
+
+    .authorship-badge-muted {
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid var(--line);
+      color: var(--muted);
+    }
+
+    .linked-output-block,
+    .related-inline {
+      margin-top: 14px;
+    }
+
+    .compact-row {
+      margin-top: 8px;
+    }
+
+    .pub-group + .pub-group {
+      margin-top: 30px;
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
+    }
+
+    .group-title {
+      margin: 0 0 16px;
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .pub-list,
+    .project-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .pub-item,
+    .project-item {
+      padding: 18px 0;
+      border-top: 1px solid rgba(29, 36, 48, 0.08);
+    }
+
+    .pub-item:first-child,
+    .project-item:first-child {
+      border-top: none;
+      padding-top: 0;
+    }
+
+    .pub-item-lead {
+      padding: 18px;
+      border: 1px solid rgba(22, 50, 79, 0.12);
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.5);
+    }
+
+    .pub-note {
+      margin: 10px 0 0;
+    }
+
+    .pub-links,
+    .profile-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 14px;
+      margin-top: 12px;
+      color: var(--muted);
+    }
+
+    .compact-links {
+      margin-top: 16px;
+    }
+
+    .pub-links a,
+    .project-item a,
+    .profile-links a {
+      text-decoration: underline;
+      text-underline-offset: 0.12em;
+    }
+
+    .project-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 960px) {
+      .publication-stats,
+      .selected-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .selected-header,
+      .pub-heading-row,
+      .project-title-row,
+      .project-item {
+        flex-direction: column;
+      }
+    }
+  </style>
+</BaseLayout>

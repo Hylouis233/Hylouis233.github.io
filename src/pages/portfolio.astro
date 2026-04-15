@@ -1,0 +1,270 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { profile } from '../data/profile';
+import { projects } from '../data/academic';
+
+const featuredProjects = projects.filter((item) => item.featured);
+const supportingProjects = projects.filter((item) => !item.featured && !item.isPrivate);
+const privateOrMixedProjects = projects.filter((item) => item.isPrivate || !item.repoUrl);
+
+const capabilityCards = [
+  {
+    title: 'Forecasting',
+    body: 'Multimodal prediction, early-warning framing, decomposition-based workflows, and respiratory disease signal modelling.',
+  },
+  {
+    title: 'Mechanistic modelling',
+    body: 'ODE and Petri Net outbreak analysis with intervention-oriented interpretation under small-sample conditions.',
+  },
+  {
+    title: 'Data systems',
+    body: 'Crawler pipelines, ETL, database workflows, visualization support, and research-oriented monitoring infrastructure.',
+  },
+  {
+    title: 'Research tooling',
+    body: 'Bibliographic validation, metadata normalization, and support tooling for evidence-driven writing workflows.',
+  },
+];
+
+const availabilityLabel = (item: (typeof projects)[number]) => {
+  if (item.isPrivate) return 'Private';
+  if (item.repoUrl) return 'Public';
+  return 'Mixed';
+};
+---
+<BaseLayout title="Hong Liu | Portfolio">
+  <div class="portfolio-page">
+    <section class="panel-primary portfolio-intro">
+      <div class="section-header">
+        <div>
+          <h1 class="section-title">Research software and analytical systems</h1>
+          <p class="section-subtitle">This page presents research software, analytical pipelines, and supporting systems connected to forecasting, outbreak modelling, data engineering, and bibliographic workflows.</p>
+        </div>
+      </div>
+      <div class="coverage-grid">
+        <article class="coverage-card">
+          <p class="coverage-value">{featuredProjects.length}</p>
+          <p class="coverage-label">Featured systems</p>
+        </article>
+        <article class="coverage-card">
+          <p class="coverage-value">{projects.filter((item) => item.repoUrl).length}</p>
+          <p class="coverage-label">Public repositories</p>
+        </article>
+        <article class="coverage-card">
+          <p class="coverage-value">{projects.length}</p>
+          <p class="coverage-label">Tracked project records</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel portfolio-section">
+      <h2 class="section-title">Featured research systems</h2>
+      <p class="section-subtitle">These systems represent the main research-software layer behind the current academic narrative.</p>
+      <div class="featured-grid">
+        {featuredProjects.map((item) => (
+          <article class="featured-card">
+            <div class="featured-header">
+              <div>
+                <p class="item-kicker">{item.type.replace('-', ' ')}</p>
+                <h3>{item.name.en}</h3>
+              </div>
+              <div class="chip-row status-row">
+                <span class="badge">{availabilityLabel(item)}</span>
+                <span class="badge badge-muted">{item.status.en}</span>
+              </div>
+            </div>
+            <div class="problem-method-output">
+              <div>
+                <p class="meta-label">Problem</p>
+                <p>{item.summary.en}</p>
+              </div>
+              {item.tags && (
+                <div>
+                  <p class="meta-label">Methods</p>
+                  <div class="chip-row compact-row">
+                    {item.tags.map((tag) => (
+                      <span class="chip">{tag}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {item.impactSummary && (
+                <div>
+                  <p class="meta-label">Output</p>
+                  <p>{item.impactSummary.en}</p>
+                </div>
+              )}
+            </div>
+            <div class="portfolio-links">
+              {item.repoUrl ? (
+                <a href={item.repoUrl} target="_blank" rel="noreferrer">Open repository</a>
+              ) : (
+                <span class="portfolio-meta">No public repository link</span>
+              )}
+              {item.relatedPublicationTitles?.map((title) => (
+                <span class="portfolio-meta">Related output: {title}</span>
+              ))}
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="panel-secondary portfolio-section">
+      <h2 class="section-title">Tools and supporting infrastructure</h2>
+      <p class="section-subtitle">Supporting tools and repositories extend the research stack without being presented as separate polished demos.</p>
+      <div class="supporting-grid">
+        {[...supportingProjects, ...privateOrMixedProjects.filter((item) => !item.featured)].map((item) => (
+          <article class="support-card">
+            <div class="support-header">
+              <h3>{item.name.en}</h3>
+              <span class="badge badge-muted">{availabilityLabel(item)}</span>
+            </div>
+            <p class="portfolio-meta">{item.status.en}</p>
+            <p>{item.summary.en}</p>
+            {item.tags && (
+              <div class="chip-row compact-row">
+                {item.tags.map((tag) => (
+                  <span class="chip">{tag}</span>
+                ))}
+              </div>
+            )}
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="panel portfolio-section">
+      <h2 class="section-title">Capability matrix</h2>
+      <p class="section-subtitle">The current portfolio emphasizes methods, systems, and outputs rather than screenshots or interactive demos.</p>
+      <div class="capability-grid">
+        {capabilityCards.map((card) => (
+          <article class="capability-card">
+            <h3>{card.title}</h3>
+            <p>{card.body}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="panel-secondary portfolio-section">
+      <h2 class="section-title">Implementation boundary</h2>
+      <p class="section-subtitle">This route now functions as a real project showcase, while still keeping the former placeholder note as a lower-priority implementation boundary.</p>
+      <div class="list">
+        <article class="card">
+          <h3>Current scope</h3>
+          <p>The page focuses on documented systems, repositories, methods, and linked outputs. It does not fabricate screenshots, demos, or unverified deployment claims.</p>
+        </article>
+        <article class="card">
+          <h3>Future extension point</h3>
+          <p>Future Vue or demo-oriented layers can still be mounted behind <code>{profile.portfolioHref}</code> without changing the public navigation structure again.</p>
+        </article>
+      </div>
+    </section>
+  </div>
+
+  <style>
+    .portfolio-page {
+      display: grid;
+      gap: 22px;
+    }
+
+    .coverage-grid,
+    .featured-grid,
+    .capability-grid {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .coverage-card,
+    .featured-card,
+    .support-card,
+    .capability-card {
+      padding: 20px;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(29, 36, 48, 0.08);
+      background: rgba(255, 255, 255, 0.62);
+    }
+
+    .coverage-value {
+      margin: 0;
+      font-size: 2rem;
+      line-height: 1;
+      color: var(--accent);
+    }
+
+    .coverage-label,
+    .portfolio-meta {
+      margin: 8px 0 0;
+      color: var(--muted);
+    }
+
+    .featured-grid,
+    .supporting-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .featured-header,
+    .support-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: flex-start;
+    }
+
+    .featured-card h3,
+    .support-card h3,
+    .capability-card h3 {
+      margin: 8px 0 0;
+      line-height: 1.4;
+    }
+
+    .status-row {
+      justify-content: flex-end;
+    }
+
+    .problem-method-output {
+      display: grid;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .compact-row {
+      margin-top: 8px;
+    }
+
+    .portfolio-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 14px;
+      margin-top: 16px;
+    }
+
+    .portfolio-links a,
+    code {
+      text-decoration: underline;
+      text-underline-offset: 0.12em;
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+    }
+
+    @media (max-width: 960px) {
+      .coverage-grid,
+      .featured-grid,
+      .capability-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .featured-header,
+      .support-header {
+        flex-direction: column;
+      }
+    }
+  </style>
+</BaseLayout>
