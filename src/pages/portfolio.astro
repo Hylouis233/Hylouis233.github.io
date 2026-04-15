@@ -25,18 +25,6 @@ const capabilityCards = [
     body: 'Bibliographic validation, metadata normalization, and support tooling for evidence-driven writing workflows.',
   },
 ];
-
-const availabilityLabel = (item: (typeof projects)[number]) => {
-  if (item.isPrivate) return 'Private';
-  if (item.repoUrl) return 'Public';
-  return 'Mixed';
-};
-
-const statusDetail = (item: (typeof projects)[number]) => {
-  const label = availabilityLabel(item);
-  const detail = item.status.en.startsWith(label) ? item.status.en.slice(label.length).trimStart() : item.status.en;
-  return detail ? detail.charAt(0).toUpperCase() + detail.slice(1) : item.status.en;
-};
 ---
 <BaseLayout title="Hong Liu | Portfolio">
   <div class="portfolio-page">
@@ -74,18 +62,11 @@ const statusDetail = (item: (typeof projects)[number]) => {
                 <p class="item-kicker">{item.type.replace('-', ' ')}</p>
                 <h3>{item.name.en}</h3>
               </div>
-              <div class="chip-row status-row">
-                <span class="badge">{availabilityLabel(item)}</span>
-              </div>
             </div>
             <div class="problem-method-output">
               <div>
                 <p class="meta-label">Problem</p>
                 <p>{item.summary.en}</p>
-              </div>
-              <div>
-                <p class="meta-label">Availability</p>
-                <p class="portfolio-meta">{statusDetail(item)}</p>
               </div>
               {item.tags && (
                 <div>
@@ -127,9 +108,7 @@ const statusDetail = (item: (typeof projects)[number]) => {
           <article class="support-card">
             <div class="support-header">
               <h3>{item.name.en}</h3>
-              <span class="badge badge-muted">{availabilityLabel(item)}</span>
             </div>
-            <p class="portfolio-meta">{statusDetail(item)}</p>
             <p>{item.summary.en}</p>
             {item.tags && (
               <div class="chip-row compact-row">
