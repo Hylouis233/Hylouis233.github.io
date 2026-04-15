@@ -1,0 +1,307 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import { profile } from '../data/profile';
+import { projects, publications } from '../data/academic';
+import { currentFocus, keywords, researchThemes, selectedHighlights } from '../data/research';
+
+const featuredPublications = publications.filter((item) => item.featured);
+const homepageStats = {
+  firstAuthor: publications.filter((item) => item.authorshipRank === 'lead').length,
+  published: publications.filter((item) => item.category === 'publication').length,
+  repositories: projects.filter((item) => item.repoUrl).length,
+};
+
+const featuredProjects = projects.filter((item) => item.featured);
+const highlightedOutputs = featuredPublications.slice(0, 3);
+const utilityLinks = [
+  { label: 'Research', href: '/research/' },
+  { label: 'Publications', href: '/publications/' },
+  { label: 'CV', href: '/cv/' },
+  { label: 'Contact', href: '/contact/' },
+  { label: 'Portfolio', href: profile.portfolioHref },
+];
+---
+<BaseLayout title="Hong Liu | Home">
+  <Hero />
+
+  <div class="grid homepage-grid">
+    <section class="panel-primary span-12 evidence-panel">
+      <div class="section-header section-header-balanced">
+        <div class="section-header-copy">
+          <h2 class="section-title">Selected research outputs</h2>
+          <p class="section-subtitle">Representative first-author and lead work appears first so the homepage communicates research direction and evidence before secondary context.</p>
+        </div>
+        <div class="stat-strip">
+          <article class="stat-chip">
+            <p class="stat-value">{homepageStats.firstAuthor}</p>
+            <p class="stat-label">First-author studies</p>
+          </article>
+          <article class="stat-chip">
+            <p class="stat-value">{homepageStats.published}</p>
+            <p class="stat-label">Published papers</p>
+          </article>
+          <article class="stat-chip">
+            <p class="stat-value">{homepageStats.repositories}</p>
+            <p class="stat-label">Public repositories</p>
+          </article>
+        </div>
+      </div>
+      <div class="highlight-grid">
+        {highlightedOutputs.map((item) => (
+          <article class="highlight-card">
+            <p class="item-kicker">{item.year} · {item.authorship?.en}</p>
+            <h3>{item.title.en}</h3>
+            <p class="highlight-meta">{item.venue.en} · {item.status.en}</p>
+            <p>{item.note.en}</p>
+            <div class="meta-row">
+              {item.url && (
+                <a href={item.url} target="_blank" rel="noreferrer" class="badge">View record</a>
+              )}
+              {item.relatedProjectKeys?.map((key) => {
+                const project = projects.find((candidate) => candidate.key === key);
+                return project ? (
+                  <span class="badge badge-muted">Related system: {project.name.en}</span>
+                ) : null;
+              })}
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="panel span-7 content-panel">
+      <div class="section-block-heading">
+        <h2 class="section-title">Research focus</h2>
+        <p class="section-subtitle">Current work is organized around a compact set of research themes rather than a long inventory of activities.</p>
+      </div>
+      <div class="list">
+        {researchThemes.map((theme) => (
+          <article class="card">
+            <h3>{theme.title.en}</h3>
+            <p>{theme.body.en}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="panel-secondary span-5 snapshot-panel content-panel">
+      <div class="section-block-heading">
+        <h2 class="section-title">Current snapshot</h2>
+        <p class="section-subtitle">A concise summary of the current research stage, active methods, and outward-facing profile links.</p>
+      </div>
+      <p>{currentFocus.en}</p>
+      <div class="chip-row compact-chip-row">
+        {keywords.map((keyword) => (
+          <span class="chip chip-soft">{keyword}</span>
+        ))}
+      </div>
+      <div class="snapshot-links divider-top">
+        {profile.links.map((link) => (
+          <a href={link.href} target="_blank" rel="noreferrer">{link.label}</a>
+        ))}
+        <a href={profile.portfolioHref}>Portfolio</a>
+      </div>
+    </section>
+
+    <section class="panel span-8 content-panel">
+      <div class="section-block-heading">
+        <h2 class="section-title">Research software and analytical systems</h2>
+        <p class="section-subtitle">Software artifacts are presented as supporting evidence for modelling, forecasting, data engineering, and research workflows.</p>
+      </div>
+      <div class="software-grid">
+        {featuredProjects.map((item) => (
+          <article class="software-card">
+            <div class="software-header">
+              <div>
+                <p class="item-kicker">{item.type.replace('-', ' ')}</p>
+                <h3>{item.name.en}</h3>
+              </div>
+              <span class="badge badge-muted">{item.status.en}</span>
+            </div>
+            <p>{item.summary.en}</p>
+            {item.impactSummary && <p class="software-impact">{item.impactSummary.en}</p>}
+            {item.tags && (
+              <div class="chip-row compact-row">
+                {item.tags.map((tag) => (
+                  <span class="chip chip-soft">{tag}</span>
+                ))}
+              </div>
+            )}
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="panel-secondary span-4 content-panel">
+      <div class="section-block-heading">
+        <h2 class="section-title">Selected highlights</h2>
+        <p class="section-subtitle">Short evidence-led notes reinforce the main outputs without repeating the entire homepage narrative.</p>
+      </div>
+      <div class="list">
+        {selectedHighlights.map((item) => (
+          <article class="card">
+            <p>{item.en}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="panel-secondary span-12 utility-panel content-panel">
+      <div class="section-block-heading">
+        <h2 class="section-title">Navigate the site</h2>
+        <p class="section-subtitle">Use the sections below for fuller research themes, publication records, CV material, and project context.</p>
+      </div>
+      <div class="chip-row compact-chip-row">
+        {utilityLinks.map((item) => (
+          <a class="chip chip-soft" href={item.href}>{item.label}</a>
+        ))}
+      </div>
+    </section>
+  </div>
+
+  <style>
+    .homepage-grid {
+      align-items: start;
+    }
+
+    .content-panel {
+      display: grid;
+      align-content: start;
+      gap: 22px;
+    }
+
+    .section-block-heading {
+      display: grid;
+      gap: 10px;
+    }
+
+    .evidence-panel {
+      display: grid;
+      gap: 24px;
+    }
+
+    .section-header-balanced {
+      align-items: start;
+    }
+
+    .section-header-copy {
+      display: grid;
+      gap: 10px;
+    }
+
+    .stat-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: flex-start;
+      align-self: start;
+    }
+
+    .stat-chip,
+    .highlight-card,
+    .software-card {
+      padding: 20px;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(29, 36, 48, 0.08);
+      background: rgba(255, 255, 255, 0.62);
+    }
+
+    .stat-chip {
+      min-width: 152px;
+      background: rgba(255, 255, 255, 0.72);
+    }
+
+    .stat-value {
+      margin: 0;
+      font-size: 1.9rem;
+      line-height: 1;
+      color: var(--accent);
+    }
+
+    .stat-label,
+    .highlight-meta,
+    .software-impact {
+      margin: 8px 0 0;
+      color: var(--muted);
+    }
+
+    .highlight-grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      align-items: stretch;
+    }
+
+    .software-grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      align-items: stretch;
+    }
+
+    .highlight-card h3,
+    .software-card h3 {
+      margin: 8px 0 0;
+      line-height: 1.4;
+    }
+
+    .software-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: flex-start;
+    }
+
+    .compact-row,
+    .compact-chip-row {
+      gap: 8px;
+    }
+
+    .compact-row {
+      margin-top: 14px;
+    }
+
+    .chip-soft {
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(29, 36, 48, 0.08);
+      color: var(--accent);
+    }
+
+    .snapshot-panel p:first-of-type {
+      margin-top: 0;
+    }
+
+    .snapshot-links {
+      display: grid;
+      gap: 10px;
+      margin-top: 8px;
+      align-content: start;
+    }
+
+    .snapshot-links a {
+      width: fit-content;
+      padding: 0 0 2px;
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(22, 50, 79, 0.24);
+      transition: border-color 0.2s ease, color 0.2s ease;
+    }
+
+    .snapshot-links a:hover {
+      color: var(--gold);
+      border-bottom-color: rgba(143, 110, 45, 0.45);
+    }
+
+    .utility-panel {
+      padding-top: 24px;
+    }
+
+    @media (max-width: 960px) {
+      .highlight-grid,
+      .software-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</BaseLayout>

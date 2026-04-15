@@ -1,0 +1,152 @@
+---
+import { profile } from '../data/profile';
+import { projects, publications } from '../data/academic';
+
+const evidenceItems = [
+  {
+    label: 'First-author work',
+    value: publications.filter((item) => item.authorshipRank === 'lead').length,
+  },
+  {
+    label: 'Published papers',
+    value: publications.filter((item) => item.category === 'publication').length,
+  },
+  {
+    label: 'Public repositories',
+    value: projects.filter((item) => item.repoUrl).length,
+  },
+];
+
+const selectedOutputs = publications.filter((item) => item.featured).slice(0, 2);
+const quickFacts = [
+  {
+    label: 'Affiliation',
+    value: profile.affiliation.en,
+  },
+  {
+    label: 'Current stage',
+    value: 'M.Sc. student working on infectious disease forecasting and analytical systems',
+  },
+  {
+    label: 'Location',
+    value: profile.location.en,
+  },
+];
+const heroMeta = [profile.affiliation.en, profile.degrees.en].filter(Boolean);
+const heroSecondaryNarrative =
+  'Current work links multimodal forecasting, epidemic dynamics, and interpretable analytical workflows, with longer-term research extending toward viral evolution and early-warning systems.';
+---
+<section class="hero-card">
+  <div class="hero-copy">
+    <p class="eyebrow">Academic homepage</p>
+    <h1>{profile.name.en}</h1>
+    <p class="headline">{profile.headline.en}</p>
+    <div class="hero-meta" aria-label="Academic affiliation and training">
+      {heroMeta.map((item) => (
+        <span class="hero-meta-item">{item}</span>
+      ))}
+    </div>
+    <p class="summary">{profile.intro.en}</p>
+    <p class="summary summary-secondary">{heroSecondaryNarrative}</p>
+
+    <div class="evidence-strip">
+      <p class="eyebrow">Research evidence</p>
+      <div class="evidence-grid">
+        {evidenceItems.map((item) => (
+          <article class="evidence-item">
+            <p class="evidence-value">{item.value}</p>
+            <p class="evidence-label">{item.label}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+
+    <div class="hero-links">
+      {profile.links.slice(0, 4).map((link) => (
+        <a href={link.href} target="_blank" rel="noreferrer">{link.label}</a>
+      ))}
+      <a href="/publications/">Selected outputs</a>
+      <a href="/cv/">View CV</a>
+      <a href={profile.portfolioHref}>Portfolio</a>
+    </div>
+  </div>
+
+  <div class="hero-side">
+    <div class="hero-image-wrap">
+      <img src={profile.profileImage} alt="Hong Liu profile" class="hero-image" />
+    </div>
+    <div class="hero-facts-card">
+      <p class="eyebrow">Academic identity</p>
+      <div class="hero-facts-list">
+        {quickFacts.map((item) => (
+          <article class="hero-fact-item">
+            <p class="hero-fact-label">{item.label}</p>
+            <p class="hero-fact-value">{item.value}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+    <div class="hero-output-card">
+      <p class="eyebrow">Selected lead outputs</p>
+      <div class="hero-output-list">
+        {selectedOutputs.map((item) => (
+          <article class="hero-output-item">
+            <p class="hero-output-year">{item.year} · {item.authorship?.en}</p>
+            <h3>{item.title.en}</h3>
+            <p>{item.venue.en} · {item.status.en}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .hero-meta-item {
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.76);
+    border: 1px solid rgba(29, 36, 48, 0.08);
+    color: var(--muted);
+    font-size: 0.92rem;
+    line-height: 1.45;
+  }
+
+  .evidence-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .evidence-item {
+    padding: 14px 16px;
+    border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.76);
+    border: 1px solid rgba(29, 36, 48, 0.08);
+  }
+
+  .evidence-value {
+    margin: 0;
+    font-size: 1.8rem;
+    line-height: 1;
+    color: var(--accent);
+  }
+
+  .evidence-label {
+    margin: 8px 0 0;
+    color: var(--muted);
+    line-height: 1.45;
+    font-size: 0.92rem;
+  }
+
+  @media (max-width: 720px) {
+    .evidence-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

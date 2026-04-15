@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { profile } from '../data/profile';
+---
+<BaseLayout title="Hong Liu | Contact">
+  <div class="grid">
+    <section class="panel span-7">
+      <h2 class="section-title">Contact</h2>
+      <p class="section-subtitle">For academic communication, research collaboration, software discussion, or related inquiries, the following channels are available.</p>
+      <div class="list">
+        {profile.links.map((link) => (
+          <article class="card">
+            <h3>{link.label}</h3>
+            <a href={link.href} target="_blank" rel="noreferrer">{link.href}</a>
+          </article>
+        ))}
+      </div>
+    </section>
+    <section class="panel span-5">
+      <h2 class="section-title">Preferred topics</h2>
+      <div class="list">
+        <article class="card">
+          <h3>Research collaboration</h3>
+          <p>Infectious disease forecasting and early warning, influenza co-circulation analysis, outbreak modelling, and research-oriented data platforms.</p>
+        </article>
+        <article class="card">
+          <h3>Academic materials</h3>
+          <p>CV requests, publication references, project summaries, and profile materials.</p>
+        </article>
+        <article class="card">
+          <h3>Code and tooling</h3>
+          <p>Discussion around repositories, modelling pipelines, data workflows, and reusable scientific tooling.</p>
+        </article>
+        <article class="card">
+          <h3>Project portfolio</h3>
+          <p>The portfolio entry is now hosted inside this site and currently serves as a compatibility placeholder for future Vue and demo layers.</p>
+          <a href={profile.portfolioHref}>{profile.portfolioHref}</a>
+        </article>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
