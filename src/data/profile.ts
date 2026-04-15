@@ -6,6 +6,7 @@ export type LocalizedText = {
 export type LinkItem = {
   label: string;
   href: string;
+  icon: 'orcid' | 'github' | 'scholar' | 'researchgate' | 'email';
 };
 
 export const siteMeta = {
@@ -20,8 +21,8 @@ export const profile = {
     zh: '刘弘',
   },
   headline: {
-    en: 'Infectious Disease Forecasting · Spatiotemporal Dynamics · Viral Evolution',
-    zh: '传染病预测预警 · 时空传播动力学 · 病毒进化',
+    en: 'Infectious Disease Forecasting | Spatiotemporal Dynamics | Viral Evolution',
+    zh: '传染病预测预警 | 时空传播动力学 | 病毒进化',
   },
   affiliation: {
     en: 'Macau University of Science and Technology',
@@ -43,26 +44,32 @@ export const profile = {
     {
       label: 'ORCID',
       href: 'https://orcid.org/my-orcid?orcid=0009-0008-3411-5304',
+      icon: 'orcid',
     },
     {
       label: 'GitHub',
       href: 'https://github.com/Hylouis233',
+      icon: 'github',
     },
     {
       label: 'Scholar',
       href: 'https://scholar.google.com/citations?user=XktvX-gAAAAJ&hl=en&authuser=1',
+      icon: 'scholar',
     },
     {
       label: 'ResearchGate',
       href: 'https://www.researchgate.net/profile/Hong-Liu-79/publications?sorting=recentlyAdded&editMode=1',
+      icon: 'researchgate',
     },
     {
       label: 'Email 1',
       href: 'mailto:liuh200107@gmail.com',
+      icon: 'email',
     },
     {
       label: 'Email 2',
       href: 'mailto:hylouis@qq.com',
+      icon: 'email',
     },
   ] satisfies LinkItem[],
   cvHref: '/files/cv.pdf',
