@@ -6,11 +6,12 @@ import { projects, publications } from '../data/academic';
 import { currentFocus, keywords, researchThemes, selectedHighlights } from '../data/research';
 
 const iconMap = {
-  orcid: '<path d="M9.9 7.8h4.2v13.4H9.9z"/><path d="M12 4.5a2.4 2.4 0 1 1 0 4.8 2.4 2.4 0 0 1 0-4.8Zm5.7 6.6c2.7 0 4.7 2 4.7 5.1 0 3.1-2 5.1-4.8 5.1h-4.4V11.1h4.5Zm-.4 2.5h-1.7v5.2h1.7c1.4 0 2.4-1 2.4-2.6 0-1.6-.9-2.6-2.4-2.6Z"/>',
-  github: '<path d="M12 .6C5.7.6.7 5.6.7 11.9c0 5 3.2 9.1 7.6 10.6.6.1.8-.3.8-.6v-2.2c-3.1.7-3.7-1.3-3.7-1.3-.5-1.3-1.2-1.7-1.2-1.7-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 .1 1.9.7 2.3 1.8.9 1.5 2.3 1.1 2.8.8.1-.7.4-1.1.7-1.4-2.5-.3-5.2-1.2-5.2-5.5 0-1.2.4-2.2 1.2-3-.1-.3-.5-1.4.1-2.9 0 0 .9-.3 3 .9a10.4 10.4 0 0 1 5.4 0c2.1-1.2 3-.9 3-.9.6 1.5.2 2.6.1 2.9.8.8 1.2 1.8 1.2 3 0 4.3-2.7 5.2-5.2 5.5.4.4.8 1.1.8 2.1v3.1c0 .3.2.7.8.6 4.4-1.5 7.6-5.6 7.6-10.6C23.3 5.6 18.3.6 12 .6Z"/>',
-  scholar: '<path d="M12 2 1 8l11 6 9-4.9V17h2V8L12 2Zm-6.8 9.3V15c0 2.8 4.1 5 6.8 5s6.8-2.2 6.8-5v-3.7L12 15l-6.8-3.7Z"/>',
-  researchgate: '<path d="M5.5 3.2h7.2c4 0 6.5 2 6.5 5.6 0 2.5-1.4 4.3-3.7 5.1l4.1 6.9h-4.2l-3.6-6.3H9.2v6.3H5.5V3.2Zm6.8 8.1c2 0 3.1-.8 3.1-2.4s-1.1-2.4-3.1-2.4H9.2v4.8h3.1Z"/><path d="M4.3 16.3h4.5v4.5H4.3z"/>',
-  email: '<path d="M2.3 5.5h19.4a1.3 1.3 0 0 1 1.3 1.3v10.4a1.3 1.3 0 0 1-1.3 1.3H2.3A1.3 1.3 0 0 1 1 17.2V6.8a1.3 1.3 0 0 1 1.3-1.3Zm9.7 6 9-5.2H3l9 5.2Zm0 1.6-9-5.1v8h18v-8l-9 5.1Z"/>',
+  orcid: '<path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zM7.369 4.378c.525 0 .947.431.947.947s-.422.947-.947.947a.95.95 0 0 1-.947-.947c0-.525.422-.947.947-.947zm-.722 3.038h1.444v10.041H6.647V7.416zm3.562 0h3.9c3.712 0 5.344 2.653 5.344 5.025 0 2.578-2.016 5.025-5.325 5.025h-3.919V7.416zm1.444 1.303v7.444h2.297c3.272 0 4.022-2.484 4.022-3.722 0-2.016-1.284-3.722-4.097-3.722h-2.222z"/>',
+  github: '<path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>',
+  scholar: '<path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/>',
+  researchgate: '<path d="M19.586 0c2.273 0 4.146 1.82 4.414 4.072v15.856c-.268 2.252-2.141 4.072-4.414 4.072H4.414C2.141 24 .268 22.18 0 19.928V4.072C.268 1.82 2.141 0 4.414 0h15.172zm-7.31 9.522c-.663-.332-1.637-.47-2.612-.47-2.612 0-4.325 1.258-4.325 3.75 0 2.506 1.7 3.708 4.27 3.708 1.146 0 2.03-.236 2.514-.47v-2.31h-2.14v-1.18h3.76v3.136c-.95.594-2.333.882-3.882.882-3.414 0-5.748-1.74-5.748-4.962 0-3.11 2.307-5.066 5.885-5.066 1.436 0 2.762.33 3.62.83l-1.342 2.152zm4.398-1.57h1.587c.717 0 1.135-.29 1.135-.91 0-.648-.445-.882-1.228-.882h-1.494v1.792zm0 1.284v2.793h-1.256V6.696h2.822c1.477 0 2.494.636 2.494 1.95 0 1.12-.823 1.646-1.618 1.826l1.826 2.556H25.32l-1.534-2.27h-.98v2.27h-1.255z"/>',
+  gmail: '<path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/>',
+  qq: '<path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm-2.096 16.73c-.947 0-1.722-.76-1.722-1.69 0-.932.775-1.69 1.722-1.69.947 0 1.72.758 1.72 1.69 0 .93-.773 1.69-1.72 1.69zm6.192 0c-.947 0-1.722-.76-1.722-1.69 0-.932.775-1.69 1.722-1.69.947 0 1.72.758 1.72 1.69 0 .93-.773 1.69-1.72 1.69zm-6.192-5.412c-2.31 0-4.186-1.878-4.186-4.192 0-2.314 1.876-4.193 4.186-4.193 2.31 0 4.186 1.88 4.186 4.193 0 2.314-1.876 4.192-4.186 4.192zm6.192 0c-2.31 0-4.186-1.878-4.186-4.192 0-2.314 1.876-4.193 4.186-4.193 2.31 0 4.186 1.88 4.186 4.193 0 2.314-1.876 4.192-4.186 4.192z"/>',
 } as const;
 
 const featuredPublications = publications.filter((item) => item.featured);
@@ -20,7 +21,7 @@ const homepageStats = {
   repositories: projects.filter((item) => item.repoUrl).length,
 };
 
-const featuredProjects = projects.filter((item) => item.featured);
+const featuredProjects = projects.filter((item) => item.featured).slice(0, 4);
 const highlightedOutputs = featuredPublications.slice(0, 3);
 const utilityLinks = [
   { label: 'Research', href: '/research/' },
@@ -34,13 +35,13 @@ const utilityLinks = [
   <Hero />
 
   <div class="grid homepage-grid">
-    <section class="panel-primary span-12 evidence-panel">
-      <div class="section-header section-header-balanced">
+    <section class="panel-primary span-12 evidence-panel primary-evidence-panel">
+      <div class="section-header section-header-balanced evidence-header">
         <div class="section-header-copy">
           <h2 class="section-title">Selected research outputs</h2>
           <p class="section-subtitle">Representative first-author and lead work appears first so the homepage communicates research direction and evidence before secondary context.</p>
         </div>
-        <div class="stat-strip">
+        <div class="stat-strip" aria-label="Homepage research statistics">
           <article class="stat-chip">
             <p class="stat-value">{homepageStats.firstAuthor}</p>
             <p class="stat-label">First-author studies</p>
@@ -56,13 +57,13 @@ const utilityLinks = [
         </div>
       </div>
       <div class="highlight-grid">
-        {highlightedOutputs.map((item) => (
-          <article class="highlight-card">
+        {highlightedOutputs.map((item, index) => (
+          <article class={`highlight-card ${index === 0 ? 'highlight-card-featured' : ''}`}>
             <p class="item-kicker">{item.year} · {item.authorship?.en}</p>
             <h3>{item.title.en}</h3>
             <p class="highlight-meta">{item.venue.en} · {item.status.en}</p>
             <p>{item.note.en}</p>
-            <div class="meta-row">
+            <div class="meta-row output-meta-row">
               {item.url && (
                 <a href={item.url} target="_blank" rel="noreferrer" class="badge">View record</a>
               )}
@@ -78,14 +79,14 @@ const utilityLinks = [
       </div>
     </section>
 
-    <section class="panel span-7 content-panel">
+    <section class="panel span-7 content-panel focus-panel">
       <div class="section-block-heading">
         <h2 class="section-title">Research focus</h2>
         <p class="section-subtitle">Current work is organized around a compact set of research themes rather than a long inventory of activities.</p>
       </div>
-      <div class="list">
+      <div class="list focus-list">
         {researchThemes.map((theme) => (
-          <article class="card">
+          <article class="card focus-card">
             <h3>{theme.title.en}</h3>
             <p>{theme.body.en}</p>
           </article>
@@ -93,7 +94,7 @@ const utilityLinks = [
       </div>
     </section>
 
-    <section class="panel-secondary span-5 snapshot-panel content-panel">
+    <section class="panel-secondary span-5 snapshot-panel content-panel auxiliary-panel">
       <div class="section-block-heading">
         <h2 class="section-title">Current snapshot</h2>
         <p class="section-subtitle">A concise summary of the current research stage, active methods, and outward-facing profile links.</p>
@@ -105,16 +106,18 @@ const utilityLinks = [
         ))}
       </div>
       <div class="snapshot-links divider-top">
-        {profile.links.map((link) => (
-          <a class="icon-link" href={link.href} target="_blank" rel="noreferrer" aria-label={link.label} title={link.label}>
-            <span class="icon-link-icon" set:html={`<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">${iconMap[link.icon]}</svg>`} />
-          </a>
-        ))}
-        <a href={profile.portfolioHref}>Portfolio</a>
+        <div class="snapshot-icon-links" aria-label="External profile links">
+          {profile.links.map((link) => (
+            <a class="icon-link" href={link.href} target="_blank" rel="noreferrer" aria-label={link.label} title={link.label}>
+              <span class="icon-link-icon" set:html={`<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">${iconMap[link.icon]}</svg>`} />
+            </a>
+          ))}
+        </div>
+        <a class="snapshot-text-link" href={profile.portfolioHref}>Portfolio</a>
       </div>
     </section>
 
-    <section class="panel span-8 content-panel">
+    <section class="panel span-8 content-panel software-panel">
       <div class="section-block-heading">
         <h2 class="section-title">Research software and analytical systems</h2>
         <p class="section-subtitle">Software artifacts are presented as supporting evidence for modelling, forecasting, data engineering, and research workflows.</p>
@@ -131,7 +134,7 @@ const utilityLinks = [
             <p>{item.summary.en}</p>
             {item.impactSummary && <p class="software-impact">{item.impactSummary.en}</p>}
             {item.tags && (
-              <div class="chip-row compact-row">
+              <div class="chip-row compact-row subdued-chip-row">
                 {item.tags.map((tag) => (
                   <span class="chip chip-soft">{tag}</span>
                 ))}
@@ -142,28 +145,28 @@ const utilityLinks = [
       </div>
     </section>
 
-    <section class="panel-secondary span-4 content-panel">
+    <section class="panel-secondary span-4 content-panel highlight-notes-panel auxiliary-panel">
       <div class="section-block-heading">
         <h2 class="section-title">Selected highlights</h2>
         <p class="section-subtitle">Short evidence-led notes reinforce the main outputs without repeating the entire homepage narrative.</p>
       </div>
-      <div class="list">
+      <div class="list compact-list">
         {selectedHighlights.map((item) => (
-          <article class="card">
+          <article class="card compact-card">
             <p>{item.en}</p>
           </article>
         ))}
       </div>
     </section>
 
-    <section class="panel-secondary span-12 utility-panel content-panel">
+    <section class="panel-secondary span-12 utility-panel auxiliary-panel content-panel">
       <div class="section-block-heading">
         <h2 class="section-title">Navigate the site</h2>
         <p class="section-subtitle">Use the sections below for fuller research themes, publication records, CV material, and project context.</p>
       </div>
-      <div class="chip-row compact-chip-row">
+      <div class="chip-row compact-chip-row utility-links-row">
         {utilityLinks.map((item) => (
-          <a class="chip chip-soft" href={item.href}>{item.label}</a>
+          <a class="badge badge-muted" href={item.href}>{item.label}</a>
         ))}
       </div>
     </section>
@@ -171,18 +174,20 @@ const utilityLinks = [
 
   <style>
     .homepage-grid {
-      align-items: start;
+      align-items: stretch;
+      margin-top: 48px;
+      row-gap: 30px;
     }
 
     .content-panel {
       display: grid;
       align-content: start;
-      gap: 22px;
+      gap: 20px;
     }
 
     .section-block-heading {
       display: grid;
-      gap: 10px;
+      gap: 8px;
     }
 
     .evidence-panel {
@@ -190,19 +195,28 @@ const utilityLinks = [
       gap: 24px;
     }
 
+    .primary-evidence-panel {
+      padding-top: 38px;
+      padding-bottom: 38px;
+    }
+
     .section-header-balanced {
       align-items: start;
     }
 
+    .evidence-header {
+      margin-bottom: 2px;
+    }
+
     .section-header-copy {
       display: grid;
-      gap: 10px;
+      gap: 8px;
     }
 
     .stat-strip {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 10px;
       justify-content: flex-start;
       align-self: start;
     }
@@ -212,18 +226,19 @@ const utilityLinks = [
     .software-card {
       padding: 20px;
       border-radius: var(--radius-md);
-      border: 1px solid rgba(29, 36, 48, 0.08);
-      background: rgba(255, 255, 255, 0.62);
+      border: 1px solid rgba(29, 36, 48, 0.06);
+      background: rgba(255, 255, 255, 0.58);
+      min-width: 0;
     }
 
     .stat-chip {
-      min-width: 152px;
-      background: rgba(255, 255, 255, 0.72);
+      min-width: 146px;
+      background: rgba(255, 255, 255, 0.62);
     }
 
     .stat-value {
       margin: 0;
-      font-size: 1.9rem;
+      font-size: 1.8rem;
       line-height: 1;
       color: var(--accent);
     }
@@ -231,13 +246,15 @@ const utilityLinks = [
     .stat-label,
     .highlight-meta,
     .software-impact {
-      margin: 8px 0 0;
+      margin: 6px 0 0;
       color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.55;
     }
 
     .highlight-grid {
       display: grid;
-      gap: 16px;
+      gap: 18px;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       align-items: stretch;
     }
@@ -249,10 +266,37 @@ const utilityLinks = [
       align-items: stretch;
     }
 
+    .highlight-card,
+    .software-card {
+      display: grid;
+      align-content: start;
+      gap: 10px;
+    }
+
+    .highlight-card {
+      background: rgba(255, 255, 255, 0.5);
+    }
+
+    .highlight-card-featured {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(245, 245, 245, 0.64));
+      box-shadow: 0 24px 46px rgba(22, 50, 79, 0.08);
+    }
+
+    .software-card {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.7), rgba(245, 245, 245, 0.5));
+    }
+
     .highlight-card h3,
-    .software-card h3 {
-      margin: 8px 0 0;
-      line-height: 1.4;
+    .software-card h3,
+    .focus-card h3 {
+      margin: 0;
+      line-height: 1.3;
+      text-wrap: balance;
+    }
+
+    .highlight-card p,
+    .software-card p {
+      margin: 0;
     }
 
     .software-header {
@@ -262,19 +306,48 @@ const utilityLinks = [
       align-items: flex-start;
     }
 
+    .focus-list,
+    .compact-list {
+      gap: 0;
+    }
+
+    .focus-card {
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
+
+    .compact-card {
+      padding-top: 16px;
+      padding-bottom: 16px;
+    }
+
+    .output-meta-row,
     .compact-row,
     .compact-chip-row {
       gap: 8px;
     }
 
+    .output-meta-row,
     .compact-row {
-      margin-top: 14px;
+      margin-top: 4px;
+    }
+
+    .subdued-chip-row .chip,
+    .snapshot-panel .chip,
+    .utility-links-row .chip {
+      background: rgba(255, 255, 255, 0.52);
+      border: 1px solid rgba(29, 36, 48, 0.06);
+      color: var(--accent);
     }
 
     .chip-soft {
-      background: rgba(255, 255, 255, 0.72);
-      border: 1px solid rgba(29, 36, 48, 0.08);
+      background: rgba(255, 255, 255, 0.58);
+      border: 1px solid rgba(29, 36, 48, 0.06);
       color: var(--accent);
+    }
+
+    .auxiliary-panel {
+      background: linear-gradient(180deg, rgba(248, 248, 248, 0.68), rgba(250, 250, 250, 0.56));
     }
 
     .snapshot-panel p:first-of-type {
@@ -284,26 +357,41 @@ const utilityLinks = [
     .snapshot-links {
       display: grid;
       gap: 10px;
-      margin-top: 8px;
+      margin-top: 4px;
       align-content: start;
     }
 
-    .snapshot-links a {
-      width: fit-content;
-      padding: 0 0 2px;
-      color: var(--accent);
-      text-decoration: none;
-      border-bottom: 1px solid rgba(22, 50, 79, 0.24);
-      transition: border-color 0.2s ease, color 0.2s ease;
+    .snapshot-icon-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
-    .snapshot-links a:hover {
-      color: var(--gold);
-      border-bottom-color: rgba(143, 110, 45, 0.45);
+    .snapshot-text-link {
+      width: fit-content;
+      padding: 7px 11px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.56);
+      border: 1px solid rgba(29, 36, 48, 0.06);
+      color: var(--accent);
+      transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .snapshot-text-link:hover,
+    .snapshot-text-link:focus-visible {
+      background: var(--surface-strong);
+      border-color: var(--line-strong);
+      transform: translateY(-1px);
+      outline: none;
     }
 
     .utility-panel {
       padding-top: 24px;
+      padding-bottom: 24px;
+    }
+
+    .utility-links-row {
+      margin-top: 2px;
     }
 
     @media (max-width: 960px) {

@@ -1,17 +1,9 @@
 ---
-import { navigation, profile, siteMeta } from '../data/profile';
+import { navigation, profile, siteMeta, iconMap } from '../data/profile';
 
 interface Props {
   title: string;
 }
-
-const iconMap = {
-  orcid: '<path d="M9.9 7.8h4.2v13.4H9.9z"/><path d="M12 4.5a2.4 2.4 0 1 1 0 4.8 2.4 2.4 0 0 1 0-4.8Zm5.7 6.6c2.7 0 4.7 2 4.7 5.1 0 3.1-2 5.1-4.8 5.1h-4.4V11.1h4.5Zm-.4 2.5h-1.7v5.2h1.7c1.4 0 2.4-1 2.4-2.6 0-1.6-.9-2.6-2.4-2.6Z"/>',
-  github: '<path d="M12 .6C5.7.6.7 5.6.7 11.9c0 5 3.2 9.1 7.6 10.6.6.1.8-.3.8-.6v-2.2c-3.1.7-3.7-1.3-3.7-1.3-.5-1.3-1.2-1.7-1.2-1.7-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 .1 1.9.7 2.3 1.8.9 1.5 2.3 1.1 2.8.8.1-.7.4-1.1.7-1.4-2.5-.3-5.2-1.2-5.2-5.5 0-1.2.4-2.2 1.2-3-.1-.3-.5-1.4.1-2.9 0 0 .9-.3 3 .9a10.4 10.4 0 0 1 5.4 0c2.1-1.2 3-.9 3-.9.6 1.5.2 2.6.1 2.9.8.8 1.2 1.8 1.2 3 0 4.3-2.7 5.2-5.2 5.5.4.4.8 1.1.8 2.1v3.1c0 .3.2.7.8.6 4.4-1.5 7.6-5.6 7.6-10.6C23.3 5.6 18.3.6 12 .6Z"/>',
-  scholar: '<path d="M12 2 1 8l11 6 9-4.9V17h2V8L12 2Zm-6.8 9.3V15c0 2.8 4.1 5 6.8 5s6.8-2.2 6.8-5v-3.7L12 15l-6.8-3.7Z"/>',
-  researchgate: '<path d="M5.5 3.2h7.2c4 0 6.5 2 6.5 5.6 0 2.5-1.4 4.3-3.7 5.1l4.1 6.9h-4.2l-3.6-6.3H9.2v6.3H5.5V3.2Zm6.8 8.1c2 0 3.1-.8 3.1-2.4s-1.1-2.4-3.1-2.4H9.2v4.8h3.1Z"/><path d="M4.3 16.3h4.5v4.5H4.3z"/>',
-  email: '<path d="M2.3 5.5h19.4a1.3 1.3 0 0 1 1.3 1.3v10.4a1.3 1.3 0 0 1-1.3 1.3H2.3A1.3 1.3 0 0 1 1 17.2V6.8a1.3 1.3 0 0 1 1.3-1.3Zm9.7 6 9-5.2H3l9 5.2Zm0 1.6-9-5.1v8h18v-8l-9 5.1Z"/>',
-} as const;
 
 const { title } = Astro.props as Props;
 const portfolioHref = profile.portfolioHref;
@@ -23,56 +15,60 @@ const portfolioHref = profile.portfolioHref;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={siteMeta.description} />
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2316324f'/%3E%3Ctext x='32' y='41' font-size='30' text-anchor='middle' fill='white' font-family='Georgia, serif'%3EH%3C/text%3E%3C/svg%3E" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230056b3'/%3E%3Ctext x='32' y='43' font-size='30' font-weight='bold' text-anchor='middle' fill='white' font-family='Arial, Helvetica, sans-serif'%3EH%3C/text%3E%3C/svg%3E" />
     <style is:global>
       :root {
-        --bg: #f3efe7;
-        --surface: rgba(255, 255, 255, 0.82);
-        --surface-strong: #fffdf9;
-        --surface-muted: rgba(248, 244, 236, 0.9);
-        --text: #1d2430;
-        --muted: #596170;
-        --line: rgba(29, 36, 48, 0.12);
-        --line-strong: rgba(22, 50, 79, 0.18);
-        --accent: #16324f;
-        --accent-soft: #dce7f1;
-        --gold: #8f6e2d;
-        --shadow: 0 28px 64px rgba(17, 24, 39, 0.08);
-        --shadow-soft: 0 16px 36px rgba(17, 24, 39, 0.05);
-        --radius-lg: 30px;
-        --radius-md: 22px;
-        --radius-sm: 16px;
-        --measure: 70ch;
+        --bg: #ffffff;
+        --surface: #ffffff;
+        --surface-strong: #fafafa;
+        --surface-muted: #f5f5f5;
+        --surface-quiet: #f0f0f0;
+        --text: #222222;
+        --muted: #555555;
+        --muted-soft: #777777;
+        --line: #e0e0e0;
+        --line-strong: #cccccc;
+        --accent: #0056b3; /* Academic blue */
+        --accent-soft: rgba(0, 86, 179, 0.1);
+        --gold: #0056b3; /* Replace gold with academic blue */
+        --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        --shadow-soft: 0 2px 6px rgba(0, 0, 0, 0.03);
+        --radius-lg: 8px; /* More professional, less rounded */
+        --radius-md: 6px;
+        --radius-sm: 4px;
+        --measure: 75ch;
       }
       * { box-sizing: border-box; }
       html { scroll-behavior: smooth; }
       body {
         margin: 0;
-        font-family: Georgia, 'Times New Roman', serif;
-        background: radial-gradient(circle at top, rgba(22, 50, 79, 0.1), transparent 30%), var(--bg);
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; /* Journal sans-serif */
+        background: var(--bg);
         color: var(--text);
+        line-height: 1.6;
       }
       a { color: inherit; text-decoration: none; }
       img { max-width: 100%; display: block; }
       p, li { max-width: var(--measure); }
-      .shell { max-width: 1140px; margin: 0 auto; padding: 18px 24px 24px; }
+      .shell { max-width: 1140px; margin: 0 auto; padding: 20px 24px 28px; }
       .site-header {
         display: flex;
         justify-content: space-between;
         align-items: baseline;
         gap: 20px;
-        padding: 14px 0 20px;
-        border-bottom: 1px solid var(--line);
+        padding: 12px 0 22px;
+        border-bottom: 1px solid var(--line-strong);
       }
       .brand h1 {
         margin: 0;
         font-size: 1.35rem;
-        letter-spacing: 0.04em;
+        letter-spacing: 0.02em;
+        font-weight: 600;
       }
       .brand p {
         margin: 8px 0 0;
         color: var(--muted);
-        font-size: 0.95rem;
+        font-size: 0.93rem;
       }
       .nav {
         display: flex;
@@ -84,90 +80,95 @@ const portfolioHref = profile.portfolioHref;
       .nav a,
       .footer-links a,
       .icon-link {
-        padding: 10px 14px;
-        border-radius: 999px;
-        background: rgba(255, 255, 255, 0.56);
+        padding: 9px 14px;
+        border-radius: var(--radius-sm);
+        background: var(--surface-muted);
         border: 1px solid var(--line);
-        transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+        transition: background-color 0.2s ease, border-color 0.2s ease;
       }
       .nav a:hover,
       .footer-links a:hover,
-      .icon-link:hover {
-        background: var(--surface-strong);
-        border-color: var(--line-strong);
-        transform: translateY(-1px);
+      .icon-link:hover,
+      .nav a:focus-visible,
+      .footer-links a:focus-visible,
+      .icon-link:focus-visible {
+        background: var(--accent-soft);
+        color: var(--accent);
+        border-color: var(--accent);
+        outline: none;
       }
-      .page { padding: 46px 0 88px; }
+      .page { padding: 50px 0 96px; }
       .hero-card,
       .panel,
       .panel-primary,
       .panel-secondary {
         border-radius: var(--radius-lg);
-        border: 1px solid rgba(255, 255, 255, 0.6);
-        box-shadow: var(--shadow);
-        backdrop-filter: blur(10px);
+        border: 1px solid var(--line);
+        background: var(--surface);
       }
       .hero-card,
       .panel-primary {
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(248, 244, 236, 0.82));
-      }
-      .panel,
-      .panel-secondary {
         background: var(--surface);
+        box-shadow: var(--shadow);
       }
-      .panel-secondary,
-      .nested-panel {
+      .panel {
+        background: var(--surface-strong);
         box-shadow: var(--shadow-soft);
+      }
+      .panel-secondary {
         background: var(--surface-muted);
-        border-color: rgba(29, 36, 48, 0.08);
+        box-shadow: none;
       }
       .hero-card {
         display: grid;
-        grid-template-columns: minmax(0, 1.45fr) minmax(300px, 0.82fr);
-        gap: 40px;
-        padding: 48px;
+        grid-template-columns: minmax(0, 1.38fr) minmax(280px, 0.78fr);
+        gap: 44px;
+        padding: 52px;
         align-items: start;
       }
+
       .hero-copy {
         display: grid;
         align-content: start;
-      }
-      .hero-copy > * + * {
-        margin-top: 18px;
+        gap: 16px;
       }
       .hero-side {
         display: grid;
-        gap: 20px;
+        gap: 18px;
         align-content: start;
-        padding-top: 8px;
+        padding-top: 6px;
       }
       .hero-facts-card,
       .hero-output-card,
       .evidence-strip {
-        padding: 24px;
+        padding: 22px;
         border-radius: var(--radius-md);
-        background: rgba(255, 255, 255, 0.62);
+        background: var(--surface-strong);
         border: 1px solid var(--line);
       }
       .eyebrow {
-        margin: 0 0 10px;
-        color: var(--gold);
+        margin: 0;
+        color: var(--accent);
         text-transform: uppercase;
-        letter-spacing: 0.16em;
-        font-size: 0.74rem;
+        letter-spacing: 0.1em;
+        font-size: 0.75rem;
+        font-weight: 600;
       }
       .hero-copy h1 {
-        margin: 0;
-        font-size: clamp(3rem, 7vw, 5.4rem);
-        line-height: 0.92;
-        letter-spacing: -0.03em;
+        margin: 4px 0 0;
+        font-size: clamp(3rem, 7vw, 4.5rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        font-weight: 700;
       }
       .headline {
-        font-size: clamp(1.18rem, 2vw, 1.4rem);
-        color: var(--accent);
-        margin: 0;
-        max-width: 24ch;
+        margin: 4px 0 0;
+        font-size: clamp(1.12rem, 2vw, 1.32rem);
+        color: var(--text);
+        max-width: 26ch;
         line-height: 1.5;
+        font-weight: 500;
+        white-space: pre-wrap;
       }
       .muted,
       .summary,
@@ -177,17 +178,17 @@ const portfolioHref = profile.portfolioHref;
       .footer,
       .section-subtitle {
         color: var(--muted);
-        line-height: 1.72;
+        line-height: 1.6;
       }
       .summary {
-        font-size: 1.06rem;
-        max-width: 62ch;
+        margin: 0;
+        font-size: 1.05rem;
+        max-width: 65ch;
       }
       .summary-secondary {
-        color: var(--text);
-        opacity: 0.82;
-        font-size: 0.98rem;
-        max-width: 58ch;
+        color: var(--muted-soft);
+        font-size: 0.96rem;
+        max-width: 60ch;
       }
       .hero-links,
       .chip-row,
@@ -197,26 +198,45 @@ const portfolioHref = profile.portfolioHref;
         gap: 10px;
       }
       .hero-links {
-        margin-top: 28px;
+        margin-top: 2px;
+        align-items: center;
       }
       .hero-links a,
       .chip,
       .badge {
-        padding: 10px 14px;
-        border-radius: 999px;
+        padding: 6px 12px;
+        border-radius: var(--radius-sm);
+        background: var(--surface-muted);
+        color: var(--text);
+        border: 1px solid var(--line);
+      }
+      .hero-links a:hover,
+      .badge:hover,
+      .chip:hover {
         background: var(--accent-soft);
         color: var(--accent);
+        border-color: var(--accent);
       }
-      .hero-links a {
-        font-size: 0.95rem;
+      .hero-links a,
+      .chip,
+      .badge,
+      .nav a,
+      .footer-links a {
+        font-size: 0.85rem;
+        font-weight: 500;
       }
       .icon-link {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        width: 44px;
-        height: 44px;
+        width: 38px;
+        height: 38px;
         padding: 0;
+        color: var(--muted);
+        background: var(--surface);
+        flex: 0 0 auto;
+      }
+      .icon-link:hover {
         color: var(--accent);
       }
       .icon-link-icon,
@@ -228,11 +248,12 @@ const portfolioHref = profile.portfolioHref;
       }
       .chip,
       .badge {
-        font-size: 0.92rem;
+        font-size: 0.82rem;
+        line-height: 1.32;
       }
       .badge-muted {
-        background: rgba(255, 255, 255, 0.72);
-        border: 1px solid var(--line);
+        background: var(--surface);
+        border-color: var(--line);
         color: var(--muted);
       }
       .hero-image-wrap {
@@ -242,10 +263,11 @@ const portfolioHref = profile.portfolioHref;
       }
       .hero-image {
         width: 100%;
-        max-width: 236px;
-        border-radius: 26px;
-        border: 6px solid rgba(255, 255, 255, 0.92);
-        box-shadow: 0 30px 60px rgba(22, 50, 79, 0.16);
+        max-width: 180px;
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow);
+        transform: scaleX(-1);
       }
       .hero-facts-list,
       .hero-output-list,
@@ -254,11 +276,11 @@ const portfolioHref = profile.portfolioHref;
       .card-grid,
       .feature-grid {
         display: grid;
-        gap: 14px;
+        gap: 16px;
       }
       .hero-fact-item,
       .hero-output-item {
-        padding-top: 14px;
+        padding-top: 12px;
         border-top: 1px solid var(--line);
       }
       .hero-fact-item:first-child,
@@ -271,37 +293,39 @@ const portfolioHref = profile.portfolioHref;
       .output-meta,
       .meta-label,
       .item-kicker {
-        margin: 0 0 6px;
-        color: var(--gold);
-        font-size: 0.8rem;
-        letter-spacing: 0.08em;
+        margin: 0 0 4px;
+        color: var(--accent);
+        font-size: 0.75rem;
+        letter-spacing: 0.05em;
         text-transform: uppercase;
+        font-weight: 600;
       }
       .hero-fact-value,
       .meta-value {
         margin: 0;
         color: var(--text);
-        line-height: 1.65;
+        line-height: 1.5;
+        font-weight: 400;
       }
       .hero-output-item h3,
       .card h3,
       .card h4 {
-        margin: 0 0 8px;
-        font-size: 1.08rem;
+        margin: 0 0 6px;
+        font-size: 1.05rem;
         color: var(--text);
-        line-height: 1.45;
+        line-height: 1.4;
+        font-weight: 600;
       }
       .hero-output-item p { margin: 0; }
       .grid {
         display: grid;
         grid-template-columns: repeat(12, 1fr);
         gap: 24px;
-        margin-top: 34px;
+        margin-top: 36px;
       }
-      .research-approach-grid { margin-top: 0; }
       .panel,
       .panel-primary,
-      .panel-secondary { padding: 30px; }
+      .panel-secondary { padding: 32px; }
       .span-8 { grid-column: span 8; }
       .span-7 { grid-column: span 7; }
       .span-6 { grid-column: span 6; }
@@ -309,16 +333,17 @@ const portfolioHref = profile.portfolioHref;
       .span-4 { grid-column: span 4; }
       .span-12 { grid-column: span 12; }
       .section-title {
-        margin: 0 0 12px;
-        font-size: clamp(1.5rem, 2.4vw, 2rem);
-        color: var(--accent);
-        line-height: 1.18;
-        letter-spacing: -0.02em;
+        margin: 0 0 8px;
+        font-size: clamp(1.5rem, 2.2vw, 2rem);
+        color: var(--text);
+        line-height: 1.2;
+        letter-spacing: -0.01em;
+        font-weight: 700;
       }
       .section-subtitle {
         margin: 0;
-        font-size: 0.98rem;
-        max-width: 64ch;
+        font-size: 0.95rem;
+        max-width: 65ch;
       }
       .section-header {
         display: grid;
@@ -332,7 +357,7 @@ const portfolioHref = profile.portfolioHref;
       }
       .list { display: grid; gap: 16px; }
       .card {
-        padding: 18px 0;
+        padding: 20px 0;
         border-top: 1px solid var(--line);
       }
       .card:first-child {
@@ -341,12 +366,12 @@ const portfolioHref = profile.portfolioHref;
       }
       .divider-top {
         border-top: 1px solid var(--line);
-        padding-top: 18px;
+        padding-top: 16px;
       }
       .footer {
-        padding: 24px 0 40px;
-        font-size: 0.95rem;
-        border-top: 1px solid var(--line);
+        padding: 32px 0 48px;
+        font-size: 0.9rem;
+        border-top: 1px solid var(--line-strong);
       }
       .footer-grid {
         display: flex;
@@ -365,7 +390,8 @@ const portfolioHref = profile.portfolioHref;
       @media (max-width: 960px) {
         .hero-card {
           grid-template-columns: 1fr;
-          gap: 28px;
+          gap: 32px;
+          padding: 40px;
         }
         .section-header {
           grid-template-columns: 1fr;
@@ -386,15 +412,35 @@ const portfolioHref = profile.portfolioHref;
         .footer-links {
           justify-content: flex-start;
         }
+        .grid {
+          gap: 24px;
+        }
+        .panel,
+        .panel-primary,
+        .panel-secondary {
+          padding: 24px;
+        }
       }
       @media (max-width: 720px) {
         .shell { padding: 20px; }
-        .page { padding: 32px 0 68px; }
+        .page { padding: 32px 0 64px; }
         .hero-card,
         .panel,
         .panel-primary,
-        .panel-secondary { padding: 22px; }
-        .hero-copy h1 { font-size: clamp(2.5rem, 16vw, 4rem); }
+        .panel-secondary { padding: 24px; }
+        .hero-copy {
+          gap: 16px;
+        }
+        .hero-copy h1 { font-size: clamp(2.5rem, 12vw, 3.5rem); }
+        .hero-links,
+        .chip-row,
+        .meta-row {
+          gap: 8px;
+        }
+        .grid {
+          margin-top: 24px;
+          gap: 20px;
+        }
       }
     </style>
   </head>
@@ -425,7 +471,7 @@ const portfolioHref = profile.portfolioHref;
             <a href={portfolioHref}>Portfolio</a>
             {profile.links.map((link) => (
               <a class="icon-link" href={link.href} target="_blank" rel="noreferrer" aria-label={link.label} title={link.label}>
-                <span class="icon-link-icon" set:html={iconMap[link.icon]} />
+                <span class="icon-link-icon" set:html={`<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">${iconMap[link.icon]}</svg>`} />
               </a>
             ))}
           </div>

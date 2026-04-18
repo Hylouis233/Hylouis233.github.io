@@ -7,7 +7,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
-    "postbuild": "cp .nojekyll dist/.nojekyll",
+    "postbuild": "node -e \"require('fs').copyFileSync('.nojekyll', 'dist/.nojekyll')\"",
     "preview": "astro preview"
   },
   "dependencies": {

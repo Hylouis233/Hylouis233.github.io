@@ -127,7 +127,7 @@ def main():
 
     story = []
     story.append(Paragraph(profile['name'], styles['Name']))
-    story.append(Paragraph('M.Sc. student, Faculty of Innovation Engineering, Macau University of Science and Technology', styles['Header']))
+    story.append(Paragraph('M.Sc. student (Full scholarship and living allowance), Faculty of Innovation Engineering, Macau University of Science and Technology', styles['Header']))
     story.append(Paragraph(profile['headline'], styles['Header']))
     story.append(Paragraph(profile['contactLine'], styles['Contact']))
     story.append(Spacer(1, 6))

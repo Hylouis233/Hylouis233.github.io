@@ -95,6 +95,24 @@ export const researchInterests: LocalizedText[] = [
 export const education: EducationItem[] = [
   {
     institution: {
+      en: 'Xiamen University',
+      zh: '厦门大学',
+    },
+    program: {
+      en: 'Ph.D. student in Epidemiology and Health Statistics',
+      zh: '流行病与卫生统计学博士研究生',
+    },
+    meta: {
+      en: 'School of Public Health · Supervised by Prof. Tianmu Chen',
+      zh: '公共卫生学院 · 师从陈田木教授',
+    },
+    detail: {
+      en: 'Doctoral research extends toward multimodal infectious disease spatiotemporal dynamics, viral evolution early warning, and integrated macro–micro modelling frameworks.',
+      zh: '博士研究延伸至多模态传染病时空动力学、病毒进化预警以及宏观传播—微观进化一体化建模框架。',
+    },
+  },
+  {
+    institution: {
       en: 'Macau University of Science and Technology',
       zh: '澳门科技大学',
     },
@@ -103,12 +121,12 @@ export const education: EducationItem[] = [
       zh: '创新工程学院硕士研究生',
     },
     meta: {
-      en: '2024–present · GPA 3.63/4',
-      zh: '2024–至今 · GPA 3.63/4',
+      en: '2024–present · GPA 3.63/4 · Full scholarship and living allowance',
+      zh: '2024–至今 · GPA 3.63/4 · 全额奖学金及生活津贴',
     },
     detail: {
-      en: 'Current training emphasizes intelligent control technology, artificial intelligence, numerical analysis, statistics, pattern recognition, algorithm theory, and optimization methods.',
-      zh: '当前课程训练重点包括智能控制技术、人工智能基础、数值分析、统计学导论、模式识别、算法理论基础与优化方法基础。',
+      en: 'Supervised by Academician Nanshan Zhong and Prof. Chitin Hon, and co-supervised by Prof. Tianmu Chen (Xiamen University). Current training emphasizes intelligent control technology, artificial intelligence, numerical analysis, statistics, pattern recognition, algorithm theory, and optimization methods.',
+      zh: '师从钟南山院士与韩子天教授，并由厦门大学陈田木教授联合培养。当前课程训练重点包括智能控制技术、人工智能基础、数值分析、统计学导论、模式识别、算法理论基础与优化方法基础。',
     },
   },
   {
@@ -117,12 +135,12 @@ export const education: EducationItem[] = [
       zh: '厦门大学',
     },
     program: {
-      en: 'Undergraduate training in public health and preventive medicine',
-      zh: '公共卫生与预防医学本科背景',
+      en: 'B.Med. in Preventive Medicine (School of Public Health) & B.Econ. in Statistics (Wang Yanan Institute for Studies in Economics)',
+      zh: '公共卫生学院预防医学系与王亚南经济研究院统计系双学位本科',
     },
     meta: {
-      en: 'Interdisciplinary preparation spanning public health, epidemiology, statistics, and data analysis',
-      zh: '具备公共卫生、流行病学、统计分析与数据科学交叉基础',
+      en: 'Preventive Medicine supervised by Prof. Tianmu Chen',
+      zh: '预防医学阶段师从陈田木教授',
     },
     detail: {
       en: 'Academic and project experience during the undergraduate stage laid the groundwork for infectious-disease modelling, health data analysis, and later AI-assisted research workflows. Selected high-mark coursework: Epidemiology, Biostatistics, and Health Statistics.',
@@ -400,25 +418,25 @@ export const publications: PublicationItem[] = [
     },
     year: 2025,
     venue: {
-      en: 'Manuscript in preparation',
-      zh: '稿件撰写中',
+      en: 'npj Systems Biology and Applications',
+      zh: 'npj Systems Biology and Applications',
     },
     status: {
-      en: 'In progress',
-      zh: '进行中',
+      en: 'Accepted',
+      zh: '已接收',
     },
     note: {
       en: 'Current work on STL-AFD-CWT-WTC-based analysis of co-circulation, co-infection signals, and frequency-domain coupling patterns.',
       zh: '当前围绕 STL-AFD-CWT-WTC 分析框架推进，用于识别共流行、共感染信号及频域耦合关系。',
     },
     authorship: {
-      en: 'Current first-author work',
-      zh: '当前第一作者工作',
+      en: 'First author',
+      zh: '第一作者',
     },
     authorshipRank: 'lead',
     featured: true,
-    category: 'work-in-progress',
-    relatedProjectKeys: ['flu-cocirc-dynamics'],
+    category: 'publication',
+    relatedProjectKeys: ['multicopat'],
   },
 ];
 
@@ -509,6 +527,7 @@ export const projects: ProjectItem[] = [
     },
     repoUrl: 'https://github.com/Hylouis233/bibverify',
     type: 'software',
+    featured: true,
     tags: ['Bibliographic tooling', 'DOI validation', 'Metadata completion'],
     impactSummary: {
       en: 'Utility for reference verification, metadata completion, deduplication, and citation cleanup across writing workflows.',
@@ -516,25 +535,99 @@ export const projects: ProjectItem[] = [
     },
   },
   {
-    key: 'flu-cocirc-dynamics',
+    key: 'breteau-index-prediction',
     name: {
-      en: 'Flu co-circulation dynamics pipeline',
-      zh: '流感共流行与预测管线',
+      en: 'Breteau Index Prediction Model',
+      zh: '布雷图指数预测模型',
     },
     summary: {
-      en: 'Pipeline for multi-region and multi-window influenza co-circulation analysis and prediction workflows.',
-      zh: '面向多地区、多时间窗的流感共流行分析与预测管线。',
+      en: 'Supplementary codebase for machine learning-based dengue vector Breteau Index prediction.',
+      zh: '基于机器学习的登革热媒介布雷图指数预测研究补充代码。',
     },
     status: {
-      en: 'Private repositories',
-      zh: '私有仓库',
+      en: 'Public repository',
+      zh: '公开仓库',
     },
-    isPrivate: true,
+    repoUrl: 'https://github.com/Hylouis233/Breteau-Index-Prediction-Model-using-machine-learning',
     type: 'research-code',
-    tags: ['Influenza', 'Co-circulation', 'Signal analysis', 'Prediction'],
+    tags: ['Machine Learning', 'Prediction Model', 'Breteau Index'],
+    relatedPublicationTitles: ['Three machine-learning models to predict dengue vectors Breteau Index based on meteorology and biotope in Fujian China'],
+  },
+  {
+    key: 'mcm2023c',
+    name: {
+      en: 'MCM 2023 Problem C Solution',
+      zh: '2023美赛C题解决方案',
+    },
+    summary: {
+      en: 'Team solution and codebase for the Mathematical Contest in Modeling (MCM) 2023 Problem C.',
+      zh: '2023年美国大学生数学建模竞赛（MCM）C题的团队解决方案及代码库。',
+    },
+    status: {
+      en: 'Public repository',
+      zh: '公开仓库',
+    },
+    repoUrl: 'https://github.com/Hylouis233/MCM2023C',
+    type: 'analysis-project',
+    tags: ['Mathematical Modeling', 'MCM', 'Data Analysis'],
+  },
+  {
+    key: 'baidu-index-spider',
+    name: {
+      en: 'Baidu Index Spider',
+      zh: '百度指数爬虫',
+    },
+    summary: {
+      en: 'A Baidu Index scraping tool equipped with a graphical user interface (GUI).',
+      zh: '一款带图形用户界面（GUI）的百度指数数据采集爬虫工具。',
+    },
+    status: {
+      en: 'Public repository',
+      zh: '公开仓库',
+    },
+    repoUrl: 'https://github.com/Hylouis233/baidu-index-spider',
+    type: 'software',
+    tags: ['Spider', 'Data Collection', 'GUI'],
+  },
+  {
+    key: 'gmcm-latex',
+    name: {
+      en: 'GMCM LaTeX Template',
+      zh: '研赛 LaTeX 模板',
+    },
+    summary: {
+      en: 'Refactored LaTeX templates for the China Graduate Mathematical Contest in Modeling.',
+      zh: '中国研究生数学建模竞赛（华为杯）LaTeX 模板重构版。',
+    },
+    status: {
+      en: 'Public repository',
+      zh: '公开仓库',
+    },
+    repoUrl: 'https://github.com/Hylouis233/GMCM_LaTeX',
+    type: 'software',
+    tags: ['LaTeX', 'Template', 'Mathematical Modeling'],
+  },
+  {
+    key: 'multicopat',
+    name: {
+      en: 'MultiCoPat',
+      zh: 'MultiCoPat',
+    },
+    summary: {
+      en: 'Multi-region and multi-window influenza co-circulation analysis and prediction workflows.',
+      zh: '多地区、多时间窗流感共流行分析与预测流程。',
+    },
+    status: {
+      en: 'Public repository',
+      zh: '公开仓库',
+    },
+    repoUrl: 'https://github.com/Hylouis233/MultiCoPat',
+    type: 'research-code',
+    featured: true,
+    tags: ['Influenza', 'Co-circulation', 'Prediction', 'Time series'],
     impactSummary: {
-      en: 'Private analytical pipeline supporting ongoing first-author work on influenza co-circulation and co-infection signals.',
-      zh: '支撑流感共流行与共感染信号第一作者在研工作的私有分析管线。',
+      en: 'Analytical pipeline supporting work on influenza co-circulation and co-infection signals.',
+      zh: '支撑流感共流行与共感染信号相关研究的分析管线。',
     },
     relatedPublicationTitles: ['Influenza co-circulation and co-infection prediction study'],
   },
