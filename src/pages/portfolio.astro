@@ -28,15 +28,20 @@ const capabilityCards = [
 ---
 <BaseLayout title="Hong Liu | Portfolio">
   <div class="portfolio-page">
-    <section class="panel-primary portfolio-intro">
-      <div class="section-header">
-        <div>
-          <h1 class="section-title">Research software and analytical systems</h1>
-          <p class="section-subtitle">This page presents research software, analytical pipelines, and supporting systems connected to forecasting, outbreak modelling, data engineering, and bibliographic workflows.</p>
+    <section class="panel-primary portfolio-intro portfolio-section">
+      <div class="portfolio-intro-grid">
+        <div class="portfolio-intro-copy">
+          <p class="eyebrow">Portfolio overview</p>
+          <h1 class="section-title portfolio-title">Research software and analytical systems</h1>
+          <p class="section-subtitle portfolio-subtitle">This page presents research software, analytical pipelines, and supporting systems connected to forecasting, outbreak modelling, data engineering, and bibliographic workflows.</p>
+        </div>
+        <div class="portfolio-intro-note">
+          <p class="meta-label">Coverage</p>
+          <p>The portfolio foregrounds featured systems first, then moves into supporting infrastructure, capability framing, and implementation boundaries.</p>
         </div>
       </div>
       <div class="coverage-grid">
-        <article class="coverage-card">
+        <article class="coverage-card coverage-card-featured">
           <p class="coverage-value">{featuredProjects.length}</p>
           <p class="coverage-label">Featured systems</p>
         </article>
@@ -51,37 +56,39 @@ const capabilityCards = [
       </div>
     </section>
 
-    <section class="panel portfolio-section">
-      <h2 class="section-title">Featured research systems</h2>
-      <p class="section-subtitle">These systems represent the main research-software layer behind the current academic narrative.</p>
+    <section class="panel portfolio-section portfolio-featured-section">
+      <div class="section-block-heading portfolio-heading-wide">
+        <h2 class="section-title">Featured research systems</h2>
+        <p class="section-subtitle">These systems represent the main research-software layer behind the current academic narrative.</p>
+      </div>
       <div class="featured-grid">
-        {featuredProjects.map((item) => (
-          <article class="featured-card">
+        {featuredProjects.map((item, index) => (
+          <article class={`featured-card ${index === 0 ? 'featured-card-emphasis' : ''}`}>
             <div class="featured-header">
-              <div>
+              <div class="featured-title-block">
                 <p class="item-kicker">{item.type.replace('-', ' ')}</p>
                 <h3>{item.name.en}</h3>
               </div>
             </div>
             <div class="problem-method-output">
-              <div>
+              <div class="detail-block detail-block-primary">
                 <p class="meta-label">Problem</p>
                 <p>{item.summary.en}</p>
               </div>
-              {item.tags && (
-                <div>
-                  <p class="meta-label">Methods</p>
-                  <div class="chip-row compact-row">
-                    {item.tags.map((tag) => (
-                      <span class="chip">{tag}</span>
-                    ))}
-                  </div>
-                </div>
-              )}
               {item.impactSummary && (
-                <div>
+                <div class="detail-block detail-block-output">
                   <p class="meta-label">Output</p>
                   <p>{item.impactSummary.en}</p>
+                </div>
+              )}
+              {item.tags && (
+                <div class="detail-block detail-block-methods">
+                  <p class="meta-label">Methods</p>
+                  <div class="chip-row compact-row subdued-chip-row">
+                    {item.tags.map((tag) => (
+                      <span class="chip chip-soft">{tag}</span>
+                    ))}
+                  </div>
                 </div>
               )}
             </div>
@@ -100,20 +107,25 @@ const capabilityCards = [
       </div>
     </section>
 
-    <section class="panel-secondary portfolio-section">
-      <h2 class="section-title">Tools and supporting infrastructure</h2>
-      <p class="section-subtitle">Supporting tools and repositories extend the research stack without being presented as separate polished demos.</p>
+    <section class="panel-secondary portfolio-section portfolio-supporting-section">
+      <div class="section-block-heading">
+        <h2 class="section-title">Tools and supporting infrastructure</h2>
+        <p class="section-subtitle">Supporting tools and repositories extend the research stack without being presented as separate polished demos.</p>
+      </div>
       <div class="supporting-grid">
         {[...supportingProjects, ...privateOrMixedProjects.filter((item) => !item.featured)].map((item) => (
           <article class="support-card">
             <div class="support-header">
-              <h3>{item.name.en}</h3>
+              <div>
+                <p class="item-kicker">{item.type.replace('-', ' ')}</p>
+                <h3>{item.name.en}</h3>
+              </div>
             </div>
             <p>{item.summary.en}</p>
             {item.tags && (
-              <div class="chip-row compact-row">
+              <div class="chip-row compact-row subdued-chip-row">
                 {item.tags.map((tag) => (
-                  <span class="chip">{tag}</span>
+                  <span class="chip chip-soft">{tag}</span>
                 ))}
               </div>
             )}
@@ -122,9 +134,11 @@ const capabilityCards = [
       </div>
     </section>
 
-    <section class="panel portfolio-section">
-      <h2 class="section-title">Capability matrix</h2>
-      <p class="section-subtitle">The current portfolio emphasizes methods, systems, and outputs rather than screenshots or interactive demos.</p>
+    <section class="panel portfolio-section portfolio-capability-section">
+      <div class="section-block-heading">
+        <h2 class="section-title">Capability matrix</h2>
+        <p class="section-subtitle">The current portfolio emphasizes methods, systems, and outputs rather than screenshots or interactive demos.</p>
+      </div>
       <div class="capability-grid">
         {capabilityCards.map((card) => (
           <article class="capability-card">
@@ -135,18 +149,95 @@ const capabilityCards = [
       </div>
     </section>
 
-    <section class="panel-secondary portfolio-section">
-      <h2 class="section-title">Implementation boundary</h2>
-      <p class="section-subtitle">This route now functions as a real project showcase, while still keeping the former placeholder note as a lower-priority implementation boundary.</p>
-      <div class="list">
-        <article class="card">
-          <h3>Current scope</h3>
-          <p>The page focuses on documented systems, repositories, methods, and linked outputs. It does not fabricate screenshots, demos, or unverified deployment claims.</p>
-        </article>
-        <article class="card">
-          <h3>Future extension point</h3>
-          <p>Future Vue or demo-oriented layers can still be mounted behind <code>{profile.portfolioHref}</code> without changing the public navigation structure again.</p>
-        </article>
+    <section class="panel-secondary portfolio-section portfolio-github-stats-section">
+      <div class="section-block-heading">
+        <h2 class="section-title">Recently I am</h2>
+      </div>
+      
+      <div class="github-stats-container">
+        <div class="stats-badges">
+          <a href="https://hylouis233.github.io"><img src="https://img.shields.io/badge/Website-Academic%20Homepage-0f766e?style=flat-square&logo=astro&logoColor=white" alt="Website" /></a>
+          <a href="mailto:liuh200107@gmail.com"><img src="https://img.shields.io/badge/Email-liuh200107%40gmail.com-d14836?style=flat-square&logo=gmail&logoColor=white" alt="Email" /></a>
+          <a href="mailto:hylouis@qq.com"><img src="https://img.shields.io/badge/QQ%20Mail-hylouis%40qq.com-12b7f5?style=flat-square&logo=tencentqq&logoColor=white" alt="QQ Mail" /></a>
+          <a href="https://buymeacoffee.com/liuh200107q"><img src="https://img.shields.io/badge/Buy%20Me%20a%20Coffee-Support%20My%20Research-ffdd00?style=flat-square&logo=buymeacoffee&logoColor=000000" alt="Buy Me a Coffee" /></a>
+        </div>
+
+        <div class="stats-grid-2">
+          <img src="https://github-readme-stats.vercel.app/api?username=Hylouis233&hide_title=true&hide_border=true&show_icons=true&line_height=21&theme=transparent" alt="GitHub Stats" />
+          <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Hylouis233&hide_title=true&hide_border=true&layout=compact&langs_count=6&theme=transparent" alt="Top Languages" />
+        </div>
+
+        <div class="stats-center">
+          <img src="https://trophy.ryglcloud.net/?username=Hylouis233&no-frame=true&no-bg=true&theme=transparent&margin-w=10&margin-h=10" alt="GitHub Trophies" />
+        </div>
+
+        <div class="stats-center">
+          <img src="https://github-readme-streak-stats.herokuapp.com/?user=Hylouis233&theme=transparent&background=transparent&hide_border=true" alt="GitHub Streak" />
+        </div>
+
+        <h3 class="stats-minor-title">Featured Research Repositories</h3>
+        <div class="stats-grid-2">
+          <img src="https://github-readme-stats.vercel.app/api/pin/?username=Hylouis233&repo=phsciencedata_crawler_region&theme=transparent&bg_color=00000000&hide_border=true" alt="phsciencedata_crawler_region" />
+          <img src="https://github-readme-stats.vercel.app/api/pin/?username=Hylouis233&repo=Breteau-Index-Prediction-Model-using-machine-learning&theme=transparent&bg_color=00000000&hide_border=true" alt="Breteau-Index-Prediction-Model" />
+        </div>
+        
+        <div class="stats-center" style="margin-top: 16px;">
+          <img src="https://github-readme-stats.vercel.app/api/pin/?username=Hylouis233&repo=bibverify&theme=transparent&bg_color=00000000&hide_border=true" alt="bibverify" />
+        </div>
+
+        <h3 class="stats-minor-title">Tech Stack</h3>
+        <div class="stats-badges">
+          <img src="https://img.shields.io/badge/-HTML5-E34F26?style=flat-square&logo=html5&logoColor=white" alt="HTML5" />
+          <img src="https://img.shields.io/badge/-CSS3-1572B6?style=flat-square&logo=css3" alt="CSS3" />
+          <img src="https://img.shields.io/badge/-JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=000" alt="JavaScript" />
+          <img src="https://img.shields.io/badge/-Python-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python" />
+          <img src="https://img.shields.io/badge/-C++-00599C?style=flat-square&logo=c%2B%2B&logoColor=white" alt="C++" />
+        </div>
+
+        <hr class="stats-divider" />
+
+        <h3 class="stats-minor-title">Live Activity Graph</h3>
+        <div class="stats-center">
+          <img src="https://github-readme-activity-graph.vercel.app/graph?username=Hylouis233&theme=transparent&hide_border=true&bg_color=transparent" alt="Live Activity Graph" />
+        </div>
+
+        <h3 class="stats-minor-title">Contribution Snake</h3>
+        <div class="stats-center">
+          <img class="blend-multiply" alt="github contribution snake" src="https://raw.githubusercontent.com/Hylouis233/Hylouis233/main/profile-snake-contrib/github-contribution-grid-snake.svg" />
+        </div>
+
+        <h3 class="stats-minor-title">3D Contribution Profile</h3>
+        <div class="stats-center">
+          <img class="blend-multiply" alt="3d contribution profile" src="https://raw.githubusercontent.com/Hylouis233/Hylouis233/main/profile-3d-contrib/profile-gitblock.svg" />
+        </div>
+
+        <h3 class="stats-minor-title">Metrics Gallery</h3>
+        <div class="stats-center stats-metrics-stack">
+          <img class="blend-multiply" src="https://raw.githubusercontent.com/Hylouis233/Hylouis233/main/github-metrics/base.svg" alt="Base Metrics" />
+          <img class="blend-multiply" src="https://raw.githubusercontent.com/Hylouis233/Hylouis233/main/github-metrics/languages.indepth.svg" alt="Language Indepth" />
+          <img class="blend-multiply" src="https://raw.githubusercontent.com/Hylouis233/Hylouis233/main/github-metrics/repositories.pinned.svg" alt="Pinned Repositories" />
+        </div>
+
+        <h3 class="stats-minor-title">Research Stack</h3>
+        <div class="stats-badges">
+          <img src="https://img.shields.io/badge/Python-Research%20Code-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python" />
+          <img src="https://img.shields.io/badge/R-Statistical%20Analysis-276DC3?style=flat-square&logo=r&logoColor=white" alt="R" />
+          <img src="https://img.shields.io/badge/Jupyter-Notebook%20Workflows-F37626?style=flat-square&logo=jupyter&logoColor=white" alt="Jupyter" />
+          <img src="https://img.shields.io/badge/PyTorch-Deep%20Learning-EE4C2C?style=flat-square&logo=pytorch&logoColor=white" alt="PyTorch" />
+          <img src="https://img.shields.io/badge/scikit--learn-Machine%20Learning-F7931E?style=flat-square&logo=scikitlearn&logoColor=white" alt="scikit-learn" />
+          <img src="https://img.shields.io/badge/Linux-Research%20Compute-FCC624?style=flat-square&logo=linux&logoColor=000" alt="Linux" />
+          <img src="https://img.shields.io/badge/Git-Reproducible%20Workflows-F05032?style=flat-square&logo=git&logoColor=white" alt="Git" />
+          <img src="https://img.shields.io/badge/LaTeX-Manuscript%20Writing-008080?style=flat-square&logo=latex&logoColor=white" alt="LaTeX" />
+        </div>
+
+        <h3 class="stats-minor-title">Academic Profiles</h3>
+        <div class="stats-badges">
+          <a href="https://hylouis233.github.io"><img src="https://img.shields.io/badge/Website-Academic%20Homepage-0f766e?style=flat-square&logo=astro&logoColor=white" alt="Website" /></a>
+          <a href="https://orcid.org/0009-0008-3411-5304"><img src="https://img.shields.io/badge/ORCID-0009--0008--3411--5304-A6CE39?style=flat-square&logo=orcid&logoColor=white" alt="ORCID" /></a>
+          <a href="https://scholar.google.com/citations?user=XktvX-gAAAAJ&hl=en&authuser=1"><img src="https://img.shields.io/badge/Google%20Scholar-Profile-4285F4?style=flat-square&logo=googlescholar&logoColor=white" alt="Google Scholar" /></a>
+          <a href="https://www.researchgate.net/profile/Hong-Liu-79/publications?sorting=recentlyAdded&editMode=1"><img src="https://img.shields.io/badge/ResearchGate-Publications-00CCBB?style=flat-square&logo=researchgate&logoColor=white" alt="ResearchGate" /></a>
+          <a href="https://hylouis233.github.io/files/cv.pdf"><img src="https://img.shields.io/badge/CV-Download-B31B1B?style=flat-square&logo=adobeacrobatreader&logoColor=white" alt="CV" /></a>
+        </div>
       </div>
     </section>
   </div>
@@ -154,15 +245,78 @@ const capabilityCards = [
   <style>
     .portfolio-page {
       display: grid;
+      gap: 30px;
+    }
+
+    .portfolio-section {
+      display: grid;
       gap: 22px;
     }
 
+    .portfolio-intro {
+      padding-top: 40px;
+      padding-bottom: 38px;
+    }
+
+    .portfolio-intro-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.72fr);
+      gap: 24px;
+      align-items: end;
+    }
+
+    .portfolio-intro-copy,
+    .portfolio-intro-note,
+    .section-block-heading {
+      display: grid;
+      gap: 8px;
+    }
+
+    .portfolio-title {
+      font-size: clamp(2rem, 3.55vw, 2.8rem);
+      margin-bottom: 2px;
+      text-wrap: balance;
+    }
+
+    .portfolio-subtitle {
+      max-width: 64ch;
+    }
+
+    .portfolio-intro-note {
+      padding: 18px;
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.58);
+      border: 1px solid rgba(29, 36, 48, 0.07);
+      align-content: start;
+    }
+
+    .portfolio-intro-note p:last-child {
+      margin: 0;
+      max-width: none;
+    }
+
+    .portfolio-heading-wide {
+      max-width: 72ch;
+    }
+
     .coverage-grid,
-    .featured-grid,
     .capability-grid {
       display: grid;
-      gap: 14px;
+      gap: 16px;
       grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .featured-grid {
+      display: grid;
+      gap: 22px;
+      grid-template-columns: minmax(0, 1.22fr) minmax(0, 0.86fr);
+      align-items: stretch;
+    }
+
+    .supporting-grid {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .coverage-card,
@@ -172,13 +326,27 @@ const capabilityCards = [
       min-width: 0;
       padding: 20px;
       border-radius: var(--radius-md);
-      border: 1px solid rgba(29, 36, 48, 0.08);
-      background: rgba(255, 255, 255, 0.62);
+      border: 1px solid rgba(29, 36, 48, 0.06);
+      background: rgba(255, 255, 255, 0.54);
+    }
+
+    .coverage-card,
+    .featured-card,
+    .support-card,
+    .capability-card {
+      display: grid;
+      align-content: start;
+      gap: 10px;
+    }
+
+    .coverage-card-featured {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(245, 245, 245, 0.62));
+      box-shadow: 0 18px 38px rgba(22, 50, 79, 0.07);
     }
 
     .coverage-value {
       margin: 0;
-      font-size: 2rem;
+      font-size: 1.95rem;
       line-height: 1;
       color: var(--accent);
     }
@@ -186,19 +354,30 @@ const capabilityCards = [
     .coverage-label,
     .portfolio-meta,
     .support-card p,
-    .featured-card p {
+    .featured-card p,
+    .capability-card p {
       min-width: 0;
-      margin: 8px 0 0;
+      margin: 0;
       color: var(--muted);
       max-width: none;
       overflow-wrap: anywhere;
       word-break: break-word;
+      line-height: 1.62;
     }
 
-    .featured-grid,
-    .supporting-grid {
-      display: grid;
-      gap: 14px;
+    .featured-card {
+      gap: 18px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.8), rgba(245, 245, 245, 0.54));
+    }
+
+    .featured-card-emphasis {
+      box-shadow: 0 28px 52px rgba(22, 50, 79, 0.09);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(245, 245, 245, 0.66));
+    }
+
+    .support-card,
+    .capability-card {
+      background: rgba(255, 255, 255, 0.46);
     }
 
     .featured-header,
@@ -210,32 +389,58 @@ const capabilityCards = [
       flex-wrap: wrap;
     }
 
+    .featured-title-block,
+    .detail-block {
+      display: grid;
+      gap: 6px;
+    }
+
     .featured-card h3,
     .support-card h3,
     .capability-card h3 {
-      margin: 8px 0 0;
-      line-height: 1.4;
-    }
-
-    .status-row {
-      justify-content: flex-end;
+      margin: 0;
+      line-height: 1.28;
+      text-wrap: balance;
     }
 
     .problem-method-output {
       display: grid;
       gap: 16px;
-      margin-top: 16px;
+      margin-top: 2px;
+    }
+
+    .detail-block-primary {
+      gap: 9px;
+    }
+
+    .detail-block-output {
+      padding-top: 13px;
+      border-top: 1px solid rgba(29, 36, 48, 0.08);
+    }
+
+    .detail-block-methods {
+      gap: 7px;
     }
 
     .compact-row {
-      margin-top: 8px;
+      margin-top: 2px;
+      gap: 8px;
+    }
+
+    .subdued-chip-row .chip,
+    .chip-soft {
+      background: rgba(255, 255, 255, 0.48);
+      border: 1px solid rgba(29, 36, 48, 0.06);
+      color: var(--accent);
     }
 
     .portfolio-links {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px 14px;
-      margin-top: 16px;
+      gap: 8px 12px;
+      margin-top: 4px;
+      padding-top: 15px;
+      border-top: 1px solid rgba(29, 36, 48, 0.08);
     }
 
     .portfolio-links a,
@@ -248,10 +453,32 @@ const capabilityCards = [
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
     }
 
+    .portfolio-supporting-section,
+    .portfolio-boundary-section {
+      background: linear-gradient(180deg, rgba(248, 248, 248, 0.68), rgba(250, 250, 250, 0.54));
+    }
+
+    .boundary-list {
+      gap: 0;
+    }
+
+    .extension-points {
+      display: grid;
+      gap: 12px;
+    }
+
+    .meta-note {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 0.95em;
+    }
+
     @media (max-width: 960px) {
+      .portfolio-intro-grid,
       .coverage-grid,
       .featured-grid,
-      .capability-grid {
+      .capability-grid,
+      .supporting-grid {
         grid-template-columns: 1fr;
       }
     }
@@ -261,6 +488,66 @@ const capabilityCards = [
       .support-header {
         flex-direction: column;
       }
+    }
+
+    /* GitHub Stats Section Styles */
+    .github-stats-container {
+      display: grid;
+      gap: 24px;
+      margin-top: 16px;
+    }
+
+    .stats-header,
+    .stats-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      text-align: center;
+    }
+
+    .stats-badges {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .stats-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 16px;
+      align-items: center;
+      justify-items: center;
+    }
+
+    .stats-divider {
+      border: none;
+      border-top: 1px solid rgba(29, 36, 48, 0.08);
+      margin: 16px 0;
+      width: 100%;
+    }
+
+    .stats-minor-title {
+      font-size: 1.2rem;
+      margin: 8px 0 0;
+      text-align: center;
+      color: var(--accent);
+    }
+
+    .stats-metrics-stack {
+      gap: 16px;
+    }
+
+    .github-stats-container img,
+    .github-stats-container picture {
+      max-width: 100%;
+      height: auto;
+      border-radius: var(--radius-sm);
+    }
+
+    .blend-multiply {
+      mix-blend-mode: multiply;
     }
   </style>
 </BaseLayout>

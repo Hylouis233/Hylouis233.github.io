@@ -1,14 +1,6 @@
 ---
-import { profile } from '../data/profile';
+import { profile, iconMap } from '../data/profile';
 import { projects, publications } from '../data/academic';
-
-const iconMap = {
-  orcid: '<path d="M9.9 7.8h4.2v13.4H9.9z"/><path d="M12 4.5a2.4 2.4 0 1 1 0 4.8 2.4 2.4 0 0 1 0-4.8Zm5.7 6.6c2.7 0 4.7 2 4.7 5.1 0 3.1-2 5.1-4.8 5.1h-4.4V11.1h4.5Zm-.4 2.5h-1.7v5.2h1.7c1.4 0 2.4-1 2.4-2.6 0-1.6-.9-2.6-2.4-2.6Z"/>',
-  github: '<path d="M12 .6C5.7.6.7 5.6.7 11.9c0 5 3.2 9.1 7.6 10.6.6.1.8-.3.8-.6v-2.2c-3.1.7-3.7-1.3-3.7-1.3-.5-1.3-1.2-1.7-1.2-1.7-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 .1 1.9.7 2.3 1.8.9 1.5 2.3 1.1 2.8.8.1-.7.4-1.1.7-1.4-2.5-.3-5.2-1.2-5.2-5.5 0-1.2.4-2.2 1.2-3-.1-.3-.5-1.4.1-2.9 0 0 .9-.3 3 .9a10.4 10.4 0 0 1 5.4 0c2.1-1.2 3-.9 3-.9.6 1.5.2 2.6.1 2.9.8.8 1.2 1.8 1.2 3 0 4.3-2.7 5.2-5.2 5.5.4.4.8 1.1.8 2.1v3.1c0 .3.2.7.8.6 4.4-1.5 7.6-5.6 7.6-10.6C23.3 5.6 18.3.6 12 .6Z"/>',
-  scholar: '<path d="M12 2 1 8l11 6 9-4.9V17h2V8L12 2Zm-6.8 9.3V15c0 2.8 4.1 5 6.8 5s6.8-2.2 6.8-5v-3.7L12 15l-6.8-3.7Z"/>',
-  researchgate: '<path d="M5.5 3.2h7.2c4 0 6.5 2 6.5 5.6 0 2.5-1.4 4.3-3.7 5.1l4.1 6.9h-4.2l-3.6-6.3H9.2v6.3H5.5V3.2Zm6.8 8.1c2 0 3.1-.8 3.1-2.4s-1.1-2.4-3.1-2.4H9.2v4.8h3.1Z"/><path d="M4.3 16.3h4.5v4.5H4.3z"/>',
-  email: '<path d="M2.3 5.5h19.4a1.3 1.3 0 0 1 1.3 1.3v10.4a1.3 1.3 0 0 1-1.3 1.3H2.3A1.3 1.3 0 0 1 1 17.2V6.8a1.3 1.3 0 0 1 1.3-1.3Zm9.7 6 9-5.2H3l9 5.2Zm0 1.6-9-5.1v8h18v-8l-9 5.1Z"/>',
-} as const;
 
 const evidenceItems = [
   {
@@ -28,19 +20,23 @@ const evidenceItems = [
 const selectedOutputs = publications.filter((item) => item.featured).slice(0, 2);
 const quickFacts = [
   {
-    label: 'Affiliation',
-    value: profile.affiliation.en,
+    label: 'Current Affiliation',
+    value: '<strong>Macau University of Science and Technology</strong><br />M.Sc. student, Faculty of Innovation Engineering<br />Full scholarship and living allowance, supervised by Academician Nanshan Zhong and Prof. Chitin Hon<br />Co-supervised by <a href="https://www.ctmodelling.cn/" target="_blank" rel="noreferrer" style="text-decoration: underline;">Prof. Tianmu Chen</a> (Xiamen University)',
   },
   {
-    label: 'Current stage',
-    value: 'M.Sc. student working on infectious disease forecasting and analytical systems',
+    label: 'Ph.D. Training',
+    value: '<strong>Xiamen University</strong><br />Ph.D. student in Epidemiology and Health Statistics, School of Public Health<br />Supervised by <a href="https://www.ctmodelling.cn/" target="_blank" rel="noreferrer" style="text-decoration: underline;">Prof. Tianmu Chen</a>',
   },
   {
-    label: 'Location',
-    value: profile.location.en,
+    label: 'Undergraduate',
+    value: '<strong>Xiamen University</strong><br />B.Med. in Preventive Medicine, School of Public Health<br />Supervised by <a href="https://www.ctmodelling.cn/" target="_blank" rel="noreferrer" style="text-decoration: underline;">Prof. Tianmu Chen</a><br /><br />B.Econ. in Statistics, Wang Yanan Institute for Studies in Economics (WISE)',
   },
 ];
-const heroMeta = [profile.affiliation.en, profile.degrees.en].filter(Boolean);
+const heroMeta = [
+  'Macau University of Science and Technology (M.Sc., Full scholarship and living allowance)',
+  'Xiamen University (Ph.D. & B.Sc.)',
+  'Interdisciplinary background spanning public health, epidemiology, AI, and data science'
+];
 const heroSecondaryNarrative =
   'Current work links multimodal forecasting, epidemic dynamics, and interpretable analytical workflows, with longer-term research extending toward viral evolution and early-warning systems.';
 ---
@@ -49,16 +45,22 @@ const heroSecondaryNarrative =
     <p class="eyebrow">Academic homepage</p>
     <h1>{profile.name.en}</h1>
     <p class="headline">{profile.headline.en}</p>
-    <div class="hero-meta" aria-label="Academic affiliation and training">
-      {heroMeta.map((item) => (
-        <span class="hero-meta-item">{item}</span>
-      ))}
+
+    <div class="hero-supporting-stack">
+      <div class="hero-meta" aria-label="Academic affiliation and training">
+        {heroMeta.map((item) => (
+          <span class="hero-meta-item">{item}</span>
+        ))}
+      </div>
+      <p class="summary">{profile.intro.en}</p>
+      <p class="summary summary-secondary">{heroSecondaryNarrative}</p>
     </div>
-    <p class="summary">{profile.intro.en}</p>
-    <p class="summary summary-secondary">{heroSecondaryNarrative}</p>
 
     <div class="evidence-strip">
-      <p class="eyebrow">Research evidence</p>
+      <div class="evidence-intro">
+        <p class="eyebrow">Research evidence</p>
+        <p class="evidence-note">A concise evidence band keeps the first screen anchored in outputs rather than ornament.</p>
+      </div>
       <div class="evidence-grid">
         {evidenceItems.map((item) => (
           <article class="evidence-item">
@@ -69,21 +71,26 @@ const heroSecondaryNarrative =
       </div>
     </div>
 
-    <div class="hero-links" aria-label="Academic profile links">
-      {profile.links.map((link) => (
-        <a class="icon-link" href={link.href} target="_blank" rel="noreferrer" aria-label={link.label} title={link.label}>
-          <span class="icon-link-icon" set:html={`<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">${iconMap[link.icon]}</svg>`} />
-        </a>
-      ))}
-      <a href="/publications/">Selected outputs</a>
-      <a href="/cv/">View CV</a>
-      <a href={profile.portfolioHref}>Portfolio</a>
+    <div class="hero-links-wrap">
+      <p class="hero-links-label">Profiles and quick routes</p>
+      <div class="hero-links" aria-label="Academic profile links">
+        {profile.links.map((link) => (
+          <a class="icon-link" href={link.href} target="_blank" rel="noreferrer" aria-label={link.label} title={link.label}>
+            <span class="icon-link-icon" set:html={`<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">${iconMap[link.icon]}</svg>`} />
+          </a>
+        ))}
+        <a href="/publications/">Selected outputs</a>
+        <a href="/cv/">View CV</a>
+        <a href={profile.portfolioHref}>Portfolio</a>
+      </div>
     </div>
   </div>
 
   <div class="hero-side">
     <div class="hero-image-wrap">
-      <img src={profile.profileImage} alt="Hong Liu profile" class="hero-image" />
+      <div class="portrait-frame">
+        <img src={profile.profileImage} alt="Hong Liu profile" class="hero-image" />
+      </div>
     </div>
     <div class="hero-facts-card">
       <p class="eyebrow">Academic identity</p>
@@ -91,19 +98,7 @@ const heroSecondaryNarrative =
         {quickFacts.map((item) => (
           <article class="hero-fact-item">
             <p class="hero-fact-label">{item.label}</p>
-            <p class="hero-fact-value">{item.value}</p>
-          </article>
-        ))}
-      </div>
-    </div>
-    <div class="hero-output-card">
-      <p class="eyebrow">Selected lead outputs</p>
-      <div class="hero-output-list">
-        {selectedOutputs.map((item) => (
-          <article class="hero-output-item">
-            <p class="hero-output-year">{item.year} · {item.authorship?.en}</p>
-            <h3>{item.title.en}</h3>
-            <p>{item.venue.en} · {item.status.en}</p>
+            <p class="hero-fact-value" set:html={item.value}></p>
           </article>
         ))}
       </div>
@@ -112,37 +107,66 @@ const heroSecondaryNarrative =
 </section>
 
 <style>
+  .hero-supporting-stack {
+    display: grid;
+    gap: 10px;
+    margin-top: 0;
+  }
+
   .hero-meta {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 7px;
     align-items: center;
   }
 
   .hero-meta-item {
-    padding: 8px 14px;
+    padding: 5px 10px;
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.76);
-    border: 1px solid rgba(29, 36, 48, 0.08);
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(29, 36, 48, 0.05);
+    color: var(--muted-soft);
+    font-size: 0.78rem;
+    line-height: 1.34;
+  }
+
+  .evidence-strip {
+    display: grid;
+    grid-template-columns: minmax(0, 0.84fr) minmax(0, 1.16fr);
+    align-items: start;
+    gap: 16px;
+    margin-top: 10px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(245, 245, 245, 0.6));
+  }
+
+  .evidence-intro {
+    display: grid;
+    gap: 4px;
+  }
+
+  .evidence-note {
+    margin: 0;
     color: var(--muted);
-    font-size: 0.92rem;
-    line-height: 1.45;
+    font-size: 0.86rem;
+    line-height: 1.5;
+    max-width: 36ch;
   }
 
   .evidence-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
   }
 
   .evidence-item {
-    padding: 14px 16px;
+    padding: 15px 15px 14px;
     border-radius: var(--radius-sm);
-    background: rgba(255, 255, 255, 0.76);
-    border: 1px solid rgba(29, 36, 48, 0.08);
+    background: rgba(255, 255, 255, 0.78);
+    border: 1px solid rgba(29, 36, 48, 0.05);
   }
 
   .evidence-value {
     margin: 0;
-    font-size: 1.8rem;
+    font-size: 1.82rem;
     line-height: 1;
     color: var(--accent);
   }
@@ -150,13 +174,56 @@ const heroSecondaryNarrative =
   .evidence-label {
     margin: 8px 0 0;
     color: var(--muted);
-    line-height: 1.45;
-    font-size: 0.92rem;
+    line-height: 1.4;
+    font-size: 0.84rem;
+  }
+
+  .hero-links-wrap {
+    display: grid;
+    gap: 8px;
+    margin-top: 0;
+  }
+
+  .hero-links-label {
+    margin: 0;
+    color: var(--muted-soft);
+    font-size: 0.76rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .hero-links :global(a:not(.icon-link)) {
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(29, 36, 48, 0.045);
+  }
+
+  .portrait-frame {
+    display: inline-flex;
+    padding: 14px;
+    border-radius: var(--radius-lg);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(245, 245, 245, 0.6));
+    border: 1px solid rgba(29, 36, 48, 0.05);
+    box-shadow: var(--shadow);
+  }
+
+  .hero-facts-card {
+    background: rgba(255, 255, 255, 0.38);
+    border-color: rgba(29, 36, 48, 0.045);
+    box-shadow: none;
   }
 
   @media (max-width: 720px) {
+    .evidence-strip {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
     .evidence-grid {
       grid-template-columns: 1fr;
+    }
+
+    .portrait-frame {
+      padding: 10px;
     }
   }
 </style>
