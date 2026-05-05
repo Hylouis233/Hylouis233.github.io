@@ -19,7 +19,7 @@ export const supportIntro = {
   title: 'Support My Work',
   subtitle: 'Voluntary support for open science, reproducible research, and research software maintenance.',
   notice:
-    'All support is optional. The site does not store payment secrets, private keys, recovery phrases, or payment credentials. Please confirm the payment method, asset, and network before sending funds.',
+    'All support is optional. The site does not store payment secrets, private keys, recovery phrases, or payment credentials. For small crypto support, USDT or USDC is usually easier than BTC on-chain. Please confirm the payment method, asset, and network before sending funds.',
 };
 
 export const supportMethods: SupportMethod[] = [
@@ -55,28 +55,9 @@ export const supportMethods: SupportMethod[] = [
     group: 'international',
     label: 'Stripe one-time support',
     description: 'One-time support through Stripe Payment Link.',
-    href: 'https://buy.stripe.com/cNibJ27Ls4Db8LJd4iasg01',
+    href: 'https://buy.stripe.com/8x228sd5M7PnbXVd4iasg04',
     buttonLabel: 'Open one-time Stripe link',
     primary: true,
-  },
-  {
-    key: 'btcpay',
-    group: 'crypto',
-    label: 'BTCPay Server',
-    description: 'Self-hosted BTCPay POS for BTC invoices with user-entered amount.',
-    href: 'https://223.109.141.77:23443/apps/PersonalSiteSupportPOS/pos',
-    buttonLabel: 'Open BTCPay POS',
-    primary: true,
-  },
-  {
-    key: 'btc',
-    group: 'crypto',
-    label: 'BTC on-chain',
-    description: 'Bitcoin mainnet address.',
-    address: '1CpFYqV98RpWSiAbDT9n6QFSz9AL12SCw8',
-    qrCodeSrc: '/support/btc-onchain.png',
-    qrCodeAlt: 'BTC on-chain QR code',
-    networks: ['Bitcoin mainnet'],
   },
   {
     key: 'usdt-tron',
@@ -87,6 +68,7 @@ export const supportMethods: SupportMethod[] = [
     qrCodeSrc: '/support/usdt-tron.png',
     qrCodeAlt: 'USDT TRON QR code',
     networks: ['TRON', 'TRC20'],
+    primary: true,
   },
   {
     key: 'usdt-ton',
@@ -97,6 +79,7 @@ export const supportMethods: SupportMethod[] = [
     qrCodeSrc: '/support/usdt-ton.png',
     qrCodeAlt: 'USDT TON QR code',
     networks: ['TON', 'Jetton'],
+    primary: true,
   },
   {
     key: 'evm-stablecoins',
@@ -117,6 +100,7 @@ export const supportMethods: SupportMethod[] = [
     ],
     warning:
       'EVM networks can share the same address format, but the selected asset and network still must match in the sending wallet.',
+    primary: true,
   },
   {
     key: 'solana-stablecoins',
@@ -127,6 +111,29 @@ export const supportMethods: SupportMethod[] = [
     qrCodeSrc: '/support/usdt-solana.png',
     qrCodeAlt: 'Solana stablecoin QR code',
     networks: ['Solana', 'SPL'],
+    primary: true,
+  },
+  {
+    key: 'btcpay',
+    group: 'crypto',
+    label: 'BTCPay BTC invoice',
+    description: 'Self-hosted BTCPay POS for BTC invoices with user-entered amount.',
+    href: 'https://223.109.141.77:23443/apps/PersonalSiteSupportPOS/pos',
+    buttonLabel: 'Open BTCPay BTC POS',
+    warning:
+      'BTC on-chain payments below the dust threshold may fail in BTCPay. For small amounts, use USDT or USDC instead, or use a larger BTC amount.',
+  },
+  {
+    key: 'btc',
+    group: 'crypto',
+    label: 'BTC on-chain',
+    description: 'Bitcoin mainnet address for larger on-chain BTC support.',
+    address: '1CpFYqV98RpWSiAbDT9n6QFSz9AL12SCw8',
+    qrCodeSrc: '/support/btc-onchain.png',
+    qrCodeAlt: 'BTC on-chain QR code',
+    networks: ['Bitcoin mainnet'],
+    warning:
+      'BTC on-chain has miner fees and dust limits. Very small support amounts can be rejected by invoice software.',
   },
 ];
 
@@ -145,7 +152,6 @@ export const supportGroups: Array<{ key: SupportMethodGroup; title: string; desc
     key: 'crypto',
     title: 'Crypto support',
     description:
-      'BTCPay and public wallet addresses. Confirm the asset and network carefully before sending; wrong-network transfers may be unrecoverable.',
+      'USDT and USDC are shown first for small support amounts. BTCPay and BTC on-chain remain available for BTC payments, but BTC can fail below dust thresholds. Confirm the asset and network carefully before sending; wrong-network transfers may be unrecoverable.',
   },
 ];
-
