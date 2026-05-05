@@ -6,7 +6,7 @@ import { currentFocus, researchApproach, researchThemes, selectedHighlights } fr
   <div class="grid">
     <section class="panel span-7">
       <h2 class="section-title">Research themes</h2>
-      <p class="section-subtitle">These themes summarize the research directions that are already underway in my current work, while keeping future doctoral plans distinct from completed or ongoing master-stage outputs.</p>
+      <p class="section-subtitle">These themes summarize completed M.Sc. work and the doctoral directions I will continue at Xiamen University, while keeping documented outputs distinct from forward-looking research plans.</p>
       <div class="list">
         {researchThemes.map((theme) => (
           <article class="card">
@@ -19,7 +19,7 @@ import { currentFocus, researchApproach, researchThemes, selectedHighlights } fr
 
     <section class="panel span-5">
       <h2 class="section-title">Current directions</h2>
-      <p class="section-subtitle">The current phase combines active master-stage modelling topics, representative evidence, and a clear boundary between ongoing work and future doctoral plans.</p>
+      <p class="section-subtitle">The current phase connects completed M.Sc. modelling work, representative evidence, and the next doctoral stage in epidemiology and health statistics.</p>
       <p>{currentFocus.en}</p>
       <div class="card">
         <h3>Selected highlights</h3>
@@ -33,7 +33,7 @@ import { currentFocus, researchApproach, researchThemes, selectedHighlights } fr
 
     <section class="panel span-12">
       <h2 class="section-title">Research approach</h2>
-      <p class="section-subtitle">Methodologically, I try to connect data sources, model structure, interpretation, and reproducible implementation while also distinguishing current evidence from forward-looking doctoral agenda items.</p>
+      <p class="section-subtitle">Methodologically, I try to connect data sources, model structure, interpretation, and reproducible implementation while distinguishing documented evidence from forward-looking doctoral agenda items.</p>
       <div class="grid research-approach-grid">
         {researchApproach.map((item) => (
           <article class="panel span-4 nested-panel">

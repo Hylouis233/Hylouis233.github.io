@@ -3,14 +3,14 @@
     "name": "Hong Liu",
     "headline": "Infectious Disease Forecasting · Spatiotemporal Dynamics · Viral Evolution",
     "contactLine": "Email: liuh200107@gmail.com · GitHub: github.com/Hylouis233 · ORCID: 0009-0008-3411-5304 · Scholar: Google Scholar · ResearchGate: public profile link retained",
-    "summary": "Current work centers on documented master-stage research in infectious disease forecasting, influenza co-circulation analysis, outbreak modelling, and related research software. Publication states are presented conservatively and separated by category."
+    "summary": "I have graduated from Macau University of Science and Technology with an M.Sc. in Computer Science and Technology. I will return to Xiamen University to continue doctoral study in Epidemiology and Health Statistics."
   },
   "education": [
     {
       "institution": {"en": "Macau University of Science and Technology", "zh": "澳门科技大学"},
-      "program": {"en": "M.Sc. student, Faculty of Innovation Engineering", "zh": "创新工程学院硕士研究生"},
-      "meta": {"en": "2024–present · GPA 3.63/4 · Full scholarship and living allowance", "zh": "2024–至今 · GPA 3.63/4 · 全额奖学金及生活津贴"},
-      "detail": {"en": "Current training emphasizes intelligent control technology, artificial intelligence, numerical analysis, statistics, pattern recognition, algorithm theory, and optimization methods.", "zh": "当前课程训练重点包括智能控制技术、人工智能基础、数值分析、统计学导论、模式识别、算法理论基础与优化方法基础。"}
+      "program": {"en": "M.Sc. in Computer Science and Technology, Faculty of Innovation Engineering", "zh": "计算机科学与技术硕士，创新工程学院"},
+      "meta": {"en": "Graduated | GPA 3.63/4 | Full scholarship and living allowance", "zh": "已毕业 | GPA 3.63/4 | 全额奖学金及生活津贴"},
+      "detail": {"en": "Completed M.Sc. training in Computer Science and Technology, emphasizing intelligent control technology, artificial intelligence, numerical analysis, statistics, pattern recognition, algorithm theory, and optimization methods.", "zh": "已完成计算机科学与技术硕士阶段训练，训练重点包括智能控制技术、人工智能基础、数值分析、统计学导论、模式识别、算法理论基础与优化方法基础。"}
     },
     {
       "institution": {"en": "Xiamen University", "zh": "厦门大学"},
@@ -21,8 +21,8 @@
     {
       "institution": {"en": "Master’s thesis", "zh": "硕士论文"},
       "program": {"en": "Multi-source-data-driven study of influenza spatiotemporal transmission dynamics, viral evolution, and early warning in China", "zh": "多源数据驱动下我国流感时空传播动力学、病毒进化与预测预警研究"},
-      "meta": {"en": "Current thesis direction", "zh": "当前学位论文方向"},
-      "detail": {"en": "The thesis links surveillance, environmental, behavioral, and sequence-related evidence while keeping completed work, submitted manuscripts, and future stages explicitly separated.", "zh": "该论文方向尝试连接监测、环境、行为与序列相关证据，并明确区分已完成工作、已投稿稿件与后续计划阶段。"}
+      "meta": {"en": "Completed master's thesis direction", "zh": "已完成硕士论文方向"},
+      "detail": {"en": "The completed thesis linked surveillance, environmental, behavioral, and sequence-related evidence while keeping completed work, submitted manuscripts, and future doctoral stages explicitly separated.", "zh": "已完成的硕士论文连接监测、环境、行为与序列相关证据，并明确区分已完成工作、已投稿稿件与后续博士阶段计划。"}
     }
   ],
   "researchInterests": [
@@ -225,7 +225,7 @@
   ],
   "experience": [
     {
-      "title": {"en": "Core master-stage coursework", "zh": "硕士阶段核心课程"},
+      "title": {"en": "Completed M.Sc. coursework", "zh": "硕士阶段核心课程"},
       "period": {"en": "2024–2025", "zh": "2024–2025"},
       "organization": {"en": "Macau University of Science and Technology", "zh": "澳门科技大学"},
       "category": "coursework",

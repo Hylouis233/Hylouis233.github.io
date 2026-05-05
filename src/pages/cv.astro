@@ -58,7 +58,7 @@ const sortedAwards = [...cvData.awards].sort((a, b) => b.year - a.year);
 
     <section class="cv-section">
       <h2>Profile</h2>
-      <p>Current work centers on documented master-stage research in infectious disease forecasting, influenza co-circulation analysis, outbreak modelling, and related research software. Publication states are presented conservatively and separated by category.</p>
+      <p>I have graduated from Macau University of Science and Technology with an M.Sc. in Computer Science and Technology. I will return to Xiamen University to continue doctoral study in Epidemiology and Health Statistics, with research continuing to focus on infectious disease forecasting, influenza co-circulation analysis, outbreak modelling, and related research software.</p>
     </section>
 
     <section class="cv-section">
@@ -66,7 +66,7 @@ const sortedAwards = [...cvData.awards].sort((a, b) => b.year - a.year);
       {cvData.education.map((item) => (
         <article class="cv-entry">
           <h3>{item.institution.en}</h3>
-          <p class="cv-meta">{item.program.en} · {item.meta.en}</p>
+          <p class="cv-meta">{item.program.en} | {item.meta.en}</p>
           <p>{item.detail.en}</p>
         </article>
       ))}
@@ -88,7 +88,7 @@ const sortedAwards = [...cvData.awards].sort((a, b) => b.year - a.year);
           <h3 class="cv-subtitle">{group.title.en}</h3>
           {group.items.map((item) => (
             <article class="cv-entry">
-              <p class="cv-meta">{item.year} · {item.venue.en}</p>
+              <p class="cv-meta">{item.year} | {item.venue.en}</p>
               <h3>{item.title.en}</h3>
               <p><strong>Status:</strong> {item.status.en}</p>
               {item.authorship && <p class="cv-meta">{item.authorship.en}</p>}
@@ -126,7 +126,7 @@ const sortedAwards = [...cvData.awards].sort((a, b) => b.year - a.year);
       <h2>Awards</h2>
       <ul>
         {sortedAwards.map((item) => (
-          <li>{item.year} · {item.title.en}{item.issuer ? ` · ${item.issuer.en}` : ''}</li>
+          <li>{item.year} | {item.title.en}{item.issuer ? ` | ${item.issuer.en}` : ''}</li>
         ))}
       </ul>
     </section>
@@ -136,7 +136,7 @@ const sortedAwards = [...cvData.awards].sort((a, b) => b.year - a.year);
       {cvData.experience.map((item) => (
         <article class="cv-entry">
           <h3>{item.title.en}</h3>
-          <p class="cv-meta">{[item.period?.en, item.organization?.en].filter(Boolean).join(' · ')}</p>
+          <p class="cv-meta">{[item.period?.en, item.organization?.en].filter(Boolean).join(' | ')}</p>
           <p>{item.detail.en}</p>
         </article>
       ))}

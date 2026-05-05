@@ -25,20 +25,20 @@ export const profile = {
     zh: '传染病预测预警\n时空传播动力学\n病毒进化',
   },
   affiliation: {
-    en: 'Macau University of Science and Technology',
-    zh: '澳门科技大学',
+    en: 'Xiamen University',
+    zh: '厦门大学',
   },
   degrees: {
-    en: 'Ph.D. student in Epidemiology and Health Statistics, Xiamen University; M.Sc. student (Full scholarship and living allowance), Faculty of Innovation Engineering, Macau University of Science and Technology; Undergraduate, Xiamen University; interdisciplinary background spanning public health, epidemiology, AI, and data science',
-    zh: '厦门大学公共卫生学院流行病与卫生统计学博士研究生；澳门科技大学创新工程学院硕士研究生（全额奖学金及生活津贴）；厦门大学公共卫生与预防医学本科；具备公共卫生、流行病学、人工智能与数据科学交叉背景',
+    en: 'M.Sc. in Computer Science and Technology, Macau University of Science and Technology; returning to Xiamen University for doctoral study in Epidemiology and Health Statistics; undergraduate training at Xiamen University; interdisciplinary background spanning public health, epidemiology, AI, and data science',
+    zh: '已获澳门科技大学计算机科学与技术硕士学位；接下来将回到厦门大学攻读流行病与卫生统计学博士学位；本科毕业于厦门大学；具备公共卫生、流行病学、人工智能与数据科学交叉背景',
   },
   intro: {
-    en: 'My current work focuses on multimodal infectious disease forecasting and early warning, influenza co-circulation analysis, small-sample outbreak modelling, and the integration of epidemic dynamics with viral evolution. I present ongoing work conservatively and distinguish current master-stage research from proposed doctoral directions.',
-    zh: '我当前的工作聚焦于多模态传染病预测预警、流感共流行分析、小样本疫情建模，以及传播动力学与病毒进化的耦合研究。网站中的相关表述坚持谨慎原则，明确区分硕士阶段已开展工作与拟开展的攻博方向。',
+    en: 'I have graduated from Macau University of Science and Technology with an M.Sc. in Computer Science and Technology. I will return to Xiamen University to continue doctoral study in Epidemiology and Health Statistics, building on work in infectious disease forecasting, influenza co-circulation analysis, outbreak modelling, and the integration of epidemic dynamics with viral evolution.',
+    zh: '我已从澳门科技大学毕业，获得计算机科学与技术硕士学位；接下来将回到厦门大学继续攻读流行病与卫生统计学博士学位。后续研究将延续传染病预测预警、流感共流行分析、小样本疫情建模，以及传播动力学与病毒进化耦合等方向。',
   },
   location: {
-    en: 'Macau, China',
-    zh: '中国澳门',
+    en: 'Xiamen, China',
+    zh: '中国厦门',
   },
   links: [
     {
