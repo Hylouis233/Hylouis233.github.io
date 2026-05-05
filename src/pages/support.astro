@@ -6,9 +6,13 @@ const methodsByGroup = supportGroups.map((group) => ({
   ...group,
   methods: supportMethods.filter((method) => method.group === group.key),
 }));
-const quickSupportMethods = supportMethods.filter((method) =>
-  ['stripe-monthly', 'stripe-one-time', 'btcpay'].includes(method.key),
-);
+const quickSupportLinks = [
+  { label: 'Stripe monthly support', href: 'https://buy.stripe.com/9B66oIaXE8Trfa73tIasg03' },
+  { label: 'Stripe one-time support', href: 'https://buy.stripe.com/8x228sd5M7PnbXVd4iasg04' },
+  { label: 'USDT Pay', href: '#usdt-tron' },
+  { label: 'USDC Pay', href: '#evm-stablecoins' },
+  { label: 'BTC / BTCPay invoice', href: '#btcpay' },
+];
 ---
 <BaseLayout title="Hong Liu | Support">
   <div class="support-page">
@@ -18,8 +22,8 @@ const quickSupportMethods = supportMethods.filter((method) =>
       <p class="section-subtitle">{supportIntro.subtitle}</p>
       <p class="support-notice">{supportIntro.notice}</p>
       <div class="support-quick-links" aria-label="Quick support links">
-        {quickSupportMethods.map((method) => (
-          <a href={method.href} target="_blank" rel="noreferrer">{method.label}</a>
+        {quickSupportLinks.map((link) => (
+          <a href={link.href} target={link.href.startsWith('http') ? '_blank' : undefined} rel={link.href.startsWith('http') ? 'noreferrer' : undefined}>{link.label}</a>
         ))}
       </div>
     </section>
@@ -34,7 +38,7 @@ const quickSupportMethods = supportMethods.filter((method) =>
         </div>
         <div class="support-grid">
           {group.methods.map((method) => (
-            <article class:list={['support-card', method.primary && 'support-card-primary']}>
+            <article id={method.key} class:list={['support-card', method.primary && 'support-card-primary']}>
               <div class="support-card-copy">
                 <p class="item-kicker">{method.group}</p>
                 <h3>{method.label}</h3>
@@ -142,7 +146,13 @@ const quickSupportMethods = supportMethods.filter((method) =>
       font-weight: 600;
     }
 
-    .support-quick-links a:nth-child(3) {
+    .support-quick-links a:nth-child(3),
+    .support-quick-links a:nth-child(4) {
+      background: #1f8f6a;
+      border-color: #1f8f6a;
+    }
+
+    .support-quick-links a:nth-child(5) {
       background: #f7931a;
       border-color: #f7931a;
     }
