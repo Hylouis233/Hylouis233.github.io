@@ -60,6 +60,19 @@ export const supportMethods: SupportMethod[] = [
     primary: true,
   },
   {
+    key: 'btcpay-stablecoins',
+    group: 'crypto',
+    label: 'BTCPay USDT / USDC invoice',
+    description:
+      'Self-hosted BTCPay POS for user-entered USD amounts. The checkout lets supporters choose USDT or USDC on the enabled networks.',
+    href: 'https://223.109.141.77:23443/apps/PersonalSiteStablecoinPOS/pos',
+    buttonLabel: 'Open USDT / USDC BTCPay POS',
+    networks: ['USDT-TRON', 'USDT-Ethereum', 'USDT-Polygon', 'USDC-Ethereum', 'USDC-Polygon'],
+    warning:
+      'Confirm both the asset and network in your wallet before sending. The site does not hold private keys; BTCPay only monitors the configured receiving addresses.',
+    primary: true,
+  },
+  {
     key: 'usdt-tron',
     group: 'crypto',
     label: 'USDT - TRON',
