@@ -6,6 +6,9 @@ const methodsByGroup = supportGroups.map((group) => ({
   ...group,
   methods: supportMethods.filter((method) => method.group === group.key),
 }));
+const quickSupportMethods = supportMethods.filter((method) =>
+  ['stripe-monthly', 'stripe-one-time', 'btcpay'].includes(method.key),
+);
 ---
 <BaseLayout title="Hong Liu | Support">
   <div class="support-page">
@@ -14,6 +17,11 @@ const methodsByGroup = supportGroups.map((group) => ({
       <h1 class="section-title">{supportIntro.title}</h1>
       <p class="section-subtitle">{supportIntro.subtitle}</p>
       <p class="support-notice">{supportIntro.notice}</p>
+      <div class="support-quick-links" aria-label="Quick support links">
+        {quickSupportMethods.map((method) => (
+          <a href={method.href} target="_blank" rel="noreferrer">{method.label}</a>
+        ))}
+      </div>
     </section>
 
     {methodsByGroup.map((group) => (
@@ -112,6 +120,31 @@ const methodsByGroup = supportGroups.map((group) => ({
       color: var(--muted);
       line-height: 1.62;
       max-width: 78ch;
+    }
+
+    .support-quick-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .support-quick-links a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 9px 14px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--accent);
+      background: var(--accent);
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .support-quick-links a:nth-child(3) {
+      background: #f7931a;
+      border-color: #f7931a;
     }
 
     .support-section {
@@ -243,4 +276,3 @@ const methodsByGroup = supportGroups.map((group) => ({
     }
   </style>
 </BaseLayout>
-
