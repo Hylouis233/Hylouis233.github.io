@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { supportGroups, supportIntro, supportMethods } from '../data/support';
+import { btcpayBtcPosUrl, btcpayStablecoinPosUrl, supportGroups, supportIntro, supportMethods } from '../data/support';
 
 const methodsByGroup = supportGroups.map((group) => ({
   ...group,
@@ -9,9 +9,9 @@ const methodsByGroup = supportGroups.map((group) => ({
 const quickSupportLinks = [
   { label: 'Stripe monthly support', href: 'https://buy.stripe.com/9B66oIaXE8Trfa73tIasg03' },
   { label: 'Stripe one-time support', href: 'https://buy.stripe.com/8x228sd5M7PnbXVd4iasg04' },
-  { label: 'USDT / USDC BTCPay invoice', href: 'https://223.109.141.77:23443/apps/PersonalSiteStablecoinPOS/pos' },
-  { label: 'USDT / USDC addresses', href: '#evm-stablecoins' },
-  { label: 'BTC / BTCPay invoice', href: '#btcpay' },
+  { label: 'USDT BTCPay invoice', href: btcpayStablecoinPosUrl },
+  { label: 'USDC BTCPay invoice', href: btcpayStablecoinPosUrl },
+  { label: 'BTC BTCPay invoice', href: btcpayBtcPosUrl },
 ];
 ---
 <BaseLayout title="Hong Liu | Support">

@@ -22,6 +22,9 @@ export const supportIntro = {
     'All support is optional. The site does not store payment secrets, private keys, recovery phrases, or payment credentials. For small crypto support, USDT or USDC is usually easier than BTC on-chain. Please confirm the payment method, asset, and network before sending funds.',
 };
 
+export const btcpayStablecoinPosUrl = 'https://223.109.141.77:23443/apps/PersonalSiteStablecoinPOS/pos';
+export const btcpayBtcPosUrl = 'https://223.109.141.77:23443/apps/PersonalSiteSupportPOS/pos';
+
 export const supportMethods: SupportMethod[] = [
   {
     key: 'wechat',
@@ -65,7 +68,7 @@ export const supportMethods: SupportMethod[] = [
     label: 'BTCPay USDT / USDC invoice',
     description:
       'Self-hosted BTCPay POS for user-entered USD amounts. The checkout lets supporters choose USDT or USDC on the enabled networks.',
-    href: 'https://223.109.141.77:23443/apps/PersonalSiteStablecoinPOS/pos',
+    href: btcpayStablecoinPosUrl,
     buttonLabel: 'Open USDT / USDC BTCPay POS',
     networks: ['USDT-TRON', 'USDT-Ethereum', 'USDT-Polygon', 'USDC-Ethereum', 'USDC-Polygon'],
     warning:
@@ -76,7 +79,9 @@ export const supportMethods: SupportMethod[] = [
     key: 'usdt-tron',
     group: 'crypto',
     label: 'USDT - TRON',
-    description: 'USDT via TRON/TRC20.',
+    description: 'USDT via TRON/TRC20. Use the BTCPay invoice link for amount entry and invoice tracking; the QR address remains as manual fallback.',
+    href: btcpayStablecoinPosUrl,
+    buttonLabel: 'Open USDT BTCPay invoice',
     address: 'TSZ9ScACPpJi5Q5jXnkHPuLfb8LNztxWJX',
     qrCodeSrc: '/support/usdt-tron.png',
     qrCodeAlt: 'USDT TRON QR code',
@@ -98,7 +103,10 @@ export const supportMethods: SupportMethod[] = [
     key: 'evm-stablecoins',
     group: 'crypto',
     label: 'USDT / USDC - EVM networks',
-    description: 'Shared EVM address for supported USDT and USDC networks.',
+    description:
+      'Shared EVM address for supported USDT and USDC networks. Use the BTCPay invoice link for Ethereum or Polygon invoice tracking; the QR address remains as manual fallback.',
+    href: btcpayStablecoinPosUrl,
+    buttonLabel: 'Open USDT / USDC BTCPay invoice',
     address: '0xb5ED2f14752b0189c9cdcC13d7e14ce947777B2c',
     qrCodeSrc: '/support/usdt-bnb-smart-chain.png',
     qrCodeAlt: 'EVM stablecoin QR code',
@@ -131,7 +139,7 @@ export const supportMethods: SupportMethod[] = [
     group: 'crypto',
     label: 'BTCPay BTC invoice',
     description: 'Self-hosted BTCPay POS for BTC invoices with user-entered amount.',
-    href: 'https://223.109.141.77:23443/apps/PersonalSiteSupportPOS/pos',
+    href: btcpayBtcPosUrl,
     buttonLabel: 'Open BTCPay BTC POS',
     warning:
       'BTC on-chain payments below the dust threshold may fail in BTCPay. For small amounts, use USDT or USDC instead, or use a larger BTC amount.',
@@ -140,7 +148,9 @@ export const supportMethods: SupportMethod[] = [
     key: 'btc',
     group: 'crypto',
     label: 'BTC on-chain',
-    description: 'Bitcoin mainnet address for larger on-chain BTC support.',
+    description: 'Bitcoin mainnet address for larger manual BTC support. Prefer the BTCPay invoice link when you want amount entry and invoice tracking.',
+    href: btcpayBtcPosUrl,
+    buttonLabel: 'Open BTC BTCPay invoice',
     address: '1CpFYqV98RpWSiAbDT9n6QFSz9AL12SCw8',
     qrCodeSrc: '/support/btc-onchain.png',
     qrCodeAlt: 'BTC on-chain QR code',
