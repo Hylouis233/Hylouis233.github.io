@@ -34,14 +34,17 @@ import { profile, iconMap } from '../data/profile';
 
         <div class="sponsor-action-card" style="margin-top: 24px;">
           <p><strong>🌱 How Your Contributions Make a Difference</strong></p>
-          <p class="sponsor-impact-text">Your sponsorship helps cover computing resources (servers/GPUs), research & maintenance costs, and fuels the late nights of debugging!</p>
+          <p class="sponsor-impact-text">Your sponsorship helps cover computing resources, research maintenance, publication-related costs, and continued upkeep of open-source research tools.</p>
+          <div class="sponsor-methods" aria-label="Available support channels">
+            <span>WeChat</span>
+            <span>Alipay</span>
+            <span>Stripe</span>
+            <span>BTCPay</span>
+            <span>USDT / USDC / BTC</span>
+          </div>
           <div class="sponsor-btn-wrapper">
-            <a href="https://buymeacoffee.com/liuh200107q" target="_blank" rel="noreferrer" class="bmc-btn">
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-                <path d="M20.216 1.792H3.576C2.158 1.792 1 2.95 1 4.368v11.595c0 1.418 1.158 2.576 2.576 2.576h1.792c0 2.138 1.733 3.871 3.871 3.871h5.31c2.138 0 3.871-1.733 3.871-3.871h1.792c1.418 0 2.576-1.158 2.576-2.576V4.368c0-1.418-1.158-2.576-2.576-2.576zm-1.792 14.171h-1.792v-3.871h1.792v3.871zm0-5.663h-1.792v-3.87h1.792v3.87z"/>
-              </svg>
-              Buy me a coffee
-            </a>
+            <a href="/support/" class="support-btn">Open support page</a>
+            <a href="https://buy.stripe.com/cNibJ27Ls4Db8LJd4iasg01" target="_blank" rel="noreferrer" class="support-btn support-btn-secondary">Stripe one-time</a>
           </div>
         </div>
       </div>
@@ -95,22 +98,47 @@ import { profile, iconMap } from '../data/profile';
 
   .sponsor-btn-wrapper {
     margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
   }
 
-  .bmc-btn {
+  .sponsor-methods {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .sponsor-methods span {
+    padding: 6px 10px;
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 0.84rem;
+  }
+
+  .support-btn {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    justify-content: center;
     padding: 10px 16px;
-    background-color: #FFDD00;
-    color: #000000;
+    background-color: var(--accent);
+    color: #ffffff;
     font-weight: 600;
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--accent);
     text-decoration: none;
     transition: transform 0.2s ease, filter 0.2s ease;
   }
 
-  .bmc-btn:hover {
+  .support-btn-secondary {
+    background: var(--surface);
+    color: var(--accent);
+  }
+
+  .support-btn:hover {
     transform: translateY(-2px);
     filter: brightness(0.95);
   }

@@ -1,0 +1,246 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { supportGroups, supportIntro, supportMethods } from '../data/support';
+
+const methodsByGroup = supportGroups.map((group) => ({
+  ...group,
+  methods: supportMethods.filter((method) => method.group === group.key),
+}));
+---
+<BaseLayout title="Hong Liu | Support">
+  <div class="support-page">
+    <section class="panel-primary support-intro">
+      <p class="eyebrow">Voluntary support</p>
+      <h1 class="section-title">{supportIntro.title}</h1>
+      <p class="section-subtitle">{supportIntro.subtitle}</p>
+      <p class="support-notice">{supportIntro.notice}</p>
+    </section>
+
+    {methodsByGroup.map((group) => (
+      <section class="panel support-section" id={group.key}>
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">{group.title}</h2>
+            <p class="section-subtitle">{group.description}</p>
+          </div>
+        </div>
+        <div class="support-grid">
+          {group.methods.map((method) => (
+            <article class:list={['support-card', method.primary && 'support-card-primary']}>
+              <div class="support-card-copy">
+                <p class="item-kicker">{method.group}</p>
+                <h3>{method.label}</h3>
+                <p>{method.description}</p>
+              </div>
+
+              {method.networks && (
+                <div class="network-list" aria-label={`${method.label} networks`}>
+                  {method.networks.map((network) => (
+                    <span class="chip badge-muted">{network}</span>
+                  ))}
+                </div>
+              )}
+
+              {method.qrCodeSrc && (
+                <div class="qr-wrap">
+                  <img src={method.qrCodeSrc} alt={method.qrCodeAlt ?? `${method.label} QR code`} loading="lazy" />
+                </div>
+              )}
+
+              {method.address && (
+                <div class="address-block">
+                  <code>{method.address}</code>
+                  <button type="button" data-copy-value={method.address}>Copy address</button>
+                </div>
+              )}
+
+              {method.href && (
+                <a class="support-link" href={method.href} target="_blank" rel="noreferrer">
+                  {method.buttonLabel ?? 'Open payment link'}
+                </a>
+              )}
+
+              {method.warning && <p class="support-warning">{method.warning}</p>}
+            </article>
+          ))}
+        </div>
+      </section>
+    ))}
+
+    <section class="panel-secondary support-footer-note">
+      <h2 class="section-title">Commercial collaboration</h2>
+      <p class="section-subtitle">For sponsorship, tool recommendation, affiliate collaboration, or research-software support discussions, please contact me through the email links on the contact page.</p>
+      <a class="support-link" href="/contact/">Contact</a>
+    </section>
+  </div>
+
+  <script>
+    const copyButtons = document.querySelectorAll('[data-copy-value]');
+    copyButtons.forEach((button) => {
+      button.addEventListener('click', async () => {
+        const value = button.getAttribute('data-copy-value');
+        if (!value || !navigator.clipboard) return;
+        await navigator.clipboard.writeText(value);
+        const originalText = button.textContent;
+        button.textContent = 'Copied';
+        window.setTimeout(() => {
+          button.textContent = originalText;
+        }, 1500);
+      });
+    });
+  </script>
+
+  <style>
+    .support-page {
+      display: grid;
+      gap: 24px;
+    }
+
+    .support-intro {
+      display: grid;
+      gap: 10px;
+    }
+
+    .support-intro .section-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      margin-bottom: 0;
+    }
+
+    .support-notice,
+    .support-warning {
+      margin: 8px 0 0;
+      color: var(--muted);
+      line-height: 1.62;
+      max-width: 78ch;
+    }
+
+    .support-section {
+      display: grid;
+      gap: 18px;
+    }
+
+    .support-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .support-card {
+      min-width: 0;
+      display: grid;
+      align-content: start;
+      gap: 14px;
+      padding: 20px;
+      border: 1px solid rgba(29, 36, 48, 0.08);
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.58);
+    }
+
+    .support-card-primary {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(245, 245, 245, 0.64));
+      box-shadow: 0 14px 30px rgba(22, 50, 79, 0.06);
+    }
+
+    .support-card-copy {
+      display: grid;
+      gap: 6px;
+    }
+
+    .support-card h3,
+    .support-card p {
+      margin: 0;
+    }
+
+    .support-card h3 {
+      line-height: 1.25;
+      color: var(--text);
+    }
+
+    .support-card p {
+      color: var(--muted);
+      line-height: 1.62;
+    }
+
+    .network-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .qr-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+      border: 1px solid rgba(29, 36, 48, 0.08);
+      border-radius: var(--radius-sm);
+      background: #ffffff;
+    }
+
+    .qr-wrap img {
+      width: min(100%, 220px);
+      aspect-ratio: 1;
+      object-fit: contain;
+    }
+
+    .address-block {
+      display: grid;
+      gap: 10px;
+    }
+
+    .address-block code {
+      display: block;
+      padding: 11px 12px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--line);
+      background: var(--surface-muted);
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      text-decoration: none;
+      color: var(--text);
+      line-height: 1.45;
+    }
+
+    .address-block button,
+    .support-link {
+      justify-self: start;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 9px 14px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--accent);
+      background: var(--accent);
+      color: #ffffff;
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+      transition: filter 0.2s ease, transform 0.2s ease;
+    }
+
+    .address-block button:hover,
+    .support-link:hover {
+      filter: brightness(0.94);
+      transform: translateY(-1px);
+    }
+
+    .support-warning {
+      padding-top: 12px;
+      border-top: 1px solid rgba(29, 36, 48, 0.08);
+      font-size: 0.92rem;
+    }
+
+    .support-footer-note {
+      display: grid;
+      gap: 12px;
+    }
+
+    @media (max-width: 860px) {
+      .support-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</BaseLayout>
+

@@ -413,21 +413,21 @@ export const publications: PublicationItem[] = [
   },
   {
     title: {
-      en: 'Influenza co-circulation and co-infection prediction study',
-      zh: '流感共流行与共感染预测研究',
+      en: 'Spatiotemporal instability of influenza seasonality during viral co-circulation',
+      zh: '病毒共流行期间流感季节性的时空不稳定性',
     },
-    year: 2025,
+    year: 2026,
     venue: {
       en: 'npj Systems Biology and Applications',
       zh: 'npj Systems Biology and Applications',
     },
     status: {
-      en: 'Accepted',
-      zh: '已接收',
+      en: 'Published',
+      zh: '已发表',
     },
     note: {
-      en: 'Current work on STL-AFD-CWT-WTC-based analysis of co-circulation, co-infection signals, and frequency-domain coupling patterns.',
-      zh: '当前围绕 STL-AFD-CWT-WTC 分析框架推进，用于识别共流行、共感染信号及频域耦合关系。',
+      en: 'First-author npj Systems Biology and Applications article. Accepted on 17 April 2026 and published online on 04 May 2026.',
+      zh: '第一作者 npj Systems Biology and Applications 论文；2026 年 4 月 17 日接收，2026 年 5 月 4 日在线发表。',
     },
     authorship: {
       en: 'First author',
@@ -436,6 +436,8 @@ export const publications: PublicationItem[] = [
     authorshipRank: 'lead',
     featured: true,
     category: 'publication',
+    doi: '10.1038/s41540-026-00729-9',
+    url: 'https://www.nature.com/articles/s41540-026-00729-9',
     relatedProjectKeys: ['multicopat'],
   },
 ];
@@ -629,7 +631,7 @@ export const projects: ProjectItem[] = [
       en: 'Analytical pipeline supporting work on influenza co-circulation and co-infection signals.',
       zh: '支撑流感共流行与共感染信号相关研究的分析管线。',
     },
-    relatedPublicationTitles: ['Influenza co-circulation and co-infection prediction study'],
+    relatedPublicationTitles: ['Spatiotemporal instability of influenza seasonality during viral co-circulation'],
   },
 ];
 

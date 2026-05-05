@@ -92,4 +92,5 @@ export const navigation = [
   { href: '/cv/', key: 'cv', label: { en: 'CV', zh: '履历' } },
   { href: '/publications/', key: 'publications', label: { en: 'Outputs', zh: '成果' } },
   { href: '/contact/', key: 'contact', label: { en: 'Contact', zh: '联系' } },
+  { href: '/support/', key: 'support', label: { en: 'Support', zh: 'Support' } },
 ];
