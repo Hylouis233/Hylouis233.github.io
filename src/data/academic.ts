@@ -99,16 +99,16 @@ export const education: EducationItem[] = [
       zh: '厦门大学',
     },
     program: {
-      en: 'Ph.D. student in Epidemiology and Health Statistics',
-      zh: '流行病与卫生统计学博士研究生',
+      en: 'Upcoming Ph.D. study in Epidemiology and Health Statistics',
+      zh: '即将攻读流行病与卫生统计学博士学位',
     },
     meta: {
-      en: 'School of Public Health · Supervised by Prof. Tianmu Chen',
-      zh: '公共卫生学院 · 师从陈田木教授',
+      en: 'School of Public Health | returning for doctoral study under Prof. Tianmu Chen',
+      zh: '公共卫生学院 | 将师从陈田木教授开展博士阶段学习',
     },
     detail: {
-      en: 'Doctoral research extends toward multimodal infectious disease spatiotemporal dynamics, viral evolution early warning, and integrated macro–micro modelling frameworks.',
-      zh: '博士研究延伸至多模态传染病时空动力学、病毒进化预警以及宏观传播—微观进化一体化建模框架。',
+      en: 'Upcoming doctoral research will extend toward multimodal infectious disease spatiotemporal dynamics, viral evolution early warning, and integrated macro-micro modelling frameworks.',
+      zh: '后续博士研究将延伸至多模态传染病时空动力学、病毒进化预警以及宏观传播—微观进化一体化建模框架。',
     },
   },
   {
@@ -117,16 +117,16 @@ export const education: EducationItem[] = [
       zh: '澳门科技大学',
     },
     program: {
-      en: 'M.Sc. student, Faculty of Innovation Engineering',
-      zh: '创新工程学院硕士研究生',
+      en: 'M.Sc. in Computer Science and Technology, Faculty of Innovation Engineering',
+      zh: '计算机科学与技术硕士，创新工程学院',
     },
     meta: {
-      en: '2024–present · GPA 3.63/4 · Full scholarship and living allowance',
-      zh: '2024–至今 · GPA 3.63/4 · 全额奖学金及生活津贴',
+      en: 'Graduated | GPA 3.63/4 | Full scholarship and living allowance',
+      zh: '已毕业 | GPA 3.63/4 | 全额奖学金及生活津贴',
     },
     detail: {
-      en: 'Supervised by Academician Nanshan Zhong and Prof. Chitin Hon, and co-supervised by Prof. Tianmu Chen (Xiamen University). Current training emphasizes intelligent control technology, artificial intelligence, numerical analysis, statistics, pattern recognition, algorithm theory, and optimization methods.',
-      zh: '师从钟南山院士与韩子天教授，并由厦门大学陈田木教授联合培养。当前课程训练重点包括智能控制技术、人工智能基础、数值分析、统计学导论、模式识别、算法理论基础与优化方法基础。',
+      en: 'Completed M.Sc. training in Computer Science and Technology under Academician Nanshan Zhong and Prof. Chitin Hon, with co-supervision by Prof. Tianmu Chen (Xiamen University). Graduate training emphasized intelligent control technology, artificial intelligence, numerical analysis, statistics, pattern recognition, algorithm theory, and optimization methods.',
+      zh: '已在钟南山院士与韩子天教授指导下完成计算机科学与技术硕士阶段训练，并由厦门大学陈田木教授联合培养。研究生阶段训练重点包括智能控制技术、人工智能基础、数值分析、统计学导论、模式识别、算法理论基础与优化方法基础。',
     },
   },
   {
@@ -157,12 +157,12 @@ export const education: EducationItem[] = [
       zh: '多源数据驱动下我国流感时空传播动力学、病毒进化与预测预警研究',
     },
     meta: {
-      en: 'Current thesis direction',
-      zh: '当前学位论文方向',
+      en: "Completed master's thesis direction",
+      zh: '已完成硕士论文方向',
     },
     detail: {
-      en: 'The thesis links surveillance, environmental, behavioral, and sequence-related evidence while keeping completed work, submitted manuscripts, and future stages explicitly separated.',
-      zh: '该论文方向尝试连接监测、环境、行为与序列相关证据，并明确区分已完成工作、已投稿稿件与后续计划阶段。',
+      en: 'The completed thesis linked surveillance, environmental, behavioral, and sequence-related evidence while keeping completed work, submitted manuscripts, and future doctoral stages explicitly separated.',
+      zh: '已完成的硕士论文连接监测、环境、行为与序列相关证据，并明确区分已完成工作、已投稿稿件与后续博士阶段计划。',
     },
   },
 ];
@@ -701,7 +701,7 @@ export const awards: AwardItem[] = [
 export const experience: ExperienceItem[] = [
   {
     title: {
-      en: 'Core master-stage coursework',
+      en: 'Completed M.Sc. coursework',
       zh: '硕士阶段核心课程',
     },
     period: {

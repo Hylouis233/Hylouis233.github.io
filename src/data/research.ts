@@ -5,8 +5,8 @@ export const researchThemes = [
       zh: '传染病预测预警',
     },
     body: {
-      en: 'Current master-stage work centers on multimodal forecasting, non-stationary time-series analysis, and early-warning-oriented modelling for infectious diseases, especially respiratory disease activity and influenza-related scenarios.',
-      zh: '当前硕士阶段工作主要围绕多模态预测、非平稳时间序列分析以及面向预警的传染病建模展开，重点关注呼吸道疾病活动与流感相关场景。',
+      en: 'Recent M.Sc. work centered on multimodal forecasting, non-stationary time-series analysis, and early-warning-oriented modelling for infectious diseases, especially respiratory disease activity and influenza-related scenarios.',
+      zh: '已完成的硕士阶段工作主要围绕多模态预测、非平稳时间序列分析以及面向预警的传染病建模展开，重点关注呼吸道疾病活动与流感相关场景。',
     },
   },
   {
@@ -42,8 +42,8 @@ export const researchThemes = [
 ];
 
 export const currentFocus = {
-  en: 'My current master-stage work includes MAESTRO for multimodal respiratory disease forecasting, influenza co-circulation and co-infection analysis, dual-framework ODE/Petri Net modelling for chikungunya transmission, and ongoing maintenance of an infectious-disease intelligence platform for data collection and analytical support. The broader narrative focuses on non-stationary time-series analysis, small-sample outbreak dynamics, and linking macroscopic epidemic patterns with microscopic viral evolution in future early-warning systems. I aim to continuously integrate epidemiological signals with phylodynamic evidence to provide reliable, multi-scale insights for public health preparedness and decision-making.',
-  zh: '我当前硕士阶段的工作包括：面向呼吸道疾病多模态预测的 MAESTRO 框架、流感共流行与共感染分析、基孔肯雅热传播的 ODE/Petri Net 双框架建模，以及用于数据采集与分析支持的传染病情报平台维护。更广阔的研究叙事则聚焦于非平稳时间序列分析、小样本疫情动力学，以及在未来预警系统中建立宏观传播格局与微观病毒进化之间的联系。我致力于持续将流行病学信号与系统发育动力学证据相结合，为公共卫生准备与决策提供可靠的多尺度见解。',
+  en: 'My completed M.Sc. and continuing doctoral trajectory includes MAESTRO for multimodal respiratory disease forecasting, influenza co-circulation and co-infection analysis, dual-framework ODE/Petri Net modelling for chikungunya transmission, and ongoing maintenance of an infectious-disease intelligence platform for data collection and analytical support. The broader narrative focuses on non-stationary time-series analysis, small-sample outbreak dynamics, and linking macroscopic epidemic patterns with microscopic viral evolution in future early-warning systems. I aim to continuously integrate epidemiological signals with phylodynamic evidence to provide reliable, multi-scale insights for public health preparedness and decision-making.',
+  zh: '我已完成的硕士阶段工作包括：面向呼吸道疾病多模态预测的 MAESTRO 框架、流感共流行与共感染分析、基孔肯雅热传播的 ODE/Petri Net 双框架建模，以及用于数据采集与分析支持的传染病情报平台维护。更广阔的研究叙事将延伸到博士阶段，聚焦非平稳时间序列分析、小样本疫情动力学，以及在未来预警系统中建立宏观传播格局与微观病毒进化之间的联系。我致力于持续将流行病学信号与系统发育动力学证据相结合，为公共卫生准备与决策提供可靠的多尺度见解。',
 };
 
 export const keywords = [
@@ -56,8 +56,8 @@ export const keywords = [
 ];
 
 export const researchNarrative = {
-  en: 'I work at the intersection of public health, infectious disease modelling, AI, and data engineering. My current research centers on multimodal forecasting, spatiotemporal epidemic analysis, and interpretable modelling workflows, while the longer-term agenda extends toward linking epidemic dynamics with viral evolution in future early-warning systems.',
-  zh: '我的研究位于公共卫生、传染病建模、人工智能与数据工程的交叉处。当前工作主要围绕多模态预测、疫情时空分析与可解释建模流程展开；更长期的研究主线则延伸到传播动力学与病毒进化的衔接，以服务未来的预测预警系统。',
+  en: 'I work at the intersection of public health, infectious disease modelling, AI, and data engineering. My recent M.Sc. work centered on multimodal forecasting, spatiotemporal epidemic analysis, and interpretable modelling workflows, while my doctoral trajectory at Xiamen University extends toward linking epidemic dynamics with viral evolution in future early-warning systems.',
+  zh: '我的研究位于公共卫生、传染病建模、人工智能与数据工程的交叉处。已完成的硕士阶段工作主要围绕多模态预测、疫情时空分析与可解释建模流程展开；接下来的博士阶段将进一步延伸到传播动力学与病毒进化的衔接，以服务未来的预测预警系统。',
 };
 
 export const selectedHighlights = [
@@ -82,8 +82,8 @@ export const selectedHighlights = [
 export const selectedAchievements = [
   {
     label: 'Current stage',
-    en: 'Master’s student (Full scholarship and living allowance) at Macau University of Science and Technology, Faculty of Innovation Engineering, with a current focus on infectious disease forecasting and early warning.',
-    zh: '现为澳门科技大学创新工程学院硕士研究生（全额奖学金及生活津贴），当前聚焦传染病预测预警方向。',
+    en: 'Graduated with an M.Sc. in Computer Science and Technology from Macau University of Science and Technology and will return to Xiamen University for doctoral study in Epidemiology and Health Statistics.',
+    zh: '已获澳门科技大学计算机科学与技术硕士学位，接下来将回到厦门大学攻读流行病与卫生统计学博士学位。',
   },
   {
     label: 'Representative outputs',
@@ -92,7 +92,7 @@ export const selectedAchievements = [
   },
   {
     label: 'Future direction',
-    en: 'Longer-term doctoral work extends toward multimodal infectious disease spatiotemporal dynamics, viral evolution early warning, and integrated macro–micro modelling frameworks.',
+    en: 'Doctoral work at Xiamen University will extend toward multimodal infectious disease spatiotemporal dynamics, viral evolution early warning, and integrated macro-micro modelling frameworks.',
     zh: '拟攻博方向延伸至多模态传染病时空动力学、病毒进化预警以及宏观传播—微观进化一体化建模框架。',
   },
 ];
@@ -109,7 +109,7 @@ export const researchApproach = [
     title: { en: 'Interpretable modelling', zh: '可解释建模' },
     body: {
       en: 'My current work combines decomposition-based forecasting, state-space reasoning, and mechanistic models such as ODEs and Petri Nets so that predictive results remain tied to epidemiological interpretation.',
-      zh: '当前研究结合分解式预测、状态空间推理以及 ODE、Petri Net 等机制模型，使预测结果尽量保持与流行病学解释相联系。',
+      zh: '我的研究结合分解式预测、状态空间推理以及 ODE、Petri Net 等机制模型，使预测结果尽量保持与流行病学解释相联系。',
     },
   },
   {
