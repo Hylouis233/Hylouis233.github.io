@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import AdSlot from '../components/AdSlot.astro';
 import { profile } from '../data/profile';
 import { projects } from '../data/academic';
 
@@ -106,6 +107,8 @@ const capabilityCards = [
         ))}
       </div>
     </section>
+
+    <AdSlot position="middle" pageType="landing" />
 
     <section class="panel-secondary portfolio-section portfolio-supporting-section">
       <div class="section-block-heading">
