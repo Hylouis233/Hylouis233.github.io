@@ -29,17 +29,31 @@ const ads = monetizationConfig.ads.enabled
 {ads.length > 0 && (
   <aside class:list={['ad-slot', `ad-slot-${position}`, className]} aria-label={monetizationConfig.ads.disclosure}>
     {ads.map((creative) => (
-      <a class="ad-slot-card" href={creative.href} rel={creative.rel ?? monetizationConfig.ads.fallbackRel}>
-        {creative.imageSrc && (
-          <img src={creative.imageSrc} alt={creative.imageAlt ?? creative.title} loading="lazy" />
-        )}
-        <span class="ad-slot-label">{creative.label}</span>
-        <span class="ad-slot-copy">
-          <strong>{creative.title}</strong>
-          <span>{creative.description}</span>
-        </span>
-        <span class="ad-slot-cta">{creative.cta}</span>
-      </a>
+      creative.href ? (
+        <a class="ad-slot-card" href={creative.href} rel={creative.rel ?? monetizationConfig.ads.fallbackRel}>
+          {creative.imageSrc && (
+            <img src={creative.imageSrc} alt={creative.imageAlt ?? creative.title} loading="lazy" />
+          )}
+          <span class="ad-slot-label">{creative.label}</span>
+          <span class="ad-slot-copy">
+            <strong>{creative.title}</strong>
+            <span>{creative.description}</span>
+          </span>
+          <span class="ad-slot-cta">{creative.cta}</span>
+        </a>
+      ) : (
+        <div class="ad-slot-card ad-slot-card-static" data-ad-provider={creative.network?.provider}>
+          {creative.imageSrc && (
+            <img src={creative.imageSrc} alt={creative.imageAlt ?? creative.title} loading="lazy" />
+          )}
+          <span class="ad-slot-label">{creative.label}</span>
+          <span class="ad-slot-copy">
+            <strong>{creative.title}</strong>
+            <span>{creative.description}</span>
+          </span>
+          <span class="ad-slot-cta ad-slot-cta-muted">{creative.cta}</span>
+        </div>
+      )
     ))}
   </aside>
 )}
@@ -67,6 +81,11 @@ const ads = monetizationConfig.ads.enabled
     border-color: var(--accent);
     background: var(--accent-soft);
     outline: none;
+  }
+
+  .ad-slot-card-static:hover {
+    border-color: var(--line);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(245, 245, 245, 0.62));
   }
 
   .ad-slot-card img {
@@ -120,6 +139,12 @@ const ads = monetizationConfig.ads.enabled
     font-size: 0.86rem;
     font-weight: 700;
     white-space: nowrap;
+  }
+
+  .ad-slot-cta-muted {
+    border-color: var(--line);
+    background: var(--surface-muted);
+    color: var(--muted);
   }
 
   @media (max-width: 720px) {

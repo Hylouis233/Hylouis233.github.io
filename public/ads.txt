@@ -1,0 +1,4 @@
+# No third-party advertising sellers are authorized yet.
+# Add approved seller records here only after an ad network has accepted the site.
+# Example format:
+# example.com, publisher-id, DIRECT, certification-authority-id

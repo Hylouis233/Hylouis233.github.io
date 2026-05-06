@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import AdSlot from '../components/AdSlot.astro';
 import { profile, iconMap } from '../data/profile';
 ---
 <BaseLayout title="Hong Liu | Contact">
@@ -72,6 +73,7 @@ import { profile, iconMap } from '../data/profile';
           </a>
         </article>
       </div>
+      <AdSlot position="sidebar" pageType="landing" />
     </section>
   </div>
 </BaseLayout>
