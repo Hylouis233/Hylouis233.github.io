@@ -6,10 +6,11 @@ This site currently uses a static, configuration-first advertising layer. No thi
 
 - Manual sponsor placement: enabled.
 - AADS adaptive banner: enabled as `Ad Unit #2436794`.
+- AADS floating window: enabled with a visible close button and session-level dismissal.
 - Affiliate placement: configured as a disabled placeholder.
 - Baidu Union placement: configured as a disabled placeholder.
 - Crypto-friendly network placement: configured as a disabled placeholder.
-- `public/ads.txt`: published with no authorized sellers yet.
+- `public/ads.txt`: published with a note that no seller record has been supplied by the active network yet.
 
 ## Where To Configure
 
@@ -44,9 +45,16 @@ Keep every ad, sponsor, affiliate, or network placement in `monetizationConfig.a
 - Provider: AADS
 - Ad unit: `2436794`
 - Placement: fixed in the page content, not sticky.
-- Pages: landing, article, and docs pages through the bottom slot.
+- Pages: landing, article, and docs pages through the bottom slot and the floating slot.
 - Excluded page: `/support/`
 - Disallowed categories configured in AADS: investments, gambling, NSFW, and risky projects.
+
+## Floating Window Rules
+
+- The floating ad must have a visible close button.
+- Closing it stores `hylouis-floating-ad-dismissed=1` in `sessionStorage`.
+- The floating ad is not shown on `/support/` or other payment-focused pages.
+- It must not cover payment buttons, QR codes, navigation, or core article content.
 
 ## Static Hosting Boundary
 
