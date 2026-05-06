@@ -38,6 +38,9 @@ export type AdCreative = {
     zoneId?: string;
     placementId?: string;
     scriptSrc?: string;
+    iframeSrc?: string;
+    iframeTitle?: string;
+    iframeDataAa?: string;
     containerId?: string;
     notes?: string;
   };
@@ -66,6 +69,27 @@ export const monetizationConfig = {
       },
     ],
     creatives: [
+      {
+        id: 'aads-adaptive-2436794',
+        enabled: true,
+        kind: 'network',
+        label: 'Advertisement',
+        title: 'AADS adaptive banner',
+        description:
+          'Adaptive crypto ad placement. High-risk categories are blocked in AADS settings; this slot is excluded from the support/payment page.',
+        cta: 'Advertisement',
+        positions: ['bottom'],
+        pageTypes: ['landing', 'article', 'docs'],
+        network: {
+          provider: 'a-ads',
+          zoneId: '2436794',
+          iframeDataAa: '2436794',
+          iframeSrc: 'https://acceptable.a-ads.com/2436794/?size=Adaptive',
+          iframeTitle: 'AADS advertisement',
+          containerId: 'aads-ad-unit-2436794',
+          notes: 'AADS Ad Unit #2436794, fixed placement, adaptive size.',
+        },
+      },
       {
         id: 'site-support-footer',
         enabled: true,

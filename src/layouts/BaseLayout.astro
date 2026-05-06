@@ -464,7 +464,7 @@ const portfolioHref = profile.portfolioHref;
       </header>
       <main class="page">
         <slot />
-        {showFooterAd && <AdSlot position="bottom" pageType={pageType} />}
+        {showFooterAd && <AdSlot position="bottom" pageType={pageType} maxItems={2} />}
       </main>
       <footer class="footer">
         <div class="footer-grid">

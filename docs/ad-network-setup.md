@@ -5,6 +5,7 @@ This site currently uses a static, configuration-first advertising layer. No thi
 ## Current Status
 
 - Manual sponsor placement: enabled.
+- AADS adaptive banner: enabled as `Ad Unit #2436794`.
 - Affiliate placement: configured as a disabled placeholder.
 - Baidu Union placement: configured as a disabled placeholder.
 - Crypto-friendly network placement: configured as a disabled placeholder.
@@ -37,6 +38,15 @@ Keep every ad, sponsor, affiliate, or network placement in `monetizationConfig.a
 - Keep `rel="sponsored nofollow noopener noreferrer"` on affiliate or sponsored links.
 - Run `npm run build`.
 - Check that ads do not cover navigation, support links, research records, payment buttons, or QR codes.
+
+## Active AADS Slot
+
+- Provider: AADS
+- Ad unit: `2436794`
+- Placement: fixed in the page content, not sticky.
+- Pages: landing, article, and docs pages through the bottom slot.
+- Excluded page: `/support/`
+- Disallowed categories configured in AADS: investments, gambling, NSFW, and risky projects.
 
 ## Static Hosting Boundary
 
