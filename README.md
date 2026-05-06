@@ -16,6 +16,7 @@ Ad and sponsor placements are centralized in `src/data/monetization.ts` and rend
 
 Current enabled placements:
 
+- AADS adaptive banner, `Ad Unit #2436794`, excluded from `/support/`.
 - Site-wide bottom support/sponsor block.
 - Contact page sidebar collaboration block.
 - Portfolio middle collaboration block.

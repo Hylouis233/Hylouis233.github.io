@@ -29,7 +29,19 @@ const ads = monetizationConfig.ads.enabled
 {ads.length > 0 && (
   <aside class:list={['ad-slot', `ad-slot-${position}`, className]} aria-label={monetizationConfig.ads.disclosure}>
     {ads.map((creative) => (
-      creative.href ? (
+      creative.network?.iframeSrc ? (
+        <div id={creative.network.containerId} class="ad-slot-network" data-ad-provider={creative.network.provider}>
+          <span class="ad-slot-label">{creative.label}</span>
+          <div class="aads-frame-wrap">
+            <iframe
+              data-aa={creative.network.iframeDataAa}
+              src={creative.network.iframeSrc}
+              title={creative.network.iframeTitle ?? creative.title}
+              loading="lazy"
+            ></iframe>
+          </div>
+        </div>
+      ) : creative.href ? (
         <a class="ad-slot-card" href={creative.href} rel={creative.rel ?? monetizationConfig.ads.fallbackRel}>
           {creative.imageSrc && (
             <img src={creative.imageSrc} alt={creative.imageAlt ?? creative.title} loading="lazy" />
@@ -74,6 +86,39 @@ const ads = monetizationConfig.ads.enabled
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(245, 245, 245, 0.62));
     color: var(--text);
     box-shadow: var(--shadow-soft);
+  }
+
+  .ad-slot-network {
+    display: grid;
+    gap: 10px;
+    padding: 14px 16px 16px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(245, 245, 245, 0.62));
+    box-shadow: var(--shadow-soft);
+  }
+
+  .ad-slot-network + .ad-slot-card,
+  .ad-slot-card + .ad-slot-network,
+  .ad-slot-card + .ad-slot-card {
+    margin-top: 14px;
+  }
+
+  .aads-frame-wrap {
+    width: 100%;
+    margin: auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .aads-frame-wrap iframe {
+    width: min(100%, 900px);
+    min-height: 120px;
+    border: 0;
+    padding: 0;
+    overflow: hidden;
+    display: block;
+    margin: auto;
   }
 
   .ad-slot-card:hover,
