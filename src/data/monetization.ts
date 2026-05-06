@@ -1,6 +1,6 @@
 export type PageType = 'tool' | 'article' | 'landing' | 'docs';
 
-export type AdPosition = 'top' | 'middle' | 'bottom' | 'sidebar' | 'modal' | 'footer';
+export type AdPosition = 'top' | 'middle' | 'bottom' | 'sidebar' | 'modal' | 'footer' | 'floating';
 
 export type AdKind = 'sponsor' | 'affiliate' | 'image' | 'text' | 'network';
 
@@ -78,7 +78,7 @@ export const monetizationConfig = {
         description:
           'Adaptive crypto ad placement. High-risk categories are blocked in AADS settings; this slot is excluded from the support/payment page.',
         cta: 'Advertisement',
-        positions: ['bottom'],
+        positions: ['bottom', 'floating'],
         pageTypes: ['landing', 'article', 'docs'],
         network: {
           provider: 'a-ads',
@@ -172,5 +172,11 @@ export const monetizationConfig = {
         },
       },
     ] satisfies AdCreative[],
+    floating: {
+      enabled: true,
+      dismissSessionKey: 'hylouis-floating-ad-dismissed',
+      label: 'Advertisement',
+      closeLabel: 'Close',
+    },
   },
 };

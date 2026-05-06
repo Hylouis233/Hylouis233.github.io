@@ -30,7 +30,11 @@ const ads = monetizationConfig.ads.enabled
   <aside class:list={['ad-slot', `ad-slot-${position}`, className]} aria-label={monetizationConfig.ads.disclosure}>
     {ads.map((creative) => (
       creative.network?.iframeSrc ? (
-        <div id={creative.network.containerId} class="ad-slot-network" data-ad-provider={creative.network.provider}>
+        <div
+          id={creative.network.containerId ? `${creative.network.containerId}-${position}` : undefined}
+          class="ad-slot-network"
+          data-ad-provider={creative.network.provider}
+        >
           <span class="ad-slot-label">{creative.label}</span>
           <div class="aads-frame-wrap">
             <iframe

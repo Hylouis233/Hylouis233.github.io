@@ -5,6 +5,7 @@ Advertising and sponsor placements must stay secondary to the site's research an
 ## Allowed Placements
 
 - Page bottom sponsor block.
+- Closeable floating ad window on non-payment pages.
 - Contact page sidebar sponsor inquiry.
 - Portfolio middle placement between major content sections.
 - Article or documentation top, middle, and bottom placements after manual review.
@@ -22,5 +23,7 @@ Advertising and sponsor placements must stay secondary to the site's research an
 - `article`: contextual sponsor or affiliate placements are acceptable after the main claim is clear.
 - `docs`: low-distraction bottom or sidebar placements are acceptable.
 - `tool`: ads must not block results, inputs, copy buttons, or download actions.
+
+Floating placements must be closeable and must remember the close action for the current session.
 
 Support or payment prompts must remain voluntary and clearly dismissible.

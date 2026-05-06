@@ -1,0 +1,139 @@
+---
+import AdSlot from './AdSlot.astro';
+import { monetizationConfig, type PageType } from '../data/monetization';
+
+interface Props {
+  pageType?: PageType;
+}
+
+const { pageType = 'landing' } = Astro.props as Props;
+const floating = monetizationConfig.ads.floating;
+const hasFloatingAd = Boolean(
+  monetizationConfig.ads.enabled &&
+    floating.enabled &&
+    monetizationConfig.ads.creatives.some((creative) =>
+      creative.enabled &&
+      creative.positions.includes('floating') &&
+      creative.pageTypes.includes(pageType)
+    )
+);
+---
+
+{hasFloatingAd && (
+  <aside
+    class="floating-ad"
+    data-floating-ad
+    data-floating-ad-key={floating.dismissSessionKey}
+    aria-label={floating.label}
+  >
+    <div class="floating-ad-header">
+      <span>{floating.label}</span>
+      <button type="button" data-floating-ad-close aria-label={floating.closeLabel}>{floating.closeLabel}</button>
+    </div>
+    <AdSlot position="floating" pageType={pageType} maxItems={1} class="floating-ad-slot" />
+  </aside>
+)}
+
+<script is:inline>
+  (() => {
+    const shell = document.querySelector('[data-floating-ad]');
+    if (!shell) return;
+
+    const key = shell.getAttribute('data-floating-ad-key') || 'hylouis-floating-ad-dismissed';
+    try {
+      if (window.sessionStorage.getItem(key) === '1') {
+        shell.remove();
+        return;
+      }
+    } catch {
+      // Storage can be unavailable in strict privacy modes.
+    }
+
+    const closeButton = shell.querySelector('[data-floating-ad-close]');
+    closeButton?.addEventListener('click', () => {
+      try {
+        window.sessionStorage.setItem(key, '1');
+      } catch {
+        // Keep close usable even if storage is blocked.
+      }
+      shell.remove();
+    });
+  })();
+</script>
+
+<style>
+  .floating-ad {
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    z-index: 70;
+    width: min(360px, calc(100vw - 28px));
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.16);
+  }
+
+  .floating-ad-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .floating-ad-header button {
+    min-height: 28px;
+    padding: 4px 8px;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--muted);
+    font: inherit;
+    letter-spacing: 0;
+    text-transform: none;
+    cursor: pointer;
+  }
+
+  .floating-ad-header button:hover,
+  .floating-ad-header button:focus-visible {
+    border-color: var(--accent);
+    color: var(--accent);
+    outline: none;
+  }
+
+  .floating-ad :global(.floating-ad-slot) {
+    margin: 0;
+  }
+
+  .floating-ad :global(.ad-slot-network) {
+    padding: 10px;
+    border: 0;
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .floating-ad :global(.ad-slot-label) {
+    display: none;
+  }
+
+  .floating-ad :global(.aads-frame-wrap iframe) {
+    width: 100%;
+    min-height: 100px;
+  }
+
+  @media (max-width: 720px) {
+    .floating-ad {
+      right: 12px;
+      bottom: 12px;
+      width: calc(100vw - 24px);
+    }
+  }
+</style>
