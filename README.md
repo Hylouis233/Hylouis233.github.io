@@ -28,3 +28,4 @@ Related docs:
 
 - `docs/ad-network-setup.md`
 - `docs/ad-placement-policy.md`
+- `docs/ad-network-access-token.md`
