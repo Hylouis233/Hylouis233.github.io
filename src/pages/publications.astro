@@ -24,7 +24,7 @@ const getRelatedProjects = (publicationKeyList?: string[]) =>
     ?.map((key) => projects.find((project) => project.key === key))
     .filter(Boolean) ?? [];
 ---
-<BaseLayout title="Hong Liu | Publications">
+<BaseLayout title="Hong Liu | Publications" pageType="article">
   <div class="publications-page">
     <section class="panel-primary publications-intro">
       <div class="section-header">

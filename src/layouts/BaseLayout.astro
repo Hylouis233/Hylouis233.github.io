@@ -1,11 +1,15 @@
 ---
 import { navigation, profile, siteMeta, iconMap } from '../data/profile';
+import AdSlot from '../components/AdSlot.astro';
+import type { PageType } from '../data/monetization';
 
 interface Props {
   title: string;
+  pageType?: PageType;
+  showFooterAd?: boolean;
 }
 
-const { title } = Astro.props as Props;
+const { title, pageType = 'landing', showFooterAd = true } = Astro.props as Props;
 const portfolioHref = profile.portfolioHref;
 ---
 <!doctype html>
@@ -460,6 +464,7 @@ const portfolioHref = profile.portfolioHref;
       </header>
       <main class="page">
         <slot />
+        {showFooterAd && <AdSlot position="bottom" pageType={pageType} />}
       </main>
       <footer class="footer">
         <div class="footer-grid">
