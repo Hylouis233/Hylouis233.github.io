@@ -1,0 +1,304 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { currentFocus, researchApproach, researchThemes, selectedHighlights } from '../../data/research';
+import { profile } from '../../data/profile';
+import { t, type Lang } from '../../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+const ui = {
+  en: {
+    pageTitle: `${profile.name.en} | Research`,
+    introEyebrow: 'Research',
+    introTitle: 'Research agenda',
+    introLede:
+      'Completed M.Sc. work, the evidence behind it, and the doctoral directions ahead — with documented outputs kept distinct from forward-looking plans.',
+    themesEyebrow: 'Themes',
+    themesTitle: 'Four intersecting lines of work',
+    themesSubtitle:
+      'These themes summarize completed M.Sc. work and the doctoral directions I will continue at Xiamen University, while keeping documented outputs distinct from forward-looking research plans.',
+    focusEyebrow: 'Current focus',
+    focusTitle: 'Current directions',
+    focusSubtitle:
+      'The current phase connects completed M.Sc. modelling work, representative evidence, and the next doctoral stage in epidemiology and health statistics.',
+    highlightsEyebrow: 'Evidence',
+    highlightsTitle: 'Selected highlights',
+    approachEyebrow: 'Methodology',
+    approachTitle: 'Research approach',
+    approachSubtitle:
+      'Methodologically, I try to connect data sources, model structure, interpretation, and reproducible implementation while distinguishing documented evidence from forward-looking doctoral agenda items.',
+  },
+  zh: {
+    pageTitle: `${profile.name.zh} | 研究方向`,
+    introEyebrow: '研究',
+    introTitle: '研究概览',
+    introLede: '这里汇总已完成的硕士阶段研究、支撑性证据与下一阶段的攻博方向，并始终明确区分已完成成果与前瞻性计划。',
+    themesEyebrow: '研究主题',
+    themesTitle: '四条相互衔接的研究主线',
+    themesSubtitle:
+      '这些主题涵盖已完成的硕士阶段工作，以及我将在厦门大学继续推进的博士研究方向；已完成成果与前瞻性研究计划始终分开呈现。',
+    focusEyebrow: '当前方向',
+    focusTitle: '当前研究方向',
+    focusSubtitle: '当前阶段将已完成的硕士建模工作、代表性研究证据，与流行病与卫生统计学博士阶段的研究计划相互衔接。',
+    highlightsEyebrow: '研究证据',
+    highlightsTitle: '代表性研究亮点',
+    approachEyebrow: '研究方法',
+    approachTitle: '研究方法论',
+    approachSubtitle:
+      '在方法层面，我尝试将数据来源、模型结构、结果解释与可复现实现相互衔接，并区分已有研究证据与前瞻性的攻博计划。',
+  },
+} as const;
+
+const copy = ui[lang];
+const themeIndex = (i: number) => String(i + 1).padStart(2, '0');
+---
+<BaseLayout title={copy.pageTitle} lang={lang}>
+  <div class="research-page" data-lang={lang}>
+    <header class="page-intro">
+      <p class="eyebrow">{copy.introEyebrow}</p>
+      <h2 class="page-title">{copy.introTitle}</h2>
+      <p class="page-lede">{copy.introLede}</p>
+    </header>
+
+    <section class="page-section" aria-labelledby="research-themes-title">
+      <div class="section-heading">
+        <p class="eyebrow">{copy.themesEyebrow}</p>
+        <h2 class="section-title" id="research-themes-title">{copy.themesTitle}</h2>
+        <p class="section-subtitle">{copy.themesSubtitle}</p>
+      </div>
+      <div class="themes-grid">
+        {researchThemes.map((theme, i) => (
+          <article class="theme-card">
+            <span class="theme-index" aria-hidden="true">{themeIndex(i)}</span>
+            <h3>{t(theme.title, lang)}</h3>
+            <p>{t(theme.body, lang)}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="page-section" aria-labelledby="research-focus-title">
+      <div class="section-heading">
+        <p class="eyebrow">{copy.focusEyebrow}</p>
+        <h2 class="section-title" id="research-focus-title">{copy.focusTitle}</h2>
+        <p class="section-subtitle">{copy.focusSubtitle}</p>
+      </div>
+      <div class="focus-grid">
+        <p class="focus-lead">{t(currentFocus, lang)}</p>
+        <aside class="highlights-card" aria-labelledby="research-highlights-title">
+          <p class="eyebrow">{copy.highlightsEyebrow}</p>
+          <h3 id="research-highlights-title">{copy.highlightsTitle}</h3>
+          <ul role="list">
+            {selectedHighlights.map((item) => (
+              <li>{t(item, lang)}</li>
+            ))}
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <section class="page-section" aria-labelledby="research-approach-title">
+      <div class="section-heading">
+        <p class="eyebrow">{copy.approachEyebrow}</p>
+        <h2 class="section-title" id="research-approach-title">{copy.approachTitle}</h2>
+        <p class="section-subtitle">{copy.approachSubtitle}</p>
+      </div>
+      <div class="approach-grid">
+        {researchApproach.map((item, i) => (
+          <article class="approach-panel">
+            <span class="approach-index" aria-hidden="true">{themeIndex(i)}</span>
+            <h3>{t(item.title, lang)}</h3>
+            <p>{t(item.body, lang)}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .research-page {
+    display: block;
+  }
+
+  /* Page intro */
+  .page-intro {
+    max-width: 720px;
+  }
+  .page-title {
+    margin: 10px 0 14px;
+    font-size: clamp(2rem, 4vw, 2.6rem);
+    line-height: 1.2;
+    letter-spacing: 0;
+  }
+  .page-lede {
+    margin: 0;
+    font-size: 1.05rem;
+    color: var(--muted);
+    max-width: 62ch;
+    line-height: 1.8;
+  }
+
+  /* Section rhythm */
+  .page-section {
+    margin-top: 64px;
+  }
+  .section-heading {
+    max-width: 720px;
+    margin-bottom: 28px;
+    padding-top: 40px;
+    border-top: 1px solid var(--line);
+  }
+  .section-heading .section-title {
+    margin: 10px 0 10px;
+  }
+
+  /* Research themes */
+  .themes-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+  }
+  .theme-card {
+    background: var(--surface-raised);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    box-shadow: var(--shadow-soft);
+  }
+  .theme-index {
+    display: block;
+    margin-bottom: 14px;
+    font-family: var(--font-serif);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    color: var(--faint);
+  }
+  .theme-card h3 {
+    margin: 0 0 10px;
+    font-size: 1.18rem;
+    line-height: 1.4;
+  }
+  .theme-card p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.96rem;
+    line-height: 1.75;
+  }
+
+  /* Current directions + highlights */
+  .focus-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr);
+    gap: 40px;
+    align-items: start;
+  }
+  .focus-lead {
+    margin: 0;
+    font-size: 1.08rem;
+    line-height: 1.85;
+    color: var(--body);
+    max-width: 62ch;
+  }
+  .highlights-card {
+    background: var(--surface-raised);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    box-shadow: var(--shadow-soft);
+  }
+  .highlights-card h3 {
+    margin: 8px 0 0;
+    font-size: 1.1rem;
+  }
+  .highlights-card ul {
+    list-style: none;
+    margin: 18px 0 0;
+    padding: 0;
+  }
+  .highlights-card li {
+    padding: 14px 0;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 0.94rem;
+    line-height: 1.7;
+  }
+  .highlights-card li:first-child {
+    border-top: none;
+    padding-top: 0;
+  }
+  .highlights-card li:last-child {
+    padding-bottom: 0;
+  }
+
+  /* Research approach */
+  .approach-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+  }
+  .approach-panel {
+    background: var(--surface-raised);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    box-shadow: var(--shadow-soft);
+  }
+  .approach-index {
+    display: block;
+    margin-bottom: 14px;
+    color: var(--accent);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+  }
+  .approach-panel h3 {
+    margin: 0 0 10px;
+    font-size: 1.12rem;
+  }
+  .approach-panel p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.94rem;
+    line-height: 1.75;
+  }
+
+  /* Chinese typography: no uppercase/letter-spacing tricks on CJK eyebrows */
+  .research-page[data-lang='zh'] .eyebrow {
+    text-transform: none;
+    letter-spacing: 0.05em;
+  }
+
+  @media (max-width: 960px) {
+    .focus-grid {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+    .approach-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 720px) {
+    .page-section {
+      margin-top: 48px;
+    }
+    .section-heading {
+      padding-top: 32px;
+      margin-bottom: 22px;
+    }
+    .themes-grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    .theme-card,
+    .approach-panel,
+    .highlights-card {
+      padding: 22px;
+    }
+  }
+</style>

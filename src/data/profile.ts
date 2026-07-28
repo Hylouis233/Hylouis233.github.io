@@ -12,7 +12,7 @@ export type LinkItem = {
 export const siteMeta = {
   title: 'Hong Liu | Academic Homepage',
   description:
-    'Academic homepage for Hong Liu, focusing on infectious disease forecasting and early warning, spatiotemporal transmission dynamics, viral evolution, and research software.',
+    'Academic homepage for Hong Liu, Ph.D. student in Epidemiology and Health Statistics at Xiamen University, focusing on infectious disease forecasting and early warning, spatiotemporal transmission dynamics, viral evolution, and research software.',
 };
 
 export const profile = {
@@ -29,12 +29,12 @@ export const profile = {
     zh: '厦门大学',
   },
   degrees: {
-    en: 'M.Sc. in Computer Science and Technology, Macau University of Science and Technology; returning to Xiamen University for doctoral study in Epidemiology and Health Statistics; undergraduate training at Xiamen University; interdisciplinary background spanning public health, epidemiology, AI, and data science',
-    zh: '已获澳门科技大学计算机科学与技术硕士学位；接下来将回到厦门大学攻读流行病与卫生统计学博士学位；本科毕业于厦门大学；具备公共卫生、流行病学、人工智能与数据科学交叉背景',
+    en: 'Ph.D. student in Epidemiology and Health Statistics, School of Public Health, Xiamen University (admitted 2026, supervised by Prof. Tianmu Chen); M.Sc. in Computer Science and Technology, Macau University of Science and Technology; undergraduate training at Xiamen University; interdisciplinary background spanning public health, epidemiology, AI, and data science',
+    zh: '厦门大学公共卫生学院流行病与卫生统计学博士在读（2026 年入学，师从陈田木教授）；澳门科技大学计算机科学与技术硕士；本科毕业于厦门大学；具备公共卫生、流行病学、人工智能与数据科学交叉背景',
   },
   intro: {
-    en: 'I have graduated from Macau University of Science and Technology with an M.Sc. in Computer Science and Technology. I will return to Xiamen University to continue doctoral study in Epidemiology and Health Statistics, building on work in infectious disease forecasting, influenza co-circulation analysis, outbreak modelling, and the integration of epidemic dynamics with viral evolution.',
-    zh: '我已从澳门科技大学毕业，获得计算机科学与技术硕士学位；接下来将回到厦门大学继续攻读流行病与卫生统计学博士学位。后续研究将延续传染病预测预警、流感共流行分析、小样本疫情建模，以及传播动力学与病毒进化耦合等方向。',
+    en: 'I am a Ph.D. student in Epidemiology and Health Statistics at the School of Public Health, Xiamen University (admitted 2026, supervised by Prof. Tianmu Chen). I hold an M.Sc. in Computer Science and Technology from Macau University of Science and Technology and completed undergraduate training at Xiamen University. My research focuses on infectious disease forecasting, influenza co-circulation analysis, outbreak modelling, and integrating epidemic dynamics with viral evolution.',
+    zh: '我目前是厦门大学公共卫生学院流行病与卫生统计学博士研究生（2026 年入学，师从陈田木教授）。我持有澳门科技大学计算机科学与技术硕士学位，本科阶段训练于厦门大学完成。我的研究聚焦于传染病预测预警、流感共流行分析、疫情建模，以及传播动力学与病毒进化的结合。',
   },
   location: {
     en: 'Xiamen, China',
@@ -92,5 +92,4 @@ export const navigation = [
   { href: '/cv/', key: 'cv', label: { en: 'CV', zh: '履历' } },
   { href: '/publications/', key: 'publications', label: { en: 'Outputs', zh: '成果' } },
   { href: '/contact/', key: 'contact', label: { en: 'Contact', zh: '联系' } },
-  { href: '/support/', key: 'support', label: { en: 'Support', zh: 'Support' } },
 ];

@@ -42,17 +42,35 @@ export const researchThemes = [
 ];
 
 export const currentFocus = {
-  en: 'My completed M.Sc. and continuing doctoral trajectory includes MAESTRO for multimodal respiratory disease forecasting, influenza co-circulation and co-infection analysis, dual-framework ODE/Petri Net modelling for chikungunya transmission, and ongoing maintenance of an infectious-disease intelligence platform for data collection and analytical support. The broader narrative focuses on non-stationary time-series analysis, small-sample outbreak dynamics, and linking macroscopic epidemic patterns with microscopic viral evolution in future early-warning systems. I aim to continuously integrate epidemiological signals with phylodynamic evidence to provide reliable, multi-scale insights for public health preparedness and decision-making.',
-  zh: '我已完成的硕士阶段工作包括：面向呼吸道疾病多模态预测的 MAESTRO 框架、流感共流行与共感染分析、基孔肯雅热传播的 ODE/Petri Net 双框架建模，以及用于数据采集与分析支持的传染病情报平台维护。更广阔的研究叙事将延伸到博士阶段，聚焦非平稳时间序列分析、小样本疫情动力学，以及在未来预警系统中建立宏观传播格局与微观病毒进化之间的联系。我致力于持续将流行病学信号与系统发育动力学证据相结合，为公共卫生准备与决策提供可靠的多尺度见解。',
+  en: 'My current doctoral-stage work centers on multimodal infectious disease forecasting and early warning, including the MAESTRO framework for respiratory disease activity, influenza co-circulation and co-infection analysis, and dual-framework ODE/Petri Net modelling for small-sample outbreak settings such as the 2025 Foshan chikungunya outbreak. Alongside these lines, I maintain an infectious-disease intelligence platform for data collection and analytical support. The longer-term agenda links macroscopic epidemic patterns with microscopic viral evolution, integrating epidemiological signals with phylodynamic evidence toward a coherent early-warning framework that offers reliable, multi-scale insights for public health preparedness and decision-making.',
+  zh: '我当前的博士阶段研究以多模态传染病预测预警为核心，包括面向呼吸道疾病活动的 MAESTRO 框架、流感共流行与共感染分析，以及面向小样本疫情场景（如 2025 年佛山基孔肯雅热疫情）的 ODE/Petri Net 双框架建模。与此同时，我持续维护一个用于数据采集与分析支持的传染病情报平台。长期研究议程致力于打通宏观传播格局与微观病毒进化之间的联系，将流行病学信号与系统发育动力学证据纳入统一的早期预警框架，为公共卫生准备与决策提供可靠的多尺度证据支持。',
 };
 
 export const keywords = [
-  'Infectious disease forecasting',
-  'Early warning',
-  'Influenza co-circulation',
-  'ODE / Petri Net modelling',
-  'Multimodal data fusion',
-  'Viral evolution',
+  {
+    en: 'Infectious disease forecasting and early warning',
+    zh: '传染病预测预警',
+  },
+  {
+    en: 'Early warning',
+    zh: '早期预警',
+  },
+  {
+    en: 'Influenza co-circulation',
+    zh: '流感共流行',
+  },
+  {
+    en: 'ODE / Petri Net modelling',
+    zh: 'ODE 与 Petri Net 建模',
+  },
+  {
+    en: 'Multimodal data fusion',
+    zh: '多模态数据融合',
+  },
+  {
+    en: 'Viral evolution',
+    zh: '病毒进化',
+  },
 ];
 
 export const researchNarrative = {
@@ -82,8 +100,8 @@ export const selectedHighlights = [
 export const selectedAchievements = [
   {
     label: 'Current stage',
-    en: 'Graduated with an M.Sc. in Computer Science and Technology from Macau University of Science and Technology and will return to Xiamen University for doctoral study in Epidemiology and Health Statistics.',
-    zh: '已获澳门科技大学计算机科学与技术硕士学位，接下来将回到厦门大学攻读流行病与卫生统计学博士学位。',
+    en: 'Ph.D. student in Epidemiology and Health Statistics at Xiamen University (2026–present), holding an M.Sc. in Computer Science and Technology from Macau University of Science and Technology.',
+    zh: '厦门大学流行病与卫生统计学博士在读（2026 年入学），已获澳门科技大学计算机科学与技术硕士学位。',
   },
   {
     label: 'Representative outputs',
@@ -92,8 +110,8 @@ export const selectedAchievements = [
   },
   {
     label: 'Future direction',
-    en: 'Doctoral work at Xiamen University will extend toward multimodal infectious disease spatiotemporal dynamics, viral evolution early warning, and integrated macro-micro modelling frameworks.',
-    zh: '拟攻博方向延伸至多模态传染病时空动力学、病毒进化预警以及宏观传播—微观进化一体化建模框架。',
+    en: 'Doctoral work at Xiamen University extends toward multimodal infectious disease spatiotemporal dynamics, viral evolution early warning, and integrated macro-micro modelling frameworks.',
+    zh: '博士研究延伸至多模态传染病时空动力学、病毒进化预警以及宏观传播—微观进化一体化建模框架。',
   },
 ];
 

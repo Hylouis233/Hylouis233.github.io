@@ -1,0 +1,1200 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { iconMap, profile } from '../../data/profile';
+import {
+  awards,
+  education,
+  projects,
+  publications,
+  type ProjectType,
+  type PublicationCategory,
+} from '../../data/academic';
+import { currentFocus, keywords, researchThemes, selectedHighlights } from '../../data/research';
+import { localizedPath, t, type Lang } from '../../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+const ui = {
+  en: {
+    pageTitle: 'Hong Liu | Academic Homepage',
+    heroEyebrow: 'Academic homepage',
+    heroMetaAria: 'Academic affiliation and training',
+    heroMeta: [
+      'M.Sc. in Computer Science and Technology, Macau University of Science and Technology',
+      'Ph.D. student in Epidemiology and Health Statistics, Xiamen University (2026–present)',
+      'Interdisciplinary background spanning public health, epidemiology, AI, and data science',
+    ],
+    heroSecondary:
+      'Current work links multimodal forecasting, epidemic dynamics, and interpretable analytical workflows, with longer-term research extending toward viral evolution and early-warning systems.',
+    evidenceAria: 'Research evidence statistics',
+    evidence: {
+      firstAuthor: 'First-author studies',
+      published: 'Published papers',
+      repositories: 'Public repositories',
+    },
+    heroLinksLabel: 'Profiles and quick routes',
+    profileLinksAria: 'Academic profile links',
+    viewOutputs: 'Selected outputs',
+    viewCv: 'View CV',
+    portfolio: 'Portfolio',
+    portraitAlt: 'Portrait of Hong Liu',
+    factsEyebrow: 'Academic identity',
+    facts: {
+      latest: 'Latest degree',
+      next: 'Next step',
+      undergrad: 'Undergraduate',
+    },
+    outputsEyebrow: 'Evidence',
+    outputsTitle: 'Selected research outputs',
+    outputsSubtitle:
+      'Representative first-author and lead work appears first, so the landing page speaks through documented evidence before secondary context.',
+    statsAria: 'Homepage research statistics',
+    stats: {
+      total: 'Research outputs',
+      firstAuthor: 'First-author studies',
+      awards: 'Honors and awards',
+    },
+    status: {
+      publication: 'Published',
+      preprint: 'Preprint',
+      submission: 'Under review',
+      'work-in-progress': 'In progress',
+    } as Record<PublicationCategory, string>,
+    viewRecord: 'View record',
+    manuscriptId: 'Manuscript ID',
+    relatedSystem: 'Related system',
+    focusEyebrow: 'Research agenda',
+    focusTitle: 'Research focus',
+    focusSubtitle:
+      'Current work is organized around a compact set of research themes rather than a long inventory of activities.',
+    snapshotEyebrow: 'Now',
+    snapshotTitle: 'Current snapshot',
+    snapshotSubtitle:
+      'A concise summary of the current research stage, active methods, and outward-facing profiles.',
+    keywordsAria: 'Research keywords',
+    extLinksAria: 'External profile links',
+    softwareEyebrow: 'Tooling',
+    softwareTitle: 'Research software and analytical systems',
+    softwareSubtitle:
+      'Software artifacts supporting modelling, forecasting, data engineering, and day-to-day research workflows.',
+    projectType: {
+      software: 'Software',
+      platform: 'Platform',
+      'research-code': 'Research code',
+      'analysis-project': 'Analysis project',
+    } as Record<ProjectType, string>,
+    highlightsEyebrow: 'Notes',
+    highlightsTitle: 'Selected highlights',
+    highlightsSubtitle:
+      'Short evidence-led notes that reinforce the main outputs without repeating the full narrative.',
+    navEyebrow: 'Site map',
+    navTitle: 'Navigate the site',
+    navSubtitle:
+      'Jump to fuller research themes, publication records, CV material, and project context.',
+    navCards: [
+      {
+        href: '/research/',
+        title: 'Research',
+        desc: 'Themes, evidence, and the longer-term research agenda.',
+      },
+      {
+        href: '/publications/',
+        title: 'Outputs',
+        desc: 'Complete list of papers, preprints, and submissions.',
+      },
+      {
+        href: '/cv/',
+        title: 'CV',
+        desc: 'Education, research experience, awards, and skills.',
+      },
+      {
+        href: '/contact/',
+        title: 'Contact',
+        desc: 'Email and academic profiles for collaboration.',
+      },
+      {
+        href: profile.portfolioHref,
+        title: 'Portfolio',
+        desc: 'Projects and selected work beyond publications.',
+      },
+    ],
+  },
+  zh: {
+    pageTitle: '刘弘 | 学术主页',
+    heroEyebrow: '学术主页',
+    heroMetaAria: '学术背景与训练经历',
+    heroMeta: [
+      '澳门科技大学计算机科学与技术硕士',
+      '厦门大学流行病与卫生统计学博士在读（2026 年入学）',
+      '公共卫生、流行病学、人工智能与数据科学交叉背景',
+    ],
+    heroSecondary:
+      '当前研究连接多模态预测、传播动力学与可解释分析流程，长期方向将延伸至病毒进化与早期预警系统。',
+    evidenceAria: '研究证据统计',
+    evidence: {
+      firstAuthor: '第一作者研究',
+      published: '已发表论文',
+      repositories: '公开代码仓库',
+    },
+    heroLinksLabel: '学术档案与快捷入口',
+    profileLinksAria: '学术档案链接',
+    viewOutputs: '代表性成果',
+    viewCv: '查看履历',
+    portfolio: '作品集',
+    portraitAlt: '刘弘肖像照',
+    factsEyebrow: '教育背景',
+    facts: {
+      latest: '最高学历',
+      next: '下一阶段',
+      undergrad: '本科阶段',
+    },
+    outputsEyebrow: '研究证据',
+    outputsTitle: '代表性研究成果',
+    outputsSubtitle: '优先呈现具有代表性的第一作者研究，让首页首先由可追溯的研究证据说话。',
+    statsAria: '首页研究统计',
+    stats: {
+      total: '研究成果总数',
+      firstAuthor: '第一作者研究',
+      awards: '获奖与荣誉',
+    },
+    status: {
+      publication: '已发表',
+      preprint: '预印本',
+      submission: '审稿中',
+      'work-in-progress': '进行中',
+    } as Record<PublicationCategory, string>,
+    viewRecord: '查看记录',
+    manuscriptId: '稿件编号',
+    relatedSystem: '关联系统',
+    focusEyebrow: '研究主线',
+    focusTitle: '研究方向',
+    focusSubtitle: '当前工作围绕少数几条研究主线展开，而非冗长的活动清单。',
+    snapshotEyebrow: '当前状态',
+    snapshotTitle: '当前研究概览',
+    snapshotSubtitle: '简要概括当前研究阶段、活跃方法与对外学术档案。',
+    keywordsAria: '研究关键词',
+    extLinksAria: '外部学术档案链接',
+    softwareEyebrow: '工具与系统',
+    softwareTitle: '科研软件与分析系统',
+    softwareSubtitle: '支撑建模、预测、数据工程与日常科研流程的软件产出。',
+    projectType: {
+      software: '软件工具',
+      platform: '数据平台',
+      'research-code': '研究代码',
+      'analysis-project': '分析项目',
+    } as Record<ProjectType, string>,
+    highlightsEyebrow: '亮点摘记',
+    highlightsTitle: '研究亮点',
+    highlightsSubtitle: '以证据为主的简短札记，呼应主要成果而不重复完整叙述。',
+    navEyebrow: '站点地图',
+    navTitle: '站点导航',
+    navSubtitle: '前往更完整的研究主题、成果记录、履历材料与项目背景。',
+    navCards: [
+      {
+        href: '/research/',
+        title: '研究',
+        desc: '研究主题、方法证据与长期研究规划。',
+      },
+      {
+        href: '/publications/',
+        title: '成果',
+        desc: '论文、预印本与在审稿件的完整列表。',
+      },
+      {
+        href: '/cv/',
+        title: '履历',
+        desc: '教育背景、科研经历、获奖情况与技能。',
+      },
+      {
+        href: '/contact/',
+        title: '联系',
+        desc: '用于学术交流与合作的邮箱与档案。',
+      },
+      {
+        href: profile.portfolioHref,
+        title: '作品集',
+        desc: '论文之外的项目与精选作品。',
+      },
+    ],
+  },
+};
+
+const copy = ui[lang];
+
+// Real counts derived from the data collections.
+const firstAuthorCount = publications.filter((item) => item.authorshipRank === 'lead').length;
+const publishedCount = publications.filter((item) => item.category === 'publication').length;
+const repositoryCount = projects.filter((item) => item.repoUrl).length;
+
+const heroEvidence = [
+  { value: firstAuthorCount, label: copy.evidence.firstAuthor },
+  { value: publishedCount, label: copy.evidence.published },
+  { value: repositoryCount, label: copy.evidence.repositories },
+];
+
+const outputStats = [
+  { value: publications.length, label: copy.stats.total },
+  { value: firstAuthorCount, label: copy.stats.firstAuthor },
+  { value: awards.length, label: copy.stats.awards },
+];
+
+const highlightedOutputs = publications.filter((item) => item.featured).slice(0, 3);
+const featuredProjects = projects.filter((item) => item.featured).slice(0, 4);
+
+const statusClass: Record<PublicationCategory, string> = {
+  publication: 'status-published',
+  preprint: 'status-preprint',
+  submission: 'status-review',
+  'work-in-progress': 'status-progress',
+};
+
+const factEntries = [
+  { label: copy.facts.latest, item: education[1] },
+  { label: copy.facts.next, item: education[0] },
+  { label: copy.facts.undergrad, item: education[2] },
+];
+
+const navCards = copy.navCards.map((card) => ({
+  ...card,
+  href: localizedPath(card.href, lang),
+}));
+---
+
+<BaseLayout title={copy.pageTitle} lang={lang}>
+  <div class:list={['home-page', `lang-${lang}`]}>
+    <section class="hero-card home-hero">
+      <div class="hero-copy">
+        <p class="eyebrow">{copy.heroEyebrow}</p>
+        <h1>{t(profile.name, lang)}</h1>
+        <p class="headline">{t(profile.headline, lang)}</p>
+
+        <div class="hero-meta" aria-label={copy.heroMetaAria}>
+          {copy.heroMeta.map((item) => <span class="hero-meta-item">{item}</span>)}
+        </div>
+
+        <p class="summary">{t(profile.intro, lang)}</p>
+        <p class="summary summary-secondary">{copy.heroSecondary}</p>
+
+        <div class="evidence-strip" aria-label={copy.evidenceAria}>
+          {heroEvidence.map((item) => (
+            <article class="evidence-item">
+              <p class="evidence-value">{item.value}</p>
+              <p class="evidence-label">{item.label}</p>
+            </article>
+          ))}
+        </div>
+
+        <div class="hero-links-wrap">
+          <p class="hero-links-label">{copy.heroLinksLabel}</p>
+          <div class="hero-links" aria-label={copy.profileLinksAria}>
+            {profile.links.map((link) => (
+              <a class="icon-link" href={link.href} target="_blank" rel="noreferrer" aria-label={link.label} title={link.label}>
+                <span class="icon-link-icon" set:html={`<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">${iconMap[link.icon]}</svg>`} />
+              </a>
+            ))}
+            <a class="link-primary" href={localizedPath('/publications/', lang)}>{copy.viewOutputs}</a>
+            <a href={localizedPath('/cv/', lang)}>{copy.viewCv}</a>
+            <a href={localizedPath(profile.portfolioHref, lang)}>{copy.portfolio}</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-side">
+        <div class="hero-image-wrap">
+          <img src={profile.profileImage} alt={copy.portraitAlt} class="hero-image" />
+        </div>
+        <div class="facts-card">
+          <p class="eyebrow">{copy.factsEyebrow}</p>
+          <div class="facts-list">
+            {factEntries.map((entry) => (
+              <article class="fact-item">
+                <p class="fact-label">{entry.label}</p>
+                <p class="fact-value">
+                  <strong>{t(entry.item.institution, lang)}</strong> · {t(entry.item.program, lang)}
+                </p>
+                <p class="fact-meta">{t(entry.item.meta, lang)}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="grid home-grid">
+      <section class="panel-primary span-12 outputs-panel">
+        <div class="section-header outputs-header">
+          <div class="panel-heading">
+            <p class="eyebrow">{copy.outputsEyebrow}</p>
+            <h2 class="section-title">{copy.outputsTitle}</h2>
+            <p class="section-subtitle">{copy.outputsSubtitle}</p>
+          </div>
+          <div class="stat-strip" aria-label={copy.statsAria}>
+            {outputStats.map((stat) => (
+              <article class="stat-chip">
+                <p class="stat-value">{stat.value}</p>
+                <p class="stat-label">{stat.label}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+        <div class="output-grid">
+          {highlightedOutputs.map((item, index) => (
+            <article class:list={['output-card', { 'output-card-featured': index === 0 }]}>
+              <div class="output-top">
+                <span class:list={['status-chip', statusClass[item.category]]}>{copy.status[item.category]}</span>
+                <span class="output-year">{item.year}</span>
+              </div>
+              <h3 class="output-title">
+                {item.url ? (
+                  <a href={item.url} target="_blank" rel="noreferrer">{t(item.title, lang)}</a>
+                ) : (
+                  t(item.title, lang)
+                )}
+              </h3>
+              <p class="output-meta">
+                {t(item.venue, lang)}{item.authorship && ` · ${t(item.authorship, lang)}`}
+              </p>
+              <p class="output-note">{t(item.note, lang)}</p>
+              <div class="output-foot">
+                {item.manuscriptId && <span class="related-badge">{copy.manuscriptId}: {item.manuscriptId}</span>}
+                {item.relatedProjectKeys?.map((key) => {
+                  const project = projects.find((candidate) => candidate.key === key);
+                  return project ? (
+                    <span class="related-badge">{copy.relatedSystem}: {t(project.name, lang)}</span>
+                  ) : null;
+                })}
+                {item.url && (
+                  <a class="record-link" href={item.url} target="_blank" rel="noreferrer">{copy.viewRecord} →</a>
+                )}
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="panel span-7 focus-panel">
+        <div class="panel-heading">
+          <p class="eyebrow">{copy.focusEyebrow}</p>
+          <h2 class="section-title">{copy.focusTitle}</h2>
+          <p class="section-subtitle">{copy.focusSubtitle}</p>
+        </div>
+        <div class="focus-list">
+          {researchThemes.map((theme, index) => (
+            <article class="focus-item">
+              <span class="focus-index" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+              <div class="focus-body">
+                <h3>{t(theme.title, lang)}</h3>
+                <p>{t(theme.body, lang)}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="panel-secondary span-5 snapshot-panel">
+        <div class="panel-heading">
+          <p class="eyebrow">{copy.snapshotEyebrow}</p>
+          <h2 class="section-title">{copy.snapshotTitle}</h2>
+          <p class="section-subtitle">{copy.snapshotSubtitle}</p>
+        </div>
+        <p class="snapshot-text">{t(currentFocus, lang)}</p>
+        <div class="keyword-row" aria-label={copy.keywordsAria}>
+          {keywords.map((keyword) => <span class="keyword-chip">{t(keyword, lang)}</span>)}
+        </div>
+        <div class="snapshot-links divider-top">
+          <div class="icon-links" aria-label={copy.extLinksAria}>
+            {profile.links.map((link) => (
+              <a class="icon-link" href={link.href} target="_blank" rel="noreferrer" aria-label={link.label} title={link.label}>
+                <span class="icon-link-icon" set:html={`<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">${iconMap[link.icon]}</svg>`} />
+              </a>
+            ))}
+          </div>
+          <a class="portfolio-link" href={localizedPath(profile.portfolioHref, lang)}>{copy.portfolio}</a>
+        </div>
+      </section>
+
+      <section class="panel span-8 software-panel">
+        <div class="panel-heading">
+          <p class="eyebrow">{copy.softwareEyebrow}</p>
+          <h2 class="section-title">{copy.softwareTitle}</h2>
+          <p class="section-subtitle">{copy.softwareSubtitle}</p>
+        </div>
+        <div class="software-grid">
+          {featuredProjects.map((item) => (
+            <article class="software-card">
+              <div class="software-top">
+                <p class="software-type">{copy.projectType[item.type]}</p>
+                {item.repoUrl && (
+                  <a class="repo-link" href={item.repoUrl} target="_blank" rel="noreferrer" aria-label={`${item.name.en} GitHub`}>GitHub →</a>
+                )}
+              </div>
+              <h3>{t(item.name, lang)}</h3>
+              <p class="software-summary">{t(item.summary, lang)}</p>
+              {item.impactSummary && <p class="software-impact">{t(item.impactSummary, lang)}</p>}
+              {item.tags && (
+                <div class="tag-row">
+                  {item.tags.map((tag) => <span class="tag">{tag}</span>)}
+                </div>
+              )}
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="panel-secondary span-4 highlights-panel">
+        <div class="panel-heading">
+          <p class="eyebrow">{copy.highlightsEyebrow}</p>
+          <h2 class="section-title">{copy.highlightsTitle}</h2>
+          <p class="section-subtitle">{copy.highlightsSubtitle}</p>
+        </div>
+        <div class="highlight-list">
+          {selectedHighlights.map((item) => (
+            <article class="highlight-item">
+              <span class="highlight-marker" aria-hidden="true">—</span>
+              <p>{t(item, lang)}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="span-12 navigate-section">
+        <div class="panel-heading">
+          <p class="eyebrow">{copy.navEyebrow}</p>
+          <h2 class="section-title">{copy.navTitle}</h2>
+          <p class="section-subtitle">{copy.navSubtitle}</p>
+        </div>
+        <div class="nav-card-grid">
+          {navCards.map((card) => (
+            <a class="nav-card" href={card.href}>
+              <span class="nav-card-top">
+                <span class="nav-card-title">{card.title}</span>
+                <span class="nav-card-arrow" aria-hidden="true">→</span>
+              </span>
+              <span class="nav-card-desc">{card.desc}</span>
+            </a>
+          ))}
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <style>
+    /* ---------- Hero ---------- */
+    .home-hero {
+      column-gap: 56px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .hero-meta-item {
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.8rem;
+      line-height: 1.45;
+    }
+
+    .evidence-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-top: 6px;
+      padding: 18px 0 16px;
+      border-top: 1px solid var(--line-strong);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .evidence-item {
+      padding: 0 20px;
+      border-left: 1px solid var(--line);
+    }
+
+    .evidence-item:first-child {
+      padding-left: 0;
+      border-left: none;
+    }
+
+    .evidence-value {
+      margin: 0;
+      font-family: var(--font-serif);
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--accent);
+    }
+
+    .evidence-label {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 0.84rem;
+      line-height: 1.45;
+    }
+
+    .hero-links-wrap {
+      display: grid;
+      gap: 10px;
+    }
+
+    .hero-links-label {
+      margin: 0;
+      color: var(--faint);
+      font-size: 0.76rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .hero-links a:not(.icon-link) {
+      display: inline-flex;
+      align-items: center;
+      min-height: 40px;
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      background: var(--surface-raised);
+      border: 1px solid var(--line-strong);
+      color: var(--body);
+      font-size: 0.88rem;
+      font-weight: 500;
+      transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    }
+
+    .hero-links a:not(.icon-link):hover,
+    .hero-links a:not(.icon-link):focus-visible {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--accent);
+      outline: none;
+    }
+
+    .hero-links a.link-primary,
+    .hero-links a.link-primary:hover,
+    .hero-links a.link-primary:focus-visible {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #ffffff;
+    }
+
+    .hero-links a.link-primary:hover,
+    .hero-links a.link-primary:focus-visible {
+      background: var(--accent-ink);
+      border-color: var(--accent-ink);
+    }
+
+    .hero-links a.icon-link,
+    .icon-links a.icon-link {
+      width: 40px;
+      height: 40px;
+      padding: 0;
+    }
+
+    .hero-image {
+      max-width: 200px;
+    }
+
+    .facts-card {
+      padding: 24px;
+      border-radius: var(--radius-md);
+      background: var(--surface-raised);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .facts-list {
+      display: grid;
+      margin-top: 12px;
+    }
+
+    .fact-item {
+      display: grid;
+      gap: 4px;
+      padding: 14px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .fact-item:first-child {
+      padding-top: 4px;
+      border-top: none;
+    }
+
+    .fact-item:last-child {
+      padding-bottom: 2px;
+    }
+
+    .fact-label {
+      margin: 0;
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .fact-value {
+      margin: 0;
+      color: var(--ink);
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+
+    .fact-meta {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.55;
+    }
+
+    /* ---------- Section rhythm & shared heading ---------- */
+    .home-grid {
+      margin-top: 64px;
+      row-gap: 56px;
+    }
+
+    .panel-heading {
+      display: grid;
+      gap: 6px;
+    }
+
+    .panel-heading .section-title {
+      margin: 0;
+    }
+
+    /* ---------- Selected outputs ---------- */
+    .outputs-panel {
+      display: grid;
+      gap: 28px;
+      padding: 40px;
+    }
+
+    .outputs-header {
+      margin-bottom: 0;
+      align-items: start;
+    }
+
+    .stat-strip {
+      display: flex;
+      flex-wrap: wrap;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+
+    .stat-chip {
+      padding: 14px 20px;
+      border-left: 1px solid var(--line);
+    }
+
+    .stat-chip:first-child {
+      border-left: none;
+    }
+
+    .stat-value {
+      margin: 0;
+      font-family: var(--font-serif);
+      font-size: 1.55rem;
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--accent);
+    }
+
+    .stat-label {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 0.8rem;
+      line-height: 1.4;
+      white-space: nowrap;
+    }
+
+    .output-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    .output-card {
+      display: grid;
+      gap: 12px;
+      align-content: start;
+      padding: 24px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+    }
+
+    .output-card-featured {
+      border-top: 2px solid var(--accent);
+    }
+
+    .output-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .output-year {
+      color: var(--faint);
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    .status-chip {
+      padding: 3px 10px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-size: 0.75rem;
+      font-weight: 600;
+      line-height: 1.5;
+    }
+
+    .status-published {
+      background: var(--accent-soft);
+      border-color: rgba(15, 76, 155, 0.22);
+      color: var(--accent-ink);
+    }
+
+    .status-preprint {
+      background: var(--surface-raised);
+      border-color: var(--line-strong);
+      color: var(--body);
+    }
+
+    .status-review,
+    .status-progress {
+      background: transparent;
+      border-color: var(--line-strong);
+      color: var(--muted);
+    }
+
+    .output-title {
+      margin: 0;
+      font-size: 1.08rem;
+      font-weight: 600;
+      line-height: 1.45;
+    }
+
+    .output-title a {
+      color: var(--ink);
+      transition: color 0.2s ease;
+    }
+
+    .output-title a:hover,
+    .output-title a:focus-visible {
+      color: var(--accent);
+      outline: none;
+    }
+
+    .output-meta {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.55;
+    }
+
+    .output-note {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.65;
+    }
+
+    .output-foot {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin-top: 2px;
+    }
+
+    .related-badge {
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      background: var(--surface-raised);
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.4;
+    }
+
+    .record-link {
+      color: var(--accent);
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    .record-link:hover,
+    .record-link:focus-visible {
+      text-decoration: underline;
+      outline: none;
+    }
+
+    /* ---------- Research focus ---------- */
+    .focus-panel,
+    .snapshot-panel,
+    .software-panel,
+    .highlights-panel {
+      display: grid;
+      gap: 20px;
+      align-content: start;
+    }
+
+    .focus-list {
+      display: grid;
+    }
+
+    .focus-item {
+      display: grid;
+      grid-template-columns: 44px minmax(0, 1fr);
+      gap: 16px;
+      padding: 18px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .focus-item:first-child {
+      padding-top: 4px;
+      border-top: none;
+    }
+
+    .focus-item:last-child {
+      padding-bottom: 4px;
+    }
+
+    .focus-index {
+      padding-top: 3px;
+      font-family: var(--font-serif);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .focus-body h3 {
+      margin: 0 0 6px;
+      font-size: 1.08rem;
+      line-height: 1.4;
+    }
+
+    .focus-body p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.94rem;
+      line-height: 1.7;
+    }
+
+    /* ---------- Current snapshot ---------- */
+    .snapshot-text {
+      margin: 0;
+      font-size: 0.95rem;
+      line-height: 1.75;
+    }
+
+    .keyword-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .keyword-chip {
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: var(--surface-raised);
+      border: 1px solid var(--line);
+      color: var(--accent-ink);
+      font-size: 0.8rem;
+      line-height: 1.5;
+    }
+
+    .snapshot-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .icon-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .portfolio-link {
+      display: inline-flex;
+      align-items: center;
+      min-height: 40px;
+      padding: 6px 14px;
+      border-radius: var(--radius-sm);
+      background: var(--surface-raised);
+      border: 1px solid var(--line-strong);
+      color: var(--accent);
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: background-color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .portfolio-link:hover,
+    .portfolio-link:focus-visible {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      outline: none;
+    }
+
+    /* ---------- Research software ---------- */
+    .software-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .software-card {
+      display: grid;
+      gap: 10px;
+      align-content: start;
+      padding: 22px;
+      background: var(--surface-raised);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+    }
+
+    .software-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+    }
+
+    .software-type {
+      margin: 0;
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .repo-link {
+      color: var(--accent);
+      font-size: 0.85rem;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .repo-link:hover,
+    .repo-link:focus-visible {
+      text-decoration: underline;
+      outline: none;
+    }
+
+    .software-card h3 {
+      margin: 0;
+      font-size: 1.05rem;
+      line-height: 1.4;
+    }
+
+    .software-summary {
+      margin: 0;
+      color: var(--body);
+      font-size: 0.92rem;
+      line-height: 1.65;
+    }
+
+    .software-impact {
+      margin: 0;
+      padding-left: 10px;
+      border-left: 2px solid var(--accent);
+      color: var(--muted);
+      font-size: 0.86rem;
+      line-height: 1.6;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 2px;
+    }
+
+    .tag {
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.76rem;
+      line-height: 1.5;
+    }
+
+    /* ---------- Selected highlights ---------- */
+    .highlight-list {
+      display: grid;
+    }
+
+    .highlight-item {
+      display: grid;
+      grid-template-columns: 20px minmax(0, 1fr);
+      gap: 10px;
+      padding: 14px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .highlight-item:first-child {
+      padding-top: 2px;
+      border-top: none;
+    }
+
+    .highlight-item:last-child {
+      padding-bottom: 2px;
+    }
+
+    .highlight-marker {
+      color: var(--accent);
+      font-family: var(--font-serif);
+      font-weight: 700;
+      line-height: 1.7;
+    }
+
+    .highlight-item p {
+      margin: 0;
+      color: var(--body);
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    /* ---------- Navigate the site ---------- */
+    .navigate-section {
+      display: grid;
+      gap: 24px;
+    }
+
+    .nav-card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .nav-card {
+      display: grid;
+      gap: 8px;
+      align-content: start;
+      padding: 22px 24px;
+      background: var(--surface-raised);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    .nav-card:hover,
+    .nav-card:focus-visible {
+      border-color: var(--accent);
+      box-shadow: var(--shadow-soft);
+      transform: translateY(-2px);
+      outline: none;
+    }
+
+    .nav-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-card-title {
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .nav-card-arrow {
+      color: var(--faint);
+      transition: color 0.2s ease, transform 0.2s ease;
+    }
+
+    .nav-card:hover .nav-card-arrow,
+    .nav-card:focus-visible .nav-card-arrow {
+      color: var(--accent);
+      transform: translateX(3px);
+    }
+
+    .nav-card-desc {
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.6;
+    }
+
+    /* ---------- Chinese typography adjustments ---------- */
+    .lang-zh .eyebrow,
+    .lang-zh .hero-links-label,
+    .lang-zh .fact-label,
+    .lang-zh .software-type {
+      letter-spacing: normal;
+    }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 960px) {
+      .home-grid {
+        margin-top: 48px;
+        row-gap: 40px;
+      }
+
+      .outputs-panel {
+        padding: 28px;
+      }
+
+      .output-grid,
+      .nav-card-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stat-chip {
+        flex: 1 1 auto;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .home-grid {
+        margin-top: 40px;
+        row-gap: 32px;
+      }
+
+      .outputs-panel {
+        padding: 24px;
+      }
+
+      .evidence-strip {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+
+      .evidence-item {
+        padding: 0 0 14px;
+        border-left: none;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .evidence-item:last-child {
+        padding-bottom: 0;
+        border-bottom: none;
+      }
+
+      .software-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stat-chip {
+        padding: 12px 16px;
+      }
+    }
+  </style>
+</BaseLayout>

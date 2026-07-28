@@ -1,5 +1,0 @@
-# AADS Ad Unit #2436794 is active through iframe embedding.
-# No ads.txt seller record has been supplied for the current AADS unit yet.
-# Add approved seller records here if an ad network provides them.
-# Example format:
-# example.com, publisher-id, DIRECT, certification-authority-id

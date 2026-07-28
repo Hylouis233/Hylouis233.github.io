@@ -1,0 +1,9 @@
+---
+import ResearchPage from '../../components/pages/ResearchPage.astro';
+import { siteVariant } from '../../i18n';
+
+if (siteVariant === 'github') {
+  return Astro.redirect('/research/');
+}
+---
+<ResearchPage lang="en" />
