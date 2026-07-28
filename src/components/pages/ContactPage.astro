@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { profile, iconMap } from '../../data/profile';
-import type { Lang } from '../../i18n';
+import { localizedPath, type Lang } from '../../i18n';
 
 interface Props {
   lang: Lang;
@@ -168,7 +168,7 @@ const emailCards = (['gmail', 'qq'] as const).map((key) => {
             <h3>{topic.title}</h3>
             <p>{topic.body}</p>
             {topic.link && (
-              <a class="topic-link" href={profile.portfolioHref}>
+              <a class="topic-link" href={localizedPath(profile.portfolioHref, lang)}>
                 {topic.link}
                 <span class="topic-link-arrow" aria-hidden="true">→</span>
               </a>
