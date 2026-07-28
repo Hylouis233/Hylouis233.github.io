@@ -125,8 +125,8 @@ export const education: EducationItem[] = [
       zh: '已毕业 | GPA 3.63/4 | 全额奖学金及生活津贴',
     },
     detail: {
-      en: 'Completed M.Sc. training in Computer Science and Technology under Academician Nanshan Zhong and Prof. Chitin Hon, with co-supervision by Prof. Tianmu Chen (Xiamen University). Graduate training emphasized intelligent control technology, artificial intelligence, numerical analysis, statistics, pattern recognition, algorithm theory, and optimization methods.',
-      zh: '已在钟南山院士与韩子天教授指导下完成计算机科学与技术硕士阶段训练，并由厦门大学陈田木教授联合培养。研究生阶段训练重点包括智能控制技术、人工智能基础、数值分析、统计学导论、模式识别、算法理论基础与优化方法基础。',
+      en: 'Completed M.Sc. training in Computer Science and Technology under Academician Nanshan Zhong and Prof. Chitin Hon, with joint training at Xiamen University (co-supervised by Prof. Tianmu Chen), focusing primarily on infectious disease forecasting and early warning. Graduate training emphasized intelligent control technology, artificial intelligence, numerical analysis, statistics, pattern recognition, algorithm theory, and optimization methods.',
+      zh: '已在钟南山院士与韩子天教授指导下完成计算机科学与技术硕士阶段训练，并由厦门大学联合培养（联合导师陈田木教授），主要从事传染病预测预警研究。研究生阶段训练重点包括智能控制技术、人工智能基础、数值分析、统计学导论、模式识别、算法理论基础与优化方法基础。',
     },
   },
   {
@@ -135,8 +135,8 @@ export const education: EducationItem[] = [
       zh: '厦门大学',
     },
     program: {
-      en: 'B.Med. in Preventive Medicine (School of Public Health) & B.Econ. in Statistics (Wang Yanan Institute for Studies in Economics)',
-      zh: '公共卫生学院预防医学系与王亚南经济研究院统计系双学位本科',
+      en: 'B.Med. in Preventive Medicine (School of Public Health) & B.Sc. in Mathematical Statistics (Wang Yanan Institute for Studies in Economics)',
+      zh: '公共卫生学院预防医学系与王亚南经济研究院数理统计专业双学位本科',
     },
     meta: {
       en: 'Preventive Medicine supervised by Prof. Tianmu Chen',
@@ -364,29 +364,28 @@ export const publications: PublicationItem[] = [
       en: 'Dual-Model Framework for CHIKV Transmission Modeling: ODE and Petri Net Analysis of the 2025 Foshan Outbreak',
       zh: 'Dual-Model Framework for CHIKV Transmission Modeling: ODE and Petri Net Analysis of the 2025 Foshan Outbreak',
     },
-    year: 2025,
+    year: 2026,
     venue: {
-      en: 'Epidemics',
-      zh: 'Epidemics',
+      en: 'BMC Public Health',
+      zh: 'BMC Public Health',
     },
     status: {
-      en: 'Submitted; with editor',
-      zh: '已投稿；编辑处理中',
+      en: 'Published',
+      zh: '已发表',
     },
     note: {
-      en: 'First-author dual-framework outbreak modelling study for the 2025 Foshan chikungunya outbreak. A publicly available arXiv preprint is openly accessible.',
-      zh: '第一作者基孔肯雅热双框架疫情建模研究，面向 2025 年佛山疫情场景；arXiv 预印本已公开可查。',
+      en: 'First-author dual-framework outbreak modelling study for the 2025 Foshan chikungunya outbreak, published in BMC Public Health on 29 June 2026. An arXiv preprint (arXiv:2512.12577) is also openly accessible.',
+      zh: '第一作者基孔肯雅热双框架疫情建模研究，面向 2025 年佛山疫情场景，2026 年 6 月 29 日发表于 BMC Public Health；arXiv 预印本（arXiv:2512.12577）同步公开可查。',
     },
-    doi: '10.48550/arXiv.2512.12577',
-    url: 'https://arxiv.org/abs/2512.12577',
-    manuscriptId: 'EPIDEMICS-D-25-00174',
+    doi: '10.1186/s12889-026-28110-9',
+    url: 'https://doi.org/10.1186/s12889-026-28110-9',
     authorship: {
       en: 'First author',
       zh: '第一作者',
     },
     authorshipRank: 'lead',
     featured: true,
-    category: 'submission',
+    category: 'publication',
     relatedProjectKeys: ['ode-petri-chikungunya'],
   },
   {
