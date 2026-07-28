@@ -25,6 +25,7 @@ const toggleLabel = lang === 'zh' ? 'English' : '中文';
     <link rel="icon" href="/favicon.jpg" type="image/jpeg" />
     <style is:global>
       :root {
+        color-scheme: light;
         /* Core design tokens */
         --ink: #1c2430;
         --body: #333c49;
@@ -38,6 +39,8 @@ const toggleLabel = lang === 'zh' ? 'English' : '中文';
         --accent: #0f4c9b;
         --accent-soft: rgba(15, 76, 155, 0.08);
         --accent-ink: #0b3a78;
+        --accent-line: rgba(15, 76, 155, 0.22);
+        --on-accent: #ffffff;
 
         /* Legacy aliases kept for page-level styles */
         --text: var(--ink);
@@ -56,6 +59,31 @@ const toggleLabel = lang === 'zh' ? 'English' : '中文';
         /* Typography */
         --font-serif: "Noto Serif SC", "Source Serif Pro", "Songti SC", Georgia, "Times New Roman", serif;
         --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
+      }
+
+      /* Dark scheme — follows the OS preference via prefers-color-scheme */
+      @media (prefers-color-scheme: dark) {
+        :root {
+          color-scheme: dark;
+          --ink: #e9eef5;
+          --body: #c3cdd9;
+          --muted: #9aa7b7;
+          --faint: #75839a;
+          --line: #2a3547;
+          --line-strong: #3a4759;
+          --bg: #0f1319;
+          --surface: #141a22;
+          --surface-raised: #1b2431;
+          --accent: #6aa5ff;
+          --accent-soft: rgba(106, 165, 255, 0.14);
+          --accent-ink: #b7d1ff;
+          --accent-line: rgba(106, 165, 255, 0.35);
+          --on-accent: #0b1526;
+          --surface-muted: #212b3a;
+          --surface-quiet: #263244;
+          --shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+          --shadow-soft: 0 4px 14px rgba(0, 0, 0, 0.35);
+        }
       }
       * { box-sizing: border-box; }
       html {
