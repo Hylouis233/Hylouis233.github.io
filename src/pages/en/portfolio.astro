@@ -1,0 +1,9 @@
+---
+import PortfolioPage from '../../components/pages/PortfolioPage.astro';
+import { siteVariant } from '../../i18n';
+
+if (siteVariant === 'github') {
+  return Astro.redirect('/portfolio/');
+}
+---
+<PortfolioPage lang="en" />

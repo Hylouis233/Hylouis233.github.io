@@ -99,16 +99,16 @@ export const education: EducationItem[] = [
       zh: '厦门大学',
     },
     program: {
-      en: 'Upcoming Ph.D. study in Epidemiology and Health Statistics',
-      zh: '即将攻读流行病与卫生统计学博士学位',
+      en: 'Ph.D. student in Epidemiology and Health Statistics (2026–present)',
+      zh: '流行病与卫生统计学博士在读（2026 年入学）',
     },
     meta: {
-      en: 'School of Public Health | returning for doctoral study under Prof. Tianmu Chen',
-      zh: '公共卫生学院 | 将师从陈田木教授开展博士阶段学习',
+      en: 'School of Public Health | doctoral study under Prof. Tianmu Chen',
+      zh: '公共卫生学院 | 师从陈田木教授',
     },
     detail: {
-      en: 'Upcoming doctoral research will extend toward multimodal infectious disease spatiotemporal dynamics, viral evolution early warning, and integrated macro-micro modelling frameworks.',
-      zh: '后续博士研究将延伸至多模态传染病时空动力学、病毒进化预警以及宏观传播—微观进化一体化建模框架。',
+      en: 'Doctoral research extends toward multimodal infectious disease spatiotemporal dynamics, viral evolution early warning, and integrated macro-micro modelling frameworks.',
+      zh: '博士阶段研究将拓展至多模态传染病时空动力学、病毒进化早期预警，以及宏观传播与微观进化相结合的一体化建模框架。',
     },
   },
   {
@@ -229,23 +229,25 @@ export const publications: PublicationItem[] = [
     },
     year: 2024,
     venue: {
-      en: 'Parasites & Vectors',
-      zh: 'Parasites & Vectors',
+      en: 'Research Square (preprint)',
+      zh: 'Research Square（预印本）',
     },
     status: {
-      en: 'Published',
-      zh: '已发表',
+      en: 'Preprint',
+      zh: '预印本',
     },
     note: {
-      en: 'Co-authored publication listed in the source materials; DOI is not explicitly provided there.',
-      zh: '源材料中明确列出的合作发表论文；其中未明确给出 DOI。',
+      en: 'Preprint posted on Research Square in April 2024; Ke is the first author and Hong Liu is a contributing co-author (2/10). No published journal version has been identified.',
+      zh: '该预印本于 2024 年 4 月发布于 Research Square 平台；第一作者为 Ke，刘弘为合作作者（2/10），目前未见正式期刊发表版本。',
     },
+    doi: '10.21203/rs.3.rs-4286413/v1',
+    url: 'https://doi.org/10.21203/rs.3.rs-4286413/v1',
     authorship: {
       en: 'Co-author (2/10)',
       zh: '合作作者（2/10）',
     },
     authorshipRank: 'collaborative',
-    category: 'publication',
+    category: 'preprint',
   },
   {
     title: {
@@ -372,9 +374,11 @@ export const publications: PublicationItem[] = [
       zh: '已投稿；编辑处理中',
     },
     note: {
-      en: 'First-author dual-framework outbreak modelling study for the 2025 Foshan chikungunya outbreak.',
-      zh: '第一作者基孔肯雅热双框架疫情建模研究，面向 2025 年佛山疫情场景。',
+      en: 'First-author dual-framework outbreak modelling study for the 2025 Foshan chikungunya outbreak. A publicly available arXiv preprint is openly accessible.',
+      zh: '第一作者基孔肯雅热双框架疫情建模研究，面向 2025 年佛山疫情场景；arXiv 预印本已公开可查。',
     },
+    doi: '10.48550/arXiv.2512.12577',
+    url: 'https://arxiv.org/abs/2512.12577',
     manuscriptId: 'EPIDEMICS-D-25-00174',
     authorship: {
       en: 'First author',

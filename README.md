@@ -7,25 +7,13 @@ Static Astro academic site for Hong Liu.
 ```bash
 npm install
 npm run dev
-npm run build
 ```
 
-## Monetization Layer
+## Build variants
 
-Ad and sponsor placements are centralized in `src/data/monetization.ts` and rendered through `src/components/AdSlot.astro`.
+The site builds two variants from one codebase, driven by `scripts/build.mjs` (which sets `SITE_VARIANT` and copies the repo-root `.nojekyll` into the output directory):
 
-Current enabled placements:
+- `npm run build` — **github** variant (default). English-only, output to `dist/`, deployed to <https://hylouis233.github.io> via GitHub Actions (`.github/workflows/pages.yml`). No ICP filing line, no language toggle.
+- `npm run build:top` — **top** variant. Chinese by default with an English version under `/en/` and a header language toggle, output to `dist-top/`, deployed to <https://introduction.hylouis.top>. The footer shows the ICP filing line (edit the text in `src/i18n.ts`, constant `icpText`).
 
-- AADS adaptive banner, `Ad Unit #2436794`, excluded from `/support/`.
-- AADS floating window, closeable and session-dismissed, excluded from `/support/`.
-- Site-wide bottom support/sponsor block.
-- Contact page sidebar collaboration block.
-- Portfolio middle collaboration block.
-
-Disabled placeholders are available for affiliate links, Baidu Union, and crypto-friendly ad networks. Do not enable third-party ad scripts until the site has been approved and `public/ads.txt` has the matching seller records.
-
-Related docs:
-
-- `docs/ad-network-setup.md`
-- `docs/ad-placement-policy.md`
-- `docs/ad-network-access-token.md`
+Variant behaviour is centralized in `src/i18n.ts` (`siteVariant`, `defaultLang`, `showLangToggle`, `showIcp`, `t`, `localizedPath`); `src/layouts/BaseLayout.astro` consumes it for the header, nav, footer, and `<html lang>`.

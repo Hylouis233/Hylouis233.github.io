@@ -1,5 +1,6 @@
 node_modules/
 dist/
+dist-top/
 .astro/
 .vscode/
 .DS_Store

@@ -1,0 +1,785 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { profile } from '../../data/profile';
+import {
+  publicationGroups,
+  publications,
+  projects,
+  type ProjectItem,
+  type PublicationCategory,
+} from '../../data/academic';
+import { t, type Lang } from '../../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const isZh = lang === 'zh';
+
+const ui = {
+  en: {
+    pageTitle: 'Hong Liu | Publications',
+    eyebrow: 'Scholarly record',
+    introTitle: 'Publications and manuscripts',
+    introSubtitle:
+      'First-author and led work is distinguished from collaborative publications, and every entry keeps the status documented in the source record.',
+    statFirstAuthor: 'First-author studies',
+    statPublished: 'Published papers',
+    statSoftware: 'Public repositories',
+    selectedEyebrow: 'Selected',
+    selectedTitle: 'Selected outputs',
+    selectedSubtitle:
+      'First-author and currently led work is highlighted ahead of the full record, so the main scholarly signal appears first.',
+    recordEyebrow: 'Complete record',
+    recordTitle: 'Full publication record',
+    recordSubtitle:
+      'All papers, preprints, and submissions grouped by status, most recent first within each group.',
+    projectsEyebrow: 'Software',
+    projectsTitle: 'Research software and projects',
+    projectsSubtitle:
+      'Software records are kept separate from papers and linked where they directly support manuscripts, models, or analytical systems.',
+    profilesEyebrow: 'Elsewhere',
+    profilesTitle: 'Profile links',
+    profilesSubtitle:
+      'External profiles are entry points only; this site remains the maintained record for the grouping and status language shown here.',
+    relatedSystems: 'Related systems',
+    relatedOutput: 'Related output',
+    viewRecord: 'View record',
+    manuscriptId: 'Manuscript ID',
+    repository: 'Repository',
+    noRepo: 'No public repository link',
+    openInNewTab: (label: string) => `Open ${label} profile in a new tab`,
+    chipPublished: 'Published',
+    chipPreprint: 'Preprint',
+    chipReview: 'Under review',
+    chipWip: 'In progress',
+  },
+  zh: {
+    pageTitle: '刘弘 | 学术成果',
+    eyebrow: '学术记录',
+    introTitle: '论文发表与在审稿件',
+    introSubtitle: '本页区分第一作者及牵头工作与合作成果，各篇目的状态均与已有记录保持一致。',
+    statFirstAuthor: '第一作者研究',
+    statPublished: '已发表论文',
+    statSoftware: '公开代码仓库',
+    selectedEyebrow: '精选成果',
+    selectedTitle: '代表性研究成果',
+    selectedSubtitle: '此处优先呈现第一作者或牵头完成的工作，完整的分组记录见下文。',
+    recordEyebrow: '完整记录',
+    recordTitle: '全部成果记录',
+    recordSubtitle: '按状态分组列出全部论文、预印本与在审稿件，各组内按年份倒序排列。',
+    projectsEyebrow: '软件与项目',
+    projectsTitle: '研究软件与项目',
+    projectsSubtitle: '软件与项目记录独立于论文列出；凡直接支撑稿件、模型或分析系统者，均已注明关联。',
+    profilesEyebrow: '外部档案',
+    profilesTitle: '学术档案链接',
+    profilesSubtitle: '外部档案仅作为访问入口；本站为成果分组与状态表述的维护版本。',
+    relatedSystems: '关联系统',
+    relatedOutput: '关联成果',
+    viewRecord: '查看记录',
+    manuscriptId: '稿件编号',
+    repository: '代码仓库',
+    noRepo: '暂无公开仓库链接',
+    openInNewTab: (label: string) => `在新窗口打开 ${label} 档案页`,
+    chipPublished: '已发表',
+    chipPreprint: '预印本',
+    chipReview: '审稿中',
+    chipWip: '进行中',
+  },
+} as const;
+
+const u = ui[lang];
+
+const groupedPublications = publicationGroups
+  .map((group) => ({
+    ...group,
+    items: publications
+      .filter((item) => item.category === group.key)
+      .sort((a, b) => b.year - a.year),
+  }))
+  .filter((group) => group.items.length > 0);
+
+// Continuous bibliography numbering across all groups, like a CV.
+let entryTotal = 0;
+const numberedGroups = groupedPublications.map((group) => {
+  const startIndex = entryTotal;
+  entryTotal += group.items.length;
+  return { ...group, startIndex };
+});
+
+const featuredPublications = publications.filter((item) => item.featured);
+
+const publicationStats = {
+  published: publications.filter((item) => item.category === 'publication').length,
+  firstAuthor: publications.filter((item) => item.authorshipRank === 'lead').length,
+  software: projects.filter((item) => item.repoUrl).length,
+};
+
+const getRelatedProjects = (publicationKeyList?: string[]): ProjectItem[] =>
+  (publicationKeyList ?? [])
+    .map((key) => projects.find((project) => project.key === key))
+    .filter((project): project is ProjectItem => Boolean(project));
+
+// Status chip semantics: Published -> accent, Preprint -> neutral, Submitted/WIP -> muted outline.
+const statusChip = (category: PublicationCategory): { label: string; className: string } => {
+  switch (category) {
+    case 'publication':
+      return { label: u.chipPublished, className: 'status-published' };
+    case 'preprint':
+      return { label: u.chipPreprint, className: 'status-preprint' };
+    case 'submission':
+      return { label: u.chipReview, className: 'status-review' };
+    default:
+      return { label: u.chipWip, className: 'status-review' };
+  }
+};
+
+const groupCount = (count: number) => (isZh ? `（${count}）` : `(${count})`);
+const joinSeparator = isZh ? '；' : '; ';
+---
+
+<BaseLayout title={u.pageTitle} lang={lang}>
+  <div class="pubs-page">
+    <section class="panel-primary pubs-intro">
+      <p class:list={['eyebrow', isZh && 'cjk']}>{u.eyebrow}</p>
+      <h1 class="pubs-title">{u.introTitle}</h1>
+      <p class="pubs-subtitle">{u.introSubtitle}</p>
+      <div class="stats-strip">
+        <div class="stat">
+          <p class="stat-value">{publicationStats.firstAuthor}</p>
+          <p class="stat-label">{u.statFirstAuthor}</p>
+        </div>
+        <div class="stat">
+          <p class="stat-value">{publicationStats.published}</p>
+          <p class="stat-label">{u.statPublished}</p>
+        </div>
+        <div class="stat">
+          <p class="stat-value">{publicationStats.software}</p>
+          <p class="stat-label">{u.statSoftware}</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="pubs-section">
+      <div class="section-header">
+        <div>
+          <p class:list={['eyebrow', isZh && 'cjk']}>{u.selectedEyebrow}</p>
+          <h2 class="section-title">{u.selectedTitle}</h2>
+          <p class="section-subtitle">{u.selectedSubtitle}</p>
+        </div>
+      </div>
+      <div class="featured-grid">
+        {featuredPublications.map((item) => {
+          const relatedProjects = getRelatedProjects(item.relatedProjectKeys);
+          const chip = statusChip(item.category);
+          const statusText = t(item.status, lang);
+          return (
+            <article class="featured-card">
+              <div class="featured-top">
+                <span class:list={['status-chip', chip.className]}>{chip.label}</span>
+                <span class="featured-year">{item.year}</span>
+              </div>
+              <h3 class="featured-title">
+                {item.url ? (
+                  <a href={item.url} target="_blank" rel="noreferrer">{t(item.title, lang)}</a>
+                ) : (
+                  t(item.title, lang)
+                )}
+              </h3>
+              <p class="meta-line featured-meta">
+                <span>{t(item.venue, lang)}</span>
+                {item.authorship && <span>{t(item.authorship, lang)}</span>}
+              </p>
+              {statusText !== chip.label && <p class="featured-status">{statusText}</p>}
+              <p class="featured-note">{t(item.note, lang)}</p>
+              {relatedProjects.length > 0 && (
+                <div class="related-block">
+                  <p class="block-label">{u.relatedSystems}</p>
+                  <div class="sys-chips">
+                    {relatedProjects.map((project) => (
+                      <span class="sys-chip">{t(project.name, lang)}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
+              <div class="featured-foot">
+                <div class="pub-links featured-links">
+                  {item.url && (
+                    <a href={item.url} target="_blank" rel="noreferrer">{u.viewRecord}</a>
+                  )}
+                  {item.doi && <span class="link-note">DOI: {item.doi}</span>}
+                  {item.manuscriptId && (
+                    <span class="link-note">{u.manuscriptId}: {item.manuscriptId}</span>
+                  )}
+                </div>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </section>
+
+    <section class="pubs-section">
+      <div class="section-header">
+        <div>
+          <p class:list={['eyebrow', isZh && 'cjk']}>{u.recordEyebrow}</p>
+          <h2 class="section-title">{u.recordTitle}</h2>
+          <p class="section-subtitle">{u.recordSubtitle}</p>
+        </div>
+      </div>
+      {numberedGroups.map((group) => (
+        <section class="pub-group">
+          <h3 class="group-heading">
+            {t(group.title, lang)}
+            <span class="group-count">{groupCount(group.items.length)}</span>
+          </h3>
+          <div class="pub-list">
+            {group.items.map((item, idx) => {
+              const relatedProjects = getRelatedProjects(item.relatedProjectKeys);
+              const entryNumber = String(group.startIndex + idx + 1).padStart(2, '0');
+              return (
+                <article class:list={['pub-entry', item.authorshipRank === 'lead' && 'pub-entry-lead']}>
+                  <span class="pub-index" aria-hidden="true">{entryNumber}</span>
+                  <div class="pub-body">
+                    <h4 class="pub-title">
+                      {item.url ? (
+                        <a href={item.url} target="_blank" rel="noreferrer">{t(item.title, lang)}</a>
+                      ) : (
+                        t(item.title, lang)
+                      )}
+                    </h4>
+                    <p class="meta-line pub-meta">
+                      <span>{t(item.venue, lang)}</span>
+                      <span>{item.year}</span>
+                      {item.authorship && (
+                        <span class:list={[item.authorshipRank === 'lead' && 'meta-lead']}>
+                          {t(item.authorship, lang)}
+                        </span>
+                      )}
+                      {item.category !== 'publication' && <span>{t(item.status, lang)}</span>}
+                    </p>
+                    <p class="pub-note">{t(item.note, lang)}</p>
+                    {relatedProjects.length > 0 && (
+                      <div class="related-block related-inline">
+                        <p class="block-label">{u.relatedSystems}</p>
+                        <div class="sys-chips">
+                          {relatedProjects.map((project) => (
+                            <span class="sys-chip">{t(project.name, lang)}</span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    {(item.url || item.doi || item.manuscriptId) && (
+                      <div class="pub-links">
+                        {item.url && (
+                          <a href={item.url} target="_blank" rel="noreferrer">{u.viewRecord}</a>
+                        )}
+                        {item.doi && <span class="link-note">DOI: {item.doi}</span>}
+                        {item.manuscriptId && (
+                          <span class="link-note">{u.manuscriptId}: {item.manuscriptId}</span>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </section>
+      ))}
+    </section>
+
+    <section class="pubs-section">
+      <div class="section-header">
+        <div>
+          <p class:list={['eyebrow', isZh && 'cjk']}>{u.projectsEyebrow}</p>
+          <h2 class="section-title">{u.projectsTitle}</h2>
+          <p class="section-subtitle">{u.projectsSubtitle}</p>
+        </div>
+      </div>
+      <div class="projects-grid">
+        {projects.map((item) => (
+          <article class="project-card">
+            <h3 class="project-name">{t(item.name, lang)}</h3>
+            <p class="project-status">{t(item.status, lang)}</p>
+            <p class="project-summary">{t(item.summary, lang)}</p>
+            {item.tags && item.tags.length > 0 && (
+              <div class="tag-row">
+                {item.tags.map((tag) => (
+                  <span class="tag">{tag}</span>
+                ))}
+              </div>
+            )}
+            {item.relatedPublicationTitles && item.relatedPublicationTitles.length > 0 && (
+              <p class="project-related">
+                <span class="related-label">{u.relatedOutput}{isZh ? '：' : ':'}</span>{' '}
+                {item.relatedPublicationTitles.join(joinSeparator)}
+              </p>
+            )}
+            <div class="project-foot">
+              {item.repoUrl ? (
+                <a class="repo-link" href={item.repoUrl} target="_blank" rel="noreferrer">{u.repository}</a>
+              ) : (
+                <span class="project-norepo">{u.noRepo}</span>
+              )}
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="pubs-section">
+      <div class="section-header">
+        <div>
+          <p class:list={['eyebrow', isZh && 'cjk']}>{u.profilesEyebrow}</p>
+          <h2 class="section-title">{u.profilesTitle}</h2>
+          <p class="section-subtitle">{u.profilesSubtitle}</p>
+        </div>
+      </div>
+      <div class="profile-links">
+        {profile.links.map((link) => (
+          <a
+            class="profile-link"
+            href={link.href}
+            target="_blank"
+            rel="noreferrer"
+            aria-label={u.openInNewTab(link.label)}
+          >
+            {link.label}
+          </a>
+        ))}
+      </div>
+    </section>
+  </div>
+
+  <style>
+    /* ---------- Shared bits ---------- */
+    .eyebrow.cjk {
+      letter-spacing: 0;
+      text-transform: none;
+    }
+    .pubs-intro .eyebrow,
+    .section-header .eyebrow {
+      margin: 0 0 10px;
+    }
+
+    .meta-line span + span::before {
+      content: '·';
+      margin: 0 0.5em;
+      color: var(--faint);
+    }
+    .meta-lead {
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .block-label {
+      margin: 0 0 6px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--faint);
+    }
+    .sys-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .sys-chip {
+      padding: 3px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.5;
+    }
+
+    .pub-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 20px;
+      font-size: 0.88rem;
+    }
+    .pub-links a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 40px;
+      padding: 0 2px;
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .pub-links a:hover,
+    .pub-links a:focus-visible {
+      text-decoration: underline;
+      text-underline-offset: 0.16em;
+      outline: none;
+    }
+    .pub-links .link-note {
+      display: inline-flex;
+      align-items: center;
+      min-height: 40px;
+      color: var(--muted);
+      overflow-wrap: anywhere;
+    }
+
+    /* ---------- Intro / stats strip ---------- */
+    .pubs-title {
+      margin: 12px 0 0;
+      font-size: clamp(2rem, 3.6vw, 2.6rem);
+    }
+    .pubs-subtitle {
+      margin: 14px 0 0;
+      color: var(--muted);
+      max-width: 68ch;
+    }
+    .stats-strip {
+      margin-top: 28px;
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .stat {
+      padding: 0 24px;
+      border-left: 1px solid var(--line);
+    }
+    .stat:first-child {
+      padding-left: 0;
+      border-left: none;
+    }
+    .stat-value {
+      margin: 0;
+      font-family: var(--font-serif);
+      font-size: 2.1rem;
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--ink);
+      font-variant-numeric: tabular-nums;
+    }
+    .stat-label {
+      margin: 6px 0 0;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    /* ---------- Section rhythm ---------- */
+    .pubs-section {
+      margin-top: 64px;
+    }
+
+    /* ---------- Featured cards ---------- */
+    .featured-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+    }
+    .featured-card {
+      display: flex;
+      flex-direction: column;
+      padding: 24px;
+      background: var(--surface-raised);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+    }
+    .featured-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .featured-year {
+      color: var(--faint);
+      font-size: 0.85rem;
+      font-variant-numeric: tabular-nums;
+    }
+    .status-chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 12px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-size: 0.78rem;
+      font-weight: 600;
+      line-height: 1.5;
+    }
+    .status-published {
+      background: var(--accent-soft);
+      color: var(--accent-ink);
+      border-color: rgba(15, 76, 155, 0.16);
+    }
+    .status-preprint {
+      background: var(--surface);
+      color: var(--body);
+      border-color: var(--line-strong);
+    }
+    .status-review {
+      background: transparent;
+      color: var(--muted);
+      border-color: var(--line-strong);
+    }
+    .featured-title {
+      margin: 16px 0 0;
+      font-size: 1.12rem;
+      font-weight: 600;
+      line-height: 1.45;
+    }
+    .featured-title a {
+      color: var(--ink);
+    }
+    .featured-title a:hover {
+      color: var(--accent);
+    }
+    .featured-meta {
+      margin: 10px 0 0;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    .featured-status {
+      margin: 6px 0 0;
+      font-size: 0.85rem;
+      color: var(--faint);
+    }
+    .featured-note {
+      margin: 12px 0 0;
+      font-size: 0.92rem;
+      color: var(--body);
+    }
+    .related-block {
+      margin-top: 14px;
+    }
+    .featured-foot {
+      margin-top: auto;
+      padding-top: 18px;
+    }
+    .featured-links {
+      padding-top: 6px;
+      border-top: 1px solid var(--line);
+    }
+
+    /* ---------- Bibliography ---------- */
+    .pub-group + .pub-group {
+      margin-top: 44px;
+    }
+    .group-heading {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin: 0;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--line-strong);
+      font-size: 1.15rem;
+    }
+    .group-count {
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: var(--faint);
+    }
+    .pub-entry {
+      display: grid;
+      grid-template-columns: 2.5rem minmax(0, 1fr);
+      gap: 2px 20px;
+      padding: 20px 0;
+      border-top: 1px solid var(--line);
+    }
+    .pub-list .pub-entry:first-child {
+      border-top: none;
+    }
+    .pub-index {
+      padding-top: 4px;
+      text-align: right;
+      font-size: 0.82rem;
+      line-height: 1.6;
+      color: var(--faint);
+      font-variant-numeric: tabular-nums;
+    }
+    .pub-entry-lead .pub-index {
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .pub-title {
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 600;
+      line-height: 1.5;
+    }
+    .pub-title a {
+      color: var(--ink);
+    }
+    .pub-title a:hover {
+      color: var(--accent);
+    }
+    .pub-meta {
+      margin: 6px 0 0;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+    .pub-note {
+      margin: 8px 0 0;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    .pub-entry .pub-links {
+      margin-top: 8px;
+    }
+
+    /* ---------- Projects ---------- */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .project-card {
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      background: var(--surface-raised);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+    }
+    .project-name {
+      margin: 0;
+      font-size: 1.02rem;
+      font-weight: 600;
+      line-height: 1.45;
+    }
+    .project-status {
+      margin: 6px 0 0;
+      font-size: 0.78rem;
+      color: var(--faint);
+    }
+    .project-summary {
+      margin: 10px 0 0;
+      font-size: 0.88rem;
+      color: var(--body);
+    }
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 12px;
+    }
+    .tag {
+      padding: 2px 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--surface);
+      color: var(--muted);
+      font-size: 0.74rem;
+      line-height: 1.5;
+    }
+    .project-related {
+      margin: 12px 0 0;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .related-label {
+      color: var(--faint);
+    }
+    .project-foot {
+      margin-top: auto;
+      padding-top: 8px;
+    }
+    .repo-link {
+      display: inline-flex;
+      align-items: center;
+      min-height: 40px;
+      color: var(--accent);
+      font-size: 0.88rem;
+      font-weight: 500;
+    }
+    .repo-link:hover,
+    .repo-link:focus-visible {
+      text-decoration: underline;
+      text-underline-offset: 0.16em;
+      outline: none;
+    }
+    .project-norepo {
+      display: inline-flex;
+      align-items: center;
+      min-height: 40px;
+      font-size: 0.82rem;
+      color: var(--faint);
+    }
+
+    /* ---------- Profile links ---------- */
+    .profile-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .profile-link {
+      display: inline-flex;
+      align-items: center;
+      min-height: 40px;
+      padding: 0 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      background: var(--surface-raised);
+      color: var(--body);
+      font-size: 0.88rem;
+      font-weight: 500;
+      transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    }
+    .profile-link:hover,
+    .profile-link:focus-visible {
+      background: var(--accent-soft);
+      color: var(--accent);
+      border-color: var(--accent);
+      outline: none;
+    }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 960px) {
+      .featured-grid {
+        grid-template-columns: 1fr;
+      }
+      .projects-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+    @media (max-width: 720px) {
+      .pubs-section {
+        margin-top: 48px;
+      }
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+      .stats-strip {
+        grid-template-columns: 1fr;
+        margin-top: 24px;
+        padding-top: 8px;
+      }
+      .stat {
+        display: flex;
+        align-items: baseline;
+        gap: 14px;
+        padding: 12px 0;
+        border-left: none;
+        border-top: 1px solid var(--line);
+      }
+      .stat:first-child {
+        border-top: none;
+      }
+      .stat-value {
+        font-size: 1.5rem;
+      }
+      .stat-label {
+        margin: 0;
+      }
+      .pub-entry {
+        grid-template-columns: 1.9rem minmax(0, 1fr);
+        gap: 2px 14px;
+      }
+    }
+    @media print {
+      .pub-entry,
+      .featured-card,
+      .project-card {
+        break-inside: avoid;
+      }
+    }
+  </style>
+</BaseLayout>

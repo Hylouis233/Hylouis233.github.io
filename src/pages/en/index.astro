@@ -1,0 +1,10 @@
+---
+import HomePage from '../../components/pages/HomePage.astro';
+import { siteVariant } from '../../i18n';
+
+if (siteVariant === 'github') {
+  return Astro.redirect('/');
+}
+---
+
+<HomePage lang="en" />

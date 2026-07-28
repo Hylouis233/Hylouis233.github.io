@@ -1,0 +1,394 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { profile, iconMap } from '../../data/profile';
+import type { Lang } from '../../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+const ui = {
+  en: {
+    pageTitle: `${profile.name.en} | Contact`,
+    introEyebrow: 'Contact',
+    introTitle: 'Get in touch',
+    introLede:
+      'For academic communication, research collaboration, software discussion, or related inquiries, email is the most reliable channel. I read every message and reply as soon as I can.',
+    emailEyebrow: 'Email',
+    emailTitle: 'Two addresses, both checked regularly',
+    emailSubtitle: 'Click a card to compose a message, or select the address to copy it. Either mailbox works.',
+    emails: {
+      gmail: { label: 'Gmail', note: 'Primary — preferred for academic correspondence' },
+      qq: { label: 'QQ Mail', note: 'Alternative — checked just as often' },
+    },
+    profilesEyebrow: 'Profiles',
+    profilesTitle: 'Elsewhere on the web',
+    profilesSubtitle: 'Academic profiles, code hosting, and publication records.',
+    profilesAria: 'Academic profile links',
+    topicsEyebrow: 'Topics',
+    topicsTitle: 'Preferred topics',
+    topicsSubtitle: 'Areas where a conversation is most likely to be productive.',
+    topics: [
+      {
+        title: 'Research collaboration',
+        body: 'Infectious disease modelling and early warning, influenza co-circulation analysis, outbreak modelling, and research-oriented data platforms.',
+        link: null,
+      },
+      {
+        title: 'Academic materials',
+        body: 'CV requests, publication references, project summaries, and other profile materials.',
+        link: null,
+      },
+      {
+        title: 'Code and tooling',
+        body: 'Discussion around repositories, modelling pipelines, data workflows, and reusable scientific tooling.',
+        link: null,
+      },
+      {
+        title: 'Project portfolio',
+        body: 'Demos and project showcases are collected on the portfolio page, with interactive layers added over time.',
+        link: 'Open portfolio',
+      },
+    ],
+  },
+  zh: {
+    pageTitle: `${profile.name.zh} | 联系`,
+    introEyebrow: '联系',
+    introTitle: '与我联系',
+    introLede: '无论是学术交流、科研合作、软件讨论，还是其他相关事宜，都欢迎通过邮件联系；来信我会认真阅读并尽快回复。',
+    emailEyebrow: '邮箱',
+    emailTitle: '两个常用邮箱',
+    emailSubtitle: '点击卡片即可撰写邮件，也可以直接选中地址复制；两个邮箱任选其一即可。',
+    emails: {
+      gmail: { label: 'Gmail', note: '常用邮箱，学术通信首选' },
+      qq: { label: 'QQ 邮箱', note: '备用邮箱，同样及时查收' },
+    },
+    profilesEyebrow: '学术平台',
+    profilesTitle: '其他能找到我的地方',
+    profilesSubtitle: '学术主页、代码仓库与论文记录。',
+    profilesAria: '学术平台链接',
+    topicsEyebrow: '联系方向',
+    topicsTitle: '欢迎联系的方向',
+    topicsSubtitle: '以下方向的交流最可能带来实质进展。',
+    topics: [
+      {
+        title: '科研合作',
+        body: '传染病建模、预测预警、数据平台与科研软件合作等方向。',
+        link: null,
+      },
+      {
+        title: '学术资料',
+        body: '履历索取、论文引用信息、项目简介及其他学术材料。',
+        link: null,
+      },
+      {
+        title: '代码与工具',
+        body: '围绕开源仓库、建模流程、数据工作流与可复用科研工具的讨论。',
+        link: null,
+      },
+      {
+        title: '项目作品',
+        body: '演示与项目展示汇总于作品集页面，后续会逐步补充交互内容。',
+        link: '查看作品集',
+      },
+    ],
+  },
+} as const;
+
+const copy = ui[lang];
+
+// Email cards are derived from profile.links so the visible address and the
+// mailto target can never drift apart.
+const emailCards = (['gmail', 'qq'] as const).map((key) => {
+  const link = profile.links.find((item) => item.icon === key)!;
+  return {
+    href: link.href,
+    address: link.href.replace('mailto:', ''),
+    icon: iconMap[key],
+    label: copy.emails[key].label,
+    note: copy.emails[key].note,
+  };
+});
+---
+<BaseLayout title={copy.pageTitle} lang={lang}>
+  <div class="contact-page" data-lang={lang}>
+    <header class="page-intro">
+      <p class="eyebrow">{copy.introEyebrow}</p>
+      <h2 class="page-title">{copy.introTitle}</h2>
+      <p class="page-lede">{copy.introLede}</p>
+    </header>
+
+    <section class="page-section" aria-labelledby="contact-email-title">
+      <div class="section-heading">
+        <p class="eyebrow">{copy.emailEyebrow}</p>
+        <h2 class="section-title" id="contact-email-title">{copy.emailTitle}</h2>
+        <p class="section-subtitle">{copy.emailSubtitle}</p>
+      </div>
+      <div class="email-grid">
+        {emailCards.map((email) => (
+          <a class="email-card" href={email.href} aria-label={`${email.label}: ${email.address}`}>
+            <span class="email-icon" set:html={`<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">${email.icon}</svg>`} />
+            <span class="email-text">
+              <span class="email-label">{email.label}</span>
+              <span class="email-address">{email.address}</span>
+              <span class="email-note">{email.note}</span>
+            </span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="page-section" aria-labelledby="contact-profiles-title">
+      <div class="section-heading">
+        <p class="eyebrow">{copy.profilesEyebrow}</p>
+        <h2 class="section-title" id="contact-profiles-title">{copy.profilesTitle}</h2>
+        <p class="section-subtitle">{copy.profilesSubtitle}</p>
+      </div>
+      <div class="profile-links" aria-label={copy.profilesAria}>
+        {profile.links.map((link) => (
+          <a class="profile-link" href={link.href} target="_blank" rel="noreferrer">
+            <span class="icon-link-icon" set:html={`<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">${iconMap[link.icon]}</svg>`} />
+            <span>{link.label}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="page-section" aria-labelledby="contact-topics-title">
+      <div class="section-heading">
+        <p class="eyebrow">{copy.topicsEyebrow}</p>
+        <h2 class="section-title" id="contact-topics-title">{copy.topicsTitle}</h2>
+        <p class="section-subtitle">{copy.topicsSubtitle}</p>
+      </div>
+      <div class="topics-grid">
+        {copy.topics.map((topic) => (
+          <article class="topic-card">
+            <h3>{topic.title}</h3>
+            <p>{topic.body}</p>
+            {topic.link && (
+              <a class="topic-link" href={profile.portfolioHref}>
+                {topic.link}
+                <span class="topic-link-arrow" aria-hidden="true">→</span>
+              </a>
+            )}
+          </article>
+        ))}
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .contact-page {
+    display: block;
+  }
+
+  /* Page intro */
+  .page-intro {
+    max-width: 720px;
+  }
+  .page-title {
+    margin: 10px 0 14px;
+    font-size: clamp(2rem, 4vw, 2.6rem);
+    line-height: 1.2;
+    letter-spacing: 0;
+  }
+  .page-lede {
+    margin: 0;
+    font-size: 1.05rem;
+    color: var(--muted);
+    max-width: 62ch;
+    line-height: 1.8;
+  }
+
+  /* Section rhythm */
+  .page-section {
+    margin-top: 64px;
+  }
+  .section-heading {
+    max-width: 720px;
+    margin-bottom: 28px;
+    padding-top: 40px;
+    border-top: 1px solid var(--line);
+  }
+  .section-heading .section-title {
+    margin: 10px 0 10px;
+  }
+
+  /* Email cards */
+  .email-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+  }
+  .email-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    padding: 28px;
+    background: var(--surface-raised);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-soft);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .email-card:hover,
+  .email-card:focus-visible {
+    border-color: var(--accent);
+    outline: none;
+  }
+  .email-icon {
+    flex: 0 0 auto;
+    width: 44px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+  .email-icon svg {
+    width: 20px;
+    height: 20px;
+    display: block;
+    fill: currentColor;
+  }
+  .email-text {
+    display: grid;
+    gap: 4px;
+    min-width: 0;
+  }
+  .email-label {
+    color: var(--faint);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .email-address {
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.4;
+    word-break: break-all;
+    transition: color 0.2s ease;
+  }
+  .email-card:hover .email-address {
+    color: var(--accent-ink);
+  }
+  .email-note {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  /* External profile links */
+  .profile-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .profile-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 8px 16px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--surface-raised);
+    color: var(--body);
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  }
+  .profile-link:hover,
+  .profile-link:focus-visible {
+    background: var(--accent-soft);
+    color: var(--accent);
+    border-color: var(--accent);
+    outline: none;
+  }
+  .profile-link .icon-link-icon {
+    flex: 0 0 auto;
+  }
+
+  /* Preferred topics */
+  .topics-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+  }
+  .topic-card {
+    background: var(--surface-raised);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    box-shadow: var(--shadow-soft);
+  }
+  .topic-card h3 {
+    margin: 0 0 10px;
+    font-size: 1.12rem;
+    line-height: 1.4;
+  }
+  .topic-card p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.96rem;
+    line-height: 1.75;
+  }
+  .topic-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 40px;
+    margin-top: 8px;
+    color: var(--accent);
+    font-size: 0.92rem;
+    font-weight: 500;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+  .topic-link:hover,
+  .topic-link:focus-visible {
+    color: var(--accent-ink);
+    border-bottom-color: var(--accent);
+    outline: none;
+  }
+  .topic-link-arrow {
+    font-family: var(--font-sans);
+  }
+
+  /* Chinese typography: no uppercase/letter-spacing tricks on CJK labels */
+  .contact-page[data-lang='zh'] .eyebrow {
+    text-transform: none;
+    letter-spacing: 0.05em;
+  }
+  .contact-page[data-lang='zh'] .email-label {
+    text-transform: none;
+    letter-spacing: 0.04em;
+  }
+
+  @media (max-width: 720px) {
+    .page-section {
+      margin-top: 48px;
+    }
+    .section-heading {
+      padding-top: 32px;
+      margin-bottom: 22px;
+    }
+    .email-grid,
+    .topics-grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    .email-card,
+    .topic-card {
+      padding: 22px;
+    }
+  }
+</style>

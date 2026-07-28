@@ -1,0 +1,924 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { profile, iconMap } from '../../data/profile';
+import { cvData, publicationGroups } from '../../data/academic';
+import { t, type Lang } from '../../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+const ui = {
+  en: {
+    cvWord: 'CV',
+    eyebrow: 'Curriculum Vitae',
+    downloadCv: 'Download CV',
+    downloadAria: 'Download the CV as a PDF file',
+    contactGroupAria: 'Contact and academic profiles',
+    profileParagraph:
+      'I am a Ph.D. student in Epidemiology and Health Statistics at the School of Public Health, Xiamen University (admitted 2026, supervised by Prof. Tianmu Chen), and I hold an M.Sc. in Computer Science and Technology from Macau University of Science and Technology. My research focuses on infectious disease forecasting, influenza co-circulation analysis, outbreak modelling, and related research software.',
+    statusPrefix: 'Status:',
+    manuscriptId: 'Manuscript ID:',
+    noRepo: 'No public repository link is shown for this item.',
+    sections: {
+      profile: { title: 'Profile', subtitle: 'Academic training and current direction' },
+      education: { title: 'Education', subtitle: 'Degrees and thesis work' },
+      interests: { title: 'Research Interests', subtitle: 'Topics under active study' },
+      publications: { title: 'Publications and Manuscripts', subtitle: 'Grouped by status, most recent first' },
+      projects: { title: 'Research Software and Projects', subtitle: 'Code, tooling, and data platforms' },
+      awards: { title: 'Awards', subtitle: 'Selected honors and competition results' },
+      experience: { title: 'Experience', subtitle: 'Research, coursework, and service' },
+    },
+    pubStatus: {
+      publication: 'Published',
+      preprint: 'Preprint',
+      submission: 'Under review',
+      'work-in-progress': 'In preparation',
+    },
+  },
+  zh: {
+    cvWord: '履历',
+    eyebrow: '个人简历',
+    downloadCv: '下载履历 PDF',
+    downloadAria: '下载履历 PDF 文件',
+    contactGroupAria: '联系方式与学术主页',
+    profileParagraph:
+      '我现为厦门大学公共卫生学院流行病与卫生统计学博士研究生（2026 年入学，师从陈田木教授），硕士毕业于澳门科技大学计算机科学与技术专业。研究聚焦传染病预测预警、流感共流行分析、疫情建模，以及相关研究软件的开发。',
+    statusPrefix: '状态：',
+    manuscriptId: '稿件编号：',
+    noRepo: '该项目暂无公开仓库链接。',
+    sections: {
+      profile: { title: '个人简介', subtitle: '学术训练与当前研究方向' },
+      education: { title: '教育经历', subtitle: '学位教育与论文工作' },
+      interests: { title: '研究兴趣', subtitle: '当前持续关注的研究主题' },
+      publications: { title: '论文与稿件', subtitle: '按发表状态分组，新近成果在前' },
+      projects: { title: '研究软件与项目', subtitle: '科研代码、工具与数据平台' },
+      awards: { title: '荣誉与获奖', subtitle: '主要荣誉与竞赛奖项' },
+      experience: { title: '实践经历', subtitle: '科研、课程、竞赛与服务经历' },
+    },
+    pubStatus: {
+      publication: '已发表',
+      preprint: '预印本',
+      submission: '审稿中',
+      'work-in-progress': '撰写中',
+    },
+  },
+} as const;
+
+const text = ui[lang];
+const pageTitle = `${t(profile.name, lang)} | ${text.cvWord}`;
+
+// Chinese pages link to the Chinese CV; English pages keep the default PDF.
+const cvHref = lang === 'zh' ? '/files/cv.zh.pdf' : profile.cvHref;
+
+const contactLinks = profile.links.map((link) => ({
+  label: link.label,
+  href: link.href,
+  icon: link.icon,
+}));
+
+// Text fallback of key contact channels so the printed PDF stays self-contained.
+const printContacts = profile.links
+  .filter((link) => ['gmail', 'qq', 'github', 'orcid'].includes(link.icon))
+  .map((link) => link.href.replace('mailto:', '').replace('https://', ''));
+
+const publicationsByGroup = publicationGroups
+  .map((group) => ({
+    ...group,
+    items: cvData.publications
+      .filter((item) => item.category === group.key)
+      .sort((a, b) => b.year - a.year),
+  }))
+  .filter((group) => group.items.length > 0);
+
+const sortedProjects = [...cvData.projects].sort((a, b) => {
+  const aYear = Math.max(
+    ...(a.relatedPublicationTitles?.map((title) => {
+      const publication = cvData.publications.find((item) => item.title.en === title);
+      return publication?.year ?? 0;
+    }) ?? [0]),
+  );
+  const bYear = Math.max(
+    ...(b.relatedPublicationTitles?.map((title) => {
+      const publication = cvData.publications.find((item) => item.title.en === title);
+      return publication?.year ?? 0;
+    }) ?? [0]),
+  );
+  return bYear - aYear;
+});
+
+const sortedAwards = [...cvData.awards].sort((a, b) => b.year - a.year);
+
+const sectionNumber = (index: number) => String(index).padStart(2, '0');
+---
+
+<BaseLayout title={pageTitle} lang={lang}>
+  <div class:list={['cv-page', { 'lang-zh': lang === 'zh' }]}>
+    <header class="cv-header">
+      <p class="eyebrow cv-eyebrow">{text.eyebrow}</p>
+      <h1 class="cv-name">{t(profile.name, lang)}</h1>
+      <p class="cv-degrees">{t(profile.degrees, lang)}</p>
+      <div class="cv-actions no-print" role="group" aria-label={text.contactGroupAria}>
+        {contactLinks.map((link) => (
+          <a class="icon-link" href={link.href} target="_blank" rel="noreferrer" aria-label={link.label} title={link.label}>
+            <span class="icon-link-icon" set:html={`<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">${iconMap[link.icon]}</svg>`} />
+          </a>
+        ))}
+        <a class="cv-download" href={cvHref} target="_blank" rel="noreferrer" aria-label={text.downloadAria} title={text.downloadCv}>
+          <span class="cv-download-icon" set:html={`<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>`} />
+          <span>{text.downloadCv}</span>
+        </a>
+      </div>
+      <p class="cv-print-contact print-only">{printContacts.join(' · ')}</p>
+    </header>
+
+    <section class="cv-section" aria-labelledby="cv-profile">
+      <div class="cv-section-head">
+        <p class="eyebrow cv-section-eyebrow">{sectionNumber(1)}</p>
+        <h2 class="section-title cv-section-title" id="cv-profile">{text.sections.profile.title}</h2>
+        <p class="section-subtitle">{text.sections.profile.subtitle}</p>
+      </div>
+      <p class="cv-profile-text">{text.profileParagraph}</p>
+    </section>
+
+    <section class="cv-section" aria-labelledby="cv-education">
+      <div class="cv-section-head">
+        <p class="eyebrow cv-section-eyebrow">{sectionNumber(2)}</p>
+        <h2 class="section-title cv-section-title" id="cv-education">{text.sections.education.title}</h2>
+        <p class="section-subtitle">{text.sections.education.subtitle}</p>
+      </div>
+      <div class="timeline">
+        {cvData.education.map((item) => (
+          <article class="timeline-entry">
+            <div class="timeline-rail">
+              <h3 class="timeline-anchor">{t(item.institution, lang)}</h3>
+            </div>
+            <div class="timeline-body">
+              <h3 class="timeline-title">{t(item.program, lang)}</h3>
+              <p class="timeline-meta">{t(item.meta, lang).split('|').map((part) => part.trim()).join(' · ')}</p>
+              <p class="timeline-detail">{t(item.detail, lang)}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="cv-section" aria-labelledby="cv-interests">
+      <div class="cv-section-head">
+        <p class="eyebrow cv-section-eyebrow">{sectionNumber(3)}</p>
+        <h2 class="section-title cv-section-title" id="cv-interests">{text.sections.interests.title}</h2>
+        <p class="section-subtitle">{text.sections.interests.subtitle}</p>
+      </div>
+      <ul class="interest-list">
+        {cvData.researchInterests.map((item) => (
+          <li class="interest-item">
+            <span class="interest-marker" aria-hidden="true">—</span>
+            <span class="interest-text">{t(item, lang)}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="cv-section" aria-labelledby="cv-publications">
+      <div class="cv-section-head">
+        <p class="eyebrow cv-section-eyebrow">{sectionNumber(4)}</p>
+        <h2 class="section-title cv-section-title" id="cv-publications">{text.sections.publications.title}</h2>
+        <p class="section-subtitle">{text.sections.publications.subtitle}</p>
+      </div>
+      {publicationsByGroup.map((group) => (
+        <div class="pub-group">
+          <div class="pub-group-head">
+            <h3 class="pub-group-title">{t(group.title, lang)}</h3>
+            <span class="pub-group-count">{group.items.length}</span>
+          </div>
+          <div class="pub-list">
+            {group.items.map((item, index) => (
+              <article class="pub-entry">
+                <span class="pub-index" aria-hidden="true">{index + 1}.</span>
+                <div class="pub-main">
+                  <div class="pub-head">
+                    <h4 class="pub-title">
+                      {item.url ? (
+                        <a href={item.url} target="_blank" rel="noreferrer">{t(item.title, lang)}</a>
+                      ) : (
+                        t(item.title, lang)
+                      )}
+                    </h4>
+                    <span class={`chip pub-status status-${item.category}`}>{text.pubStatus[item.category]}</span>
+                  </div>
+                  <p class="pub-meta">
+                    {[t(item.venue, lang), String(item.year), item.authorship ? t(item.authorship, lang) : null]
+                      .filter(Boolean)
+                      .join(' · ')}
+                  </p>
+                  {item.category !== 'publication' && (
+                    <p class="pub-status-line"><strong>{text.statusPrefix}</strong> {t(item.status, lang)}</p>
+                  )}
+                  <p class="pub-note">{t(item.note, lang)}</p>
+                  {(item.doi || item.url || item.manuscriptId) && (
+                    <p class="pub-links">
+                      {item.doi ? (
+                        <a href={item.url ?? `https://doi.org/${item.doi}`} target="_blank" rel="noreferrer">DOI: {item.doi}</a>
+                      ) : item.url ? (
+                        <a href={item.url} target="_blank" rel="noreferrer">{item.url.replace('https://', '')}</a>
+                      ) : null}
+                      {item.manuscriptId && <span class="pub-manuscript">{text.manuscriptId} {item.manuscriptId}</span>}
+                    </p>
+                  )}
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      ))}
+    </section>
+
+    <section class="cv-section" aria-labelledby="cv-projects">
+      <div class="cv-section-head">
+        <p class="eyebrow cv-section-eyebrow">{sectionNumber(5)}</p>
+        <h2 class="section-title cv-section-title" id="cv-projects">{text.sections.projects.title}</h2>
+        <p class="section-subtitle">{text.sections.projects.subtitle}</p>
+      </div>
+      <div class="project-list">
+        {sortedProjects.map((item) => (
+          <article class="project-entry">
+            <div class="project-head">
+              <h3 class="project-name">
+                {item.repoUrl ? (
+                  <a href={item.repoUrl} target="_blank" rel="noreferrer">{t(item.name, lang)}</a>
+                ) : (
+                  t(item.name, lang)
+                )}
+              </h3>
+              <span class="project-status">{t(item.status, lang)}</span>
+            </div>
+            <p class="project-summary">{t(item.summary, lang)}</p>
+            {item.tags && item.tags.length > 0 && (
+              <p class="project-tags">
+                {item.tags.map((tag) => (
+                  <span class="chip project-tag">{tag}</span>
+                ))}
+              </p>
+            )}
+            <p class="project-repo">
+              {item.repoUrl ? (
+                <a href={item.repoUrl} target="_blank" rel="noreferrer">{item.repoUrl.replace('https://', '')}</a>
+              ) : (
+                <span class="project-no-repo">{text.noRepo}</span>
+              )}
+            </p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="cv-section" aria-labelledby="cv-awards">
+      <div class="cv-section-head">
+        <p class="eyebrow cv-section-eyebrow">{sectionNumber(6)}</p>
+        <h2 class="section-title cv-section-title" id="cv-awards">{text.sections.awards.title}</h2>
+        <p class="section-subtitle">{text.sections.awards.subtitle}</p>
+      </div>
+      <div class="award-list">
+        {sortedAwards.map((item) => (
+          <div class="award-row">
+            <span class="award-year">{item.year}</span>
+            <div class="award-main">
+              <p class="award-title">{t(item.title, lang)}</p>
+              {item.issuer && <p class="award-issuer">{t(item.issuer, lang)}</p>}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="cv-section" aria-labelledby="cv-experience">
+      <div class="cv-section-head">
+        <p class="eyebrow cv-section-eyebrow">{sectionNumber(7)}</p>
+        <h2 class="section-title cv-section-title" id="cv-experience">{text.sections.experience.title}</h2>
+        <p class="section-subtitle">{text.sections.experience.subtitle}</p>
+      </div>
+      <div class="timeline">
+        {cvData.experience.map((item) => (
+          <article class="timeline-entry">
+            <div class="timeline-rail">
+              {item.period && <h3 class="timeline-anchor timeline-period">{t(item.period, lang)}</h3>}
+              {item.organization && <p class="timeline-rail-meta">{t(item.organization, lang)}</p>}
+            </div>
+            <div class="timeline-body">
+              <h3 class="timeline-title">{t(item.title, lang)}</h3>
+              <p class="timeline-detail">{t(item.detail, lang)}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  </div>
+
+  <style>
+    .cv-page {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    /* ---------- Header ---------- */
+    .cv-header {
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--line-strong);
+    }
+
+    .cv-eyebrow {
+      margin: 0 0 10px;
+    }
+
+    .cv-name {
+      font-size: clamp(2rem, 4vw, 2.6rem);
+      line-height: 1.15;
+    }
+
+    .cv-degrees {
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 0.98rem;
+      line-height: 1.7;
+    }
+
+    .cv-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .cv-download {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 40px;
+      padding: 8px 16px;
+      border: 1px solid var(--accent);
+      border-radius: var(--radius-sm);
+      background: var(--surface-raised);
+      color: var(--accent);
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .cv-download:hover,
+    .cv-download:focus-visible {
+      background: var(--accent-soft);
+      color: var(--accent-ink);
+      outline: none;
+    }
+
+    .cv-download-icon,
+    .cv-download-icon svg {
+      width: 16px;
+      height: 16px;
+      display: block;
+      fill: currentColor;
+    }
+
+    .cv-print-contact {
+      margin: 14px 0 0;
+      font-size: 0.85rem;
+      color: var(--muted);
+      max-width: none;
+    }
+
+    .print-only {
+      display: none;
+    }
+
+    /* ---------- Sections ---------- */
+    .cv-section {
+      margin-top: 40px;
+      padding-top: 28px;
+      border-top: 1px solid var(--line);
+    }
+
+    .cv-section-head {
+      display: grid;
+      gap: 6px;
+      margin-bottom: 22px;
+    }
+
+    .cv-section-eyebrow {
+      margin: 0;
+    }
+
+    .cv-section-title {
+      font-size: clamp(1.35rem, 2vw, 1.6rem);
+    }
+
+    .cv-profile-text {
+      margin: 0;
+      color: var(--body);
+      line-height: 1.8;
+    }
+
+    /* ---------- Timeline (education / experience) ---------- */
+    .timeline-entry {
+      display: grid;
+      grid-template-columns: 190px minmax(0, 1fr);
+    }
+
+    .timeline-rail {
+      padding: 22px 24px 22px 0;
+    }
+
+    .timeline-body {
+      position: relative;
+      padding: 22px 0 22px 24px;
+      border-left: 1px solid var(--line);
+    }
+
+    .timeline-body::before {
+      content: '';
+      position: absolute;
+      left: -4.5px;
+      top: 30px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--line-strong);
+    }
+
+    .timeline-entry:first-child .timeline-body::before {
+      background: var(--accent);
+    }
+
+    .timeline-entry:first-child .timeline-rail,
+    .timeline-entry:first-child .timeline-body {
+      padding-top: 2px;
+    }
+
+    .timeline-entry:first-child .timeline-body::before {
+      top: 10px;
+    }
+
+    .timeline-entry:last-child .timeline-rail,
+    .timeline-entry:last-child .timeline-body {
+      padding-bottom: 2px;
+    }
+
+    .timeline-anchor {
+      font-size: 1rem;
+      font-weight: 600;
+      line-height: 1.45;
+    }
+
+    .timeline-period {
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--ink);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .timeline-rail-meta {
+      margin: 4px 0 0;
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .timeline-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      line-height: 1.5;
+    }
+
+    .timeline-meta {
+      margin: 5px 0 0;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    .timeline-detail {
+      margin: 8px 0 0;
+      color: var(--body);
+      line-height: 1.75;
+    }
+
+    /* ---------- Research interests ---------- */
+    .interest-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+    }
+
+    .interest-item {
+      display: flex;
+      gap: 14px;
+      padding: 10px 0;
+      border-top: 1px solid var(--line);
+      max-width: none;
+      color: var(--body);
+    }
+
+    .interest-item:first-child {
+      border-top: none;
+      padding-top: 0;
+    }
+
+    .interest-marker {
+      color: var(--accent);
+      flex: 0 0 auto;
+    }
+
+    /* ---------- Publications ---------- */
+    .pub-group + .pub-group {
+      margin-top: 28px;
+    }
+
+    .pub-group-head {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .pub-group-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      color: var(--accent);
+    }
+
+    .pub-group-count {
+      font-size: 0.8rem;
+      color: var(--faint);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .pub-entry {
+      position: relative;
+      padding: 14px 0 14px 2.4rem;
+      border-top: 1px solid var(--line);
+    }
+
+    .pub-entry:first-child {
+      border-top: none;
+    }
+
+    .pub-index {
+      position: absolute;
+      left: 0;
+      top: 15px;
+      font-size: 0.9rem;
+      color: var(--faint);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .pub-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 8px 16px;
+      flex-wrap: wrap;
+    }
+
+    .pub-title {
+      font-size: 1.02rem;
+      font-weight: 600;
+      line-height: 1.5;
+      max-width: none;
+    }
+
+    .pub-title a {
+      color: inherit;
+      text-decoration: underline;
+      text-decoration-color: transparent;
+      text-underline-offset: 0.15em;
+      transition: color 0.2s ease, text-decoration-color 0.2s ease;
+    }
+
+    .pub-title a:hover,
+    .pub-title a:focus-visible {
+      color: var(--accent);
+      text-decoration-color: var(--accent);
+      outline: none;
+    }
+
+    .pub-status {
+      flex: 0 0 auto;
+      font-weight: 600;
+    }
+
+    .status-publication {
+      background: var(--accent-soft);
+      border-color: transparent;
+      color: var(--accent-ink);
+    }
+
+    .status-preprint {
+      background: var(--surface);
+      border-color: var(--line);
+      color: var(--body);
+    }
+
+    .status-submission,
+    .status-work-in-progress {
+      background: transparent;
+      border-color: var(--line-strong);
+      color: var(--muted);
+    }
+
+    .pub-meta {
+      margin: 4px 0 0;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    .pub-status-line {
+      margin: 4px 0 0;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    .pub-status-line strong {
+      font-weight: 600;
+      color: var(--body);
+    }
+
+    .pub-note {
+      margin: 6px 0 0;
+      font-size: 0.92rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .pub-links {
+      margin: 8px 0 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 18px;
+      font-size: 0.85rem;
+      max-width: none;
+    }
+
+    .pub-links a {
+      color: var(--accent);
+      text-decoration: underline;
+      text-underline-offset: 0.15em;
+      text-decoration-color: var(--line-strong);
+      transition: color 0.2s ease, text-decoration-color 0.2s ease;
+      overflow-wrap: anywhere;
+    }
+
+    .pub-links a:hover,
+    .pub-links a:focus-visible {
+      color: var(--accent-ink);
+      text-decoration-color: var(--accent-ink);
+      outline: none;
+    }
+
+    .pub-manuscript {
+      color: var(--muted);
+    }
+
+    /* ---------- Projects ---------- */
+    .project-entry {
+      padding: 18px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .project-entry:first-child {
+      border-top: none;
+      padding-top: 0;
+    }
+
+    .project-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 4px 14px;
+    }
+
+    .project-name {
+      font-size: 1.05rem;
+      font-weight: 600;
+    }
+
+    .project-name a {
+      color: inherit;
+      text-decoration: underline;
+      text-decoration-color: transparent;
+      text-underline-offset: 0.15em;
+      transition: color 0.2s ease, text-decoration-color 0.2s ease;
+    }
+
+    .project-name a:hover,
+    .project-name a:focus-visible {
+      color: var(--accent);
+      text-decoration-color: var(--accent);
+      outline: none;
+    }
+
+    .project-status {
+      font-size: 0.82rem;
+      color: var(--faint);
+    }
+
+    .project-summary {
+      margin: 6px 0 0;
+      color: var(--body);
+      line-height: 1.75;
+    }
+
+    .project-tags {
+      margin: 10px 0 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      max-width: none;
+    }
+
+    .project-tag {
+      padding: 3px 10px;
+      font-size: 0.78rem;
+    }
+
+    .project-repo {
+      margin: 10px 0 0;
+      font-size: 0.88rem;
+      max-width: none;
+    }
+
+    .project-repo a {
+      color: var(--accent);
+      text-decoration: underline;
+      text-underline-offset: 0.15em;
+      text-decoration-color: var(--line-strong);
+      transition: color 0.2s ease, text-decoration-color 0.2s ease;
+      overflow-wrap: anywhere;
+    }
+
+    .project-repo a:hover,
+    .project-repo a:focus-visible {
+      color: var(--accent-ink);
+      text-decoration-color: var(--accent-ink);
+      outline: none;
+    }
+
+    .project-no-repo {
+      color: var(--faint);
+    }
+
+    /* ---------- Awards ---------- */
+    .award-row {
+      display: grid;
+      grid-template-columns: 76px minmax(0, 1fr);
+      gap: 20px;
+      padding: 12px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .award-row:first-child {
+      border-top: none;
+      padding-top: 0;
+    }
+
+    .award-year {
+      padding-top: 2px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .award-title {
+      margin: 0;
+      max-width: none;
+      font-weight: 500;
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    .award-issuer {
+      margin: 2px 0 0;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    /* ---------- Chinese typography ---------- */
+    .lang-zh .eyebrow {
+      letter-spacing: 0;
+    }
+
+    .lang-zh .cv-profile-text,
+    .lang-zh .timeline-detail,
+    .lang-zh .project-summary,
+    .lang-zh .interest-item {
+      line-height: 1.85;
+    }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 720px) {
+      .timeline-entry {
+        display: block;
+        padding: 18px 0;
+        border-top: 1px solid var(--line);
+      }
+
+      .timeline-entry:first-child {
+        border-top: none;
+        padding-top: 0;
+      }
+
+      .timeline-entry:last-child {
+        padding-bottom: 0;
+      }
+
+      .timeline-rail,
+      .timeline-entry:first-child .timeline-rail,
+      .timeline-entry:last-child .timeline-rail {
+        padding: 0 0 6px;
+      }
+
+      .timeline-body,
+      .timeline-entry:first-child .timeline-body,
+      .timeline-entry:last-child .timeline-body {
+        padding: 0;
+        border-left: none;
+      }
+
+      .timeline-body::before {
+        display: none;
+      }
+
+      .award-row {
+        grid-template-columns: 60px minmax(0, 1fr);
+        gap: 14px;
+      }
+
+      .pub-entry {
+        padding-left: 2rem;
+      }
+    }
+
+    /* ---------- Print ---------- */
+    @media print {
+      .cv-page {
+        max-width: none;
+        /* Grayscale-friendly overrides scoped to this page. */
+        --accent: #1a1a1a;
+        --accent-ink: #1a1a1a;
+        --accent-soft: transparent;
+        --muted: #444;
+        --faint: #555;
+      }
+
+      .no-print {
+        display: none !important;
+      }
+
+      .print-only {
+        display: block;
+      }
+
+      .cv-header {
+        padding-bottom: 18px;
+      }
+
+      .cv-section {
+        margin-top: 22px;
+        padding-top: 16px;
+      }
+
+      .cv-section-head {
+        margin-bottom: 12px;
+        break-after: avoid;
+        page-break-after: avoid;
+      }
+
+      .pub-group-head {
+        break-after: avoid;
+        page-break-after: avoid;
+      }
+
+      .timeline-entry,
+      .pub-entry,
+      .award-row,
+      .project-entry,
+      .interest-item {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      .chip {
+        background: none;
+      }
+
+      .pub-links a,
+      .project-repo a {
+        color: #1a1a1a;
+        text-decoration-color: #999;
+      }
+    }
+  </style>
+</BaseLayout>

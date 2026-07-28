@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build",
-    "postbuild": "node -e \"require('fs').copyFileSync('.nojekyll', 'dist/.nojekyll')\"",
+    "build": "node scripts/build.mjs github",
+    "build:top": "node scripts/build.mjs top",
     "preview": "astro preview"
   },
   "dependencies": {

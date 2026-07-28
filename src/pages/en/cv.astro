@@ -1,0 +1,10 @@
+---
+import CvPage from '../../components/pages/CvPage.astro';
+import { siteVariant } from '../../i18n';
+
+if (siteVariant === 'github') {
+  return Astro.redirect('/cv/');
+}
+---
+
+<CvPage lang="en" />

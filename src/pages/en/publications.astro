@@ -1,0 +1,11 @@
+---
+import PublicationsPage from '../../components/pages/PublicationsPage.astro';
+import { siteVariant } from '../../i18n';
+
+// English lives at /en/ only on the `top` variant; the github variant is English-only at the root.
+if (siteVariant === 'github') {
+  return Astro.redirect('/publications/');
+}
+---
+
+<PublicationsPage lang="en" />
