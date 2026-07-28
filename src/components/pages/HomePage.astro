@@ -44,8 +44,8 @@ const ui = {
     portraitAlt: 'Portrait of Hong Liu',
     factsEyebrow: 'Academic identity',
     facts: {
-      latest: 'Latest degree',
-      next: 'Next step',
+      latest: 'Current',
+      next: 'Master’s degree',
       undergrad: 'Undergraduate',
     },
     outputsEyebrow: 'Evidence',
@@ -148,8 +148,8 @@ const ui = {
     portraitAlt: '刘弘肖像照',
     factsEyebrow: '教育背景',
     facts: {
-      latest: '最高学历',
-      next: '下一阶段',
+      latest: '现阶段',
+      next: '硕士学历',
       undergrad: '本科阶段',
     },
     outputsEyebrow: '研究证据',
@@ -253,8 +253,8 @@ const statusClass: Record<PublicationCategory, string> = {
 };
 
 const factEntries = [
-  { label: copy.facts.latest, item: education[1] },
-  { label: copy.facts.next, item: education[0] },
+  { label: copy.facts.latest, item: education[0] },
+  { label: copy.facts.next, item: education[1] },
   { label: copy.facts.undergrad, item: education[2] },
 ];
 

@@ -105,8 +105,8 @@ export const selectedAchievements = [
   },
   {
     label: 'Representative outputs',
-    en: 'Representative work includes the MAESTRO arXiv preprint with a journal submission under review, a chikungunya dual-model manuscript submitted to Epidemics, and ongoing co-circulation research that remains in progress.',
-    zh: '代表性工作包括：已公开 arXiv 预印本且期刊审稿中的 MAESTRO 研究、已投稿至 Epidemics 的基孔肯雅热双模型稿件，以及仍在推进中的共流行研究。',
+    en: 'Representative work includes the MAESTRO arXiv preprint with a journal submission under review, a first-author chikungunya dual-model article published in BMC Public Health, and ongoing co-circulation research that remains in progress.',
+    zh: '代表性工作包括：已公开 arXiv 预印本且期刊审稿中的 MAESTRO 研究、已发表于 BMC Public Health 的第一作者基孔肯雅热双模型论文，以及仍在推进中的共流行研究。',
   },
   {
     label: 'Future direction',
