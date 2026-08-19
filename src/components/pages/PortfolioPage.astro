@@ -22,6 +22,7 @@ const ui = {
     statFeatured: 'Featured systems',
     statRepos: 'Public repositories',
     statTotal: 'Tracked project records',
+    statStars: 'Cumulative stars',
     featuredEyebrow: 'Systems',
     featuredTitle: 'Featured research systems',
     featuredSubtitle:
@@ -91,6 +92,7 @@ const ui = {
     statFeatured: '重点系统',
     statRepos: '公开仓库',
     statTotal: '在册项目记录',
+    statStars: '累计 Star',
     featuredEyebrow: '研究系统',
     featuredTitle: '重点研究系统',
     featuredSubtitle: '这些系统构成了当前学术叙事背后的主要研究软件层。',
@@ -168,6 +170,8 @@ const statCards = [
   { value: projects.length, label: copy.statTotal },
 ];
 
+const totalStars = projects.reduce((acc, item) => acc + (item.stars || 0), 0);
+
 const cardIndex = (i: number) => String(i + 1).padStart(2, '0');
 ---
 <BaseLayout title={copy.pageTitle} lang={lang}>
@@ -177,7 +181,7 @@ const cardIndex = (i: number) => String(i + 1).padStart(2, '0');
       <h2 class="page-title">{copy.introTitle}</h2>
       <p class="page-lede">{copy.introLede}</p>
       <div class="coverage-grid">
-        {statCards.map((card) => (
+        {[...statCards, { value: totalStars, label: copy.statStars }].map((card) => (
           <article class="coverage-card">
             <p class="coverage-value">{card.value}</p>
             <p class="coverage-label">{card.label}</p>
@@ -228,6 +232,7 @@ const cardIndex = (i: number) => String(i + 1).padStart(2, '0');
               ) : (
                 <span class="foot-meta">{copy.noRepo}</span>
               )}
+              {item.stars ? <span class="foot-meta repo-stars" aria-label={`${item.stars} stars on GitHub`}>★ {item.stars}</span> : null}
               {item.relatedPublicationTitles?.map((title) => (
                 <span class="foot-meta">{copy.relatedPrefix}{title}</span>
               ))}
@@ -254,8 +259,14 @@ const cardIndex = (i: number) => String(i + 1).padStart(2, '0');
                 {item.tags.map((tag) => (
                   <span class="chip">{tag}</span>
                 ))}
+                {item.stars ? <span class="chip chip-stars" aria-label={`${item.stars} stars on GitHub`}>★ {item.stars}</span> : null}
               </div>
             )}
+            {(!item.tags && item.stars) ? (
+              <div class="chip-row">
+                <span class="chip chip-stars" aria-label={`${item.stars} stars on GitHub`}>★ {item.stars}</span>
+              </div>
+            ) : null}
           </article>
         ))}
       </div>
@@ -530,6 +541,20 @@ const cardIndex = (i: number) => String(i + 1).padStart(2, '0');
     font-size: 0.85rem;
     line-height: 1.6;
     overflow-wrap: anywhere;
+  }
+
+  .repo-stars,
+  .chip-stars {
+    background: var(--accent-soft);
+    border-color: var(--accent-line);
+    color: var(--accent-ink);
+    font-weight: 600;
+  }
+  .repo-stars {
+    padding: 4px 10px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--line);
+    font-size: 0.82rem;
   }
 
   /* Supporting infrastructure */
