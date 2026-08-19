@@ -1,4 +1,4 @@
----
+﻿---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { profile, iconMap } from '../../data/profile';
 import { cvData, publicationGroups } from '../../data/academic';
@@ -18,7 +18,7 @@ const ui = {
     downloadAria: 'Download the CV as a PDF file',
     contactGroupAria: 'Contact and academic profiles',
     profileParagraph:
-      'I am a Ph.D. student in Epidemiology and Health Statistics at the School of Public Health, Xiamen University (admitted 2026, supervised by Prof. Tianmu Chen), and I hold an M.Sc. in Computer Science and Technology from Macau University of Science and Technology. My research focuses on infectious disease forecasting, influenza co-circulation analysis, outbreak modelling, and related research software.',
+      'I am a Ph.D. student in Epidemiology and Health Statistics at the School of Public Health, Xiamen University (admitted 2026, supervised by Prof. Tianmu Chen), and I hold an M.Sc. in Intelligent Technology from Macau University of Science and Technology. My research focuses on infectious-disease forecasting, influenza co-circulation analysis, mechanistic outbreak modelling, and related research software.',
     statusPrefix: 'Status:',
     manuscriptId: 'Manuscript ID:',
     noRepo: 'No public repository link is shown for this item.',
@@ -45,7 +45,7 @@ const ui = {
     downloadAria: '下载履历 PDF 文件',
     contactGroupAria: '联系方式与学术主页',
     profileParagraph:
-      '我现为厦门大学公共卫生学院流行病与卫生统计学博士研究生（2026 年入学，师从陈田木教授），硕士毕业于澳门科技大学智能技术专业。研究聚焦传染病预测预警、流感共流行分析、疫情建模，以及相关研究软件的开发。',
+      '我现为厦门大学公共卫生学院流行病与卫生统计学博士研究生（2026 年入学，师从陈田木教授），硕士毕业于澳门科技大学智能技术专业。研究聚焦传染病预测预警、流感共流行分析、疫情机制建模，以及相关研究软件的开发。',
     statusPrefix: '状态：',
     manuscriptId: '稿件编号：',
     noRepo: '该项目暂无公开仓库链接。',
@@ -216,7 +216,7 @@ const sectionNumber = (index: number) => String(index).padStart(2, '0');
                   {item.category !== 'publication' && (
                     <p class="pub-status-line"><strong>{text.statusPrefix}</strong> {t(item.status, lang)}</p>
                   )}
-                  <p class="pub-note">{t(item.note, lang)}</p>
+                  <p class="pub-note">{item.note ? t(item.note, lang) : null}</p>
                   {(item.doi || item.url || item.manuscriptId) && (
                     <p class="pub-links">
                       {item.doi ? (
@@ -922,3 +922,5 @@ const sectionNumber = (index: number) => String(index).padStart(2, '0');
     }
   </style>
 </BaseLayout>
+
+

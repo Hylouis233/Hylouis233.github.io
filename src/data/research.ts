@@ -1,4 +1,4 @@
-export const researchThemes = [
+﻿export const researchThemes = [
   {
     title: {
       en: 'Infectious disease forecasting and early warning',
@@ -80,7 +80,7 @@ export const researchNarrative = {
 
 export const selectedHighlights = [
   {
-    en: 'Developed the MAESTRO multimodal forecasting framework for respiratory disease activity; in the documented evaluation context, the reported R² reached 0.956 on a 10-year Hong Kong influenza dataset.',
+    en: 'Developed the MAESTRO multimodal forecasting framework for respiratory disease activity; reported R² = 0.956 on over 11 years of Hong Kong influenza data (excluding COVID-19).',
     zh: '开发了面向呼吸道疾病活动预测的多模态框架 MAESTRO；在香港十一年以上流感数据（不含 COVID-19 期间）上报告 R² = 0.956。',
   },
   {
@@ -99,8 +99,8 @@ export const selectedHighlights = [
 
 export const selectedAchievements = [
   {
-    label: 'Current stage',
-    en: 'Ph.D. student in Epidemiology and Health Statistics at Xiamen University (2026–present), holding an M.Sc. in Computer Science and Technology from Macau University of Science and Technology.',
+    label: 'Current status',
+    en: 'Ph.D. student in Epidemiology and Health Statistics at Xiamen University (2026–present), holding an M.Sc. in Intelligent Technology from Macau University of Science and Technology.',
     zh: '厦门大学流行病与卫生统计学博士在读（2026 年入学），已获澳门科技大学智能技术硕士学位。',
   },
   {
@@ -138,3 +138,6 @@ export const researchApproach = [
     },
   },
 ];
+
+
+

@@ -85,7 +85,7 @@ export const researchInterests: LocalizedText[] = [
     zh: '多模态传染病预测预警。',
   },
   {
-    en: 'Influenza co-circulation analysis, co-circulation signals, and non-stationary time-series modelling.',
+    en: 'Influenza co-circulation, multi-subtype interaction, and non-stationary time-series modelling.',
     zh: '流感共流行分析、共流行信号识别与非平稳时间序列建模。',
   },
   {
@@ -119,7 +119,7 @@ export const education: EducationItem[] = [
       zh: '澳门科技大学',
     },
     program: {
-      en: 'M.Sc. in Computer Science and Technology, Faculty of Innovation Engineering',
+      en: 'M.Sc. in Intelligent Technology, Faculty of Innovation Engineering',
       zh: '智能技术硕士，创新工程学院',
     },
     meta: {
@@ -127,7 +127,7 @@ export const education: EducationItem[] = [
       zh: '已毕业 | GPA 3.63/4 | 全额奖学金及生活津贴',
     },
     detail: {
-      en: 'Completed M.Sc. training in Computer Science and Technology under Academician Nanshan Zhong and Prof. Chitin Hon, with joint training at Xiamen University (co-supervised by Prof. Tianmu Chen), focusing primarily on infectious disease forecasting and early warning. Graduate training emphasized intelligent control technology, artificial intelligence, numerical analysis, statistics, pattern recognition, algorithm theory, and optimization methods.',
+      en: 'Completed M.Sc. training in Intelligent Technology at MUST, under Academician Nanshan Zhong and Prof. Chitin Hon. Joint doctoral-stage research training at Xiamen University with Prof. Tianmu Chen, focused on infectious-disease forecasting and early warning. Graduate coursework covered intelligent control technology, fundamentals of AI, numerical analysis, statistics, pattern recognition, algorithms, and optimization methods.',
       zh: '已在钟南山院士与韩子天教授指导下完成智能技术硕士阶段训练，并由厦门大学联合培养（联合导师陈田木教授），主要从事传染病预测预警研究。研究生阶段训练重点包括智能控制技术、人工智能基础、数值分析、统计学导论、模式识别、算法理论基础与优化方法基础。',
     },
   },
@@ -149,24 +149,6 @@ export const education: EducationItem[] = [
       zh: '本科阶段的课程、科研与项目经历为后续的传染病建模、健康数据分析与 AI 辅助科研流程奠定了基础。',
     },
   },
-  {
-    institution: {
-      en: 'Master’s thesis',
-      zh: '硕士论文',
-    },
-    program: {
-      en: 'Multi-source-data-driven study of influenza spatiotemporal transmission dynamics, viral evolution, and early warning in China',
-      zh: '多源数据驱动下我国流感时空传播动力学、病毒进化与预测预警研究',
-    },
-    meta: {
-      en: "Completed master's thesis direction",
-      zh: '已完成硕士论文方向',
-    },
-    detail: {
-      en: 'The completed thesis linked surveillance, environmental, behavioral, and sequence-related evidence while keeping completed work, submitted manuscripts, and future doctoral stages explicitly separated.',
-      zh: '已完成的硕士论文连接监测、环境、行为与序列相关证据，并明确区分已完成工作、已投稿稿件与后续博士阶段计划。',
-    },
-  },
 ];
 
 export const publications: PublicationItem[] = [
@@ -183,10 +165,6 @@ export const publications: PublicationItem[] = [
     status: {
       en: 'Published',
       zh: '已发表',
-    },
-    note: {
-      en: 'Co-authored publication listed in the source materials.',
-      zh: '源材料中明确列出的合作发表论文。',
     },
     doi: '10.1038/s41467-024-48201-8',
     url: 'https://doi.org/10.1038/s41467-024-48201-8',
@@ -210,10 +188,6 @@ export const publications: PublicationItem[] = [
     status: {
       en: 'Published',
       zh: '已发表',
-    },
-    note: {
-      en: 'Co-authored publication listed in the source materials.',
-      zh: '源材料中明确列出的合作发表论文。',
     },
     doi: '10.1016/j.heliyon.2024.e32164',
     url: 'https://doi.org/10.1016/j.heliyon.2024.e32164',
@@ -265,10 +239,6 @@ export const publications: PublicationItem[] = [
       en: 'Published',
       zh: '已发表',
     },
-    note: {
-      en: 'Co-authored publication listed in the source materials.',
-      zh: '源材料中明确列出的合作发表论文。',
-    },
     doi: '10.13723/j.yxysh.2024.08.011',
     url: 'https://doi.org/10.13723/j.yxysh.2024.08.011',
     authorship: {
@@ -292,10 +262,6 @@ export const publications: PublicationItem[] = [
       en: 'Published',
       zh: '已发表',
     },
-    note: {
-      en: 'Co-authored publication listed in the source materials.',
-      zh: '源材料中明确列出的合作发表论文。',
-    },
     doi: '10.3389/fcimb.2023.1212473',
     url: 'https://doi.org/10.3389/fcimb.2023.1212473',
     authorship: {
@@ -318,10 +284,6 @@ export const publications: PublicationItem[] = [
     status: {
       en: 'Published',
       zh: '已发表',
-    },
-    note: {
-      en: 'Co-authored publication listed in the source materials.',
-      zh: '源材料中明确列出的合作发表论文。',
     },
     doi: '10.46234/ccdcw2023.158',
     url: 'https://doi.org/10.46234/ccdcw2023.158',
@@ -755,7 +717,7 @@ export const projects: ProjectItem[] = [
     stars: 0,
     tags: ['Influenza', 'Co-circulation', 'Prediction', 'Time series'],
     impactSummary: {
-      en: 'Analytical pipeline supporting work on influenza co-circulation and co-circulation signals.',
+      en: 'Analytical pipeline supporting work on influenza co-circulation, multi-subtype interaction, and non-stationary time-series modelling.',
       zh: '支撑流感共流行与共流行信号相关研究的分析管线。',
     },
     relatedPublicationTitles: ['Spatiotemporal instability of influenza seasonality during viral co-circulation'],
