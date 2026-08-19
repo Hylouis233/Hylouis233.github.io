@@ -23,6 +23,43 @@ const toggleLabel = lang === 'zh' ? 'English' : '中文';
     <title>{title}</title>
     <meta name="description" content={siteMeta.description} />
     <link rel="icon" href="/favicon.jpg" type="image/jpeg" />
+    <link rel="canonical" href={`https://introduction.hylouis.top${localizedPath(currentPath, lang)}`} />
+    <link rel="alternate" hreflang="zh-CN" href={`https://introduction.hylouis.top${localizedPath(currentPath, 'zh')}`} />
+    <link rel="alternate" hreflang="en" href={`https://introduction.hylouis.top${localizedPath(currentPath, 'en')}`} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={siteMeta.description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={`https://introduction.hylouis.top${localizedPath(currentPath, lang)}`} />
+    <meta property="og:locale" content={lang === 'zh' ? 'zh_CN' : 'en_US'} />
+    <meta name="twitter:card" content="summary" />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Person',
+      name: 'Hong Liu',
+      alternateName: '刘弘',
+      url: 'https://introduction.hylouis.top/',
+      sameAs: [
+        'https://orcid.org/0009-0008-3411-5304',
+        'https://scholar.google.com/citations?user=XktvX-gAAAAJ',
+        'https://github.com/Hylouis233',
+        'https://www.researchgate.net/profile/Hong-Liu-79',
+      ],
+      jobTitle: 'Incoming Ph.D. student in Epidemiology and Health Statistics',
+      affiliation: { '@type': 'CollegeOrUniversity', name: 'Xiamen University' },
+      alumniOf: [
+        { '@type': 'CollegeOrUniversity', name: 'Macau University of Science and Technology' },
+        { '@type': 'CollegeOrUniversity', name: 'Xiamen University' },
+      ],
+      knowsAbout: [
+        'Infectious-disease forecasting',
+        'Mechanistic outbreak modelling',
+        'Influenza co-circulation dynamics',
+        'Multimodal time-series analysis',
+        'Open-source research software',
+        'Scientific agents',
+        'Citation verification',
+      ],
+    })} />
     <style is:global>
       :root {
         color-scheme: light;
