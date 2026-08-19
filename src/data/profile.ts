@@ -21,8 +21,8 @@ export const profile = {
     zh: '刘弘',
   },
   headline: {
-    en: 'Infectious Disease Forecasting\nSpatiotemporal Dynamics\nViral Evolution',
-    zh: '传染病预测预警\n时空传播动力学\n病毒进化',
+    en: 'Infectious Disease Forecasting\nSpatiotemporal Dynamics\nMechanistic Outbreak Modelling',
+    zh: '传染病预测预警\n时空传播动力学\n机制疫情建模',
   },
   affiliation: {
     en: 'Xiamen University',
