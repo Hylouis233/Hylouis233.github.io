@@ -1,4 +1,4 @@
----
+﻿---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { profile } from '../../data/profile';
 import {
@@ -192,7 +192,7 @@ const joinSeparator = isZh ? '；' : '; ';
                 {item.authorship && <span>{t(item.authorship, lang)}</span>}
               </p>
               {statusText !== chip.label && <p class="featured-status">{statusText}</p>}
-              <p class="featured-note">{t(item.note, lang)}</p>
+              <p class="featured-note">{item.note ? t(item.note, lang) : null}</p>
               {relatedProjects.length > 0 && (
                 <div class="related-block">
                   <p class="block-label">{u.relatedSystems}</p>
@@ -259,7 +259,7 @@ const joinSeparator = isZh ? '；' : '; ';
                       )}
                       {item.category !== 'publication' && <span>{t(item.status, lang)}</span>}
                     </p>
-                    <p class="pub-note">{t(item.note, lang)}</p>
+                    <p class="pub-note">{item.note ? t(item.note, lang) : null}</p>
                     {relatedProjects.length > 0 && (
                       <div class="related-block related-inline">
                         <p class="block-label">{u.relatedSystems}</p>
@@ -783,3 +783,4 @@ const joinSeparator = isZh ? '；' : '; ';
     }
   </style>
 </BaseLayout>
+
