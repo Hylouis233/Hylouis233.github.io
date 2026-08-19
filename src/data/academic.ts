@@ -685,6 +685,42 @@ export const projects: ProjectItem[] = [
     tags: ['LegalTech', 'Claude Code', 'Compliance', 'Cross-discipline'],
   },
   {
+    key: 'epic-intel-harness',
+    name: {
+      en: 'EpicIntel Harness',
+      zh: 'EpicIntel 评测与改进工具集',
+    },
+    summary: {
+      en: 'Local-first research environment for building, benchmarking, and improving auditable outbreak-intelligence agents under deterministic public-health safety constraints (fail-closed publication, evidence binding, no autonomous approval).',
+      zh: '面向疫情智能体的本地化研究环境：构建、评测、改进可审计的传染病暴发智能体，遵循确定性公共卫生安全约束（fail-closed 发文、证据绑定、禁止自主审批）。',
+    },
+    status: {
+      en: 'Public repository',
+      zh: '公开仓库',
+    },
+    repoUrl: 'https://github.com/Hylouis233/epic-intel-harness',
+    type: 'research-code',
+    tags: ['Agent benchmarking', 'Outbreak intelligence', 'Deterministic safety', 'Public-health AI'],
+  },
+  {
+    key: 'hanta-scientific-data-resource',
+    name: {
+      en: 'Hantavirus / Ebola Research Workspace',
+      zh: '汉坦病毒 / 埃博拉研究工作区',
+    },
+    summary: {
+      en: 'Monorepo for reproducible, auditable viral outbreak research (Hantavirus, Ebola) with DVC, Snakemake, and MLflow-based ResearchOps, including data-provenance grading.',
+      zh: '可复现、可审计的病毒暴发研究 monorepo（汉坦病毒、埃博拉），采用 DVC、Snakemake 与 MLflow 的 ResearchOps 流程，含数据真实性分级。',
+    },
+    status: {
+      en: 'Public repository',
+      zh: '公开仓库',
+    },
+    repoUrl: 'https://github.com/Hylouis233/hanta-scientific-data-resource',
+    type: 'research-code',
+    tags: ['ResearchOps', 'Hantavirus', 'Ebola', 'Snakemake', 'DVC'],
+  },
+  {
     key: 'multicopat',
     name: {
       en: 'MultiCoPat',
