@@ -37,4 +37,36 @@ if (!existsSync(nojekyll)) {
   writeFileSync(nojekyll, '');
 }
 copyFileSync(nojekyll, resolve(root, outDir, '.nojekyll'));
+// When building the github variant, overwrite dist/index.html with a
+// meta-refresh / canonical redirect to introduction.hylouis.top so the old
+// hylouis233.github.io domain migrates visitors to the canonical homepage.
+if (variant === 'github') {
+  const target = 'https://introduction.hylouis.top/';
+  const distIndex = resolve(root, outDir, 'index.html');
+  const redirectHtml = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Hong Liu | Academic Homepage</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="canonical" href="${target}" />
+  <meta http-equiv="refresh" content="0;url=${target}" />
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      margin: 0; padding: 4rem 1.5rem; text-align: center; color: #1f2937; }
+    a { color: #0f766e; text-decoration: none; font-weight: 600; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <p>This page has moved to <a href="${target}">introduction.hylouis.top</a>.</p>
+  <p>If you are not redirected automatically, please follow the link above.</p>
+  <script>window.location.replace(${JSON.stringify(target)});</script>
+</body>
+</html>
+`;
+  writeFileSync(distIndex, redirectHtml);
+  console.log(`[build] github variant: dist/index.html -> ${target} (301 redirect)`);
+}
+
 console.log(`[build] variant=${variant} -> ${outDir}/ (.nojekyll copied)`);
