@@ -120,7 +120,7 @@ export const education: EducationItem[] = [
     },
     program: {
       en: 'M.Sc. in Computer Science and Technology, Faculty of Innovation Engineering',
-      zh: '计算机科学与技术硕士，创新工程学院',
+      zh: '智能技术硕士，创新工程学院',
     },
     meta: {
       en: 'Graduated | GPA 3.63/4 | Full scholarship and living allowance',
@@ -128,7 +128,7 @@ export const education: EducationItem[] = [
     },
     detail: {
       en: 'Completed M.Sc. training in Computer Science and Technology under Academician Nanshan Zhong and Prof. Chitin Hon, with joint training at Xiamen University (co-supervised by Prof. Tianmu Chen), focusing primarily on infectious disease forecasting and early warning. Graduate training emphasized intelligent control technology, artificial intelligence, numerical analysis, statistics, pattern recognition, algorithm theory, and optimization methods.',
-      zh: '已在钟南山院士与韩子天教授指导下完成计算机科学与技术硕士阶段训练，并由厦门大学联合培养（联合导师陈田木教授），主要从事传染病预测预警研究。研究生阶段训练重点包括智能控制技术、人工智能基础、数值分析、统计学导论、模式识别、算法理论基础与优化方法基础。',
+      zh: '已在钟南山院士与韩子天教授指导下完成智能技术硕士阶段训练，并由厦门大学联合培养（联合导师陈田木教授），主要从事传染病预测预警研究。研究生阶段训练重点包括智能控制技术、人工智能基础、数值分析、统计学导论、模式识别、算法理论基础与优化方法基础。',
     },
   },
   {
@@ -347,8 +347,8 @@ export const publications: PublicationItem[] = [
       zh: '已公开预印本；期刊投稿审稿中',
     },
     note: {
-      en: 'First-author MAESTRO study. In the documented evaluation context, the reported R² reached 0.956 on a 10-year Hong Kong influenza dataset.',
-      zh: '第一作者 MAESTRO 研究。在已给出的文档评估场景中，香港十年流感数据上的报告 R² 为 0.956。',
+      en: 'First-author MAESTRO study; reports R² = 0.956 on over 11 years of Hong Kong influenza data (excluding COVID-19).',
+      zh: '第一作者 MAESTRO 研究；在香港十一年以上流感数据（不含 COVID-19 期间）上报告 R² = 0.956。',
     },
     doi: '10.48550/arXiv.2509.08578',
     url: 'https://doi.org/10.48550/arXiv.2509.08578',

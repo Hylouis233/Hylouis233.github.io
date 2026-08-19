@@ -43,7 +43,7 @@ export const researchThemes = [
 
 export const currentFocus = {
   en: 'My current doctoral-stage work centres on multimodal infectious-disease forecasting and early warning, including the MAESTRO framework for respiratory-disease activity, influenza co-circulation analysis, and dual-framework ODE / Petri Net modelling for small-sample outbreak settings such as the 2025 Foshan chikungunya outbreak. Alongside these lines, I maintain an infectious-disease intelligence platform for data collection and analytical support. The longer-term agenda links macroscopic epidemic patterns with microscopic viral evolution, integrating epidemiological signals with phylodynamic evidence toward a coherent early-warning framework.',
-  zh: '我当前的博士阶段研究以多模态传染病预测预警为核心，包括面向呼吸道疾病活动的 MAESTRO 框架、流感共流行与共感染分析，以及面向小样本疫情场景（如 2025 年佛山基孔肯雅热疫情）的 ODE/Petri Net 双框架建模。与此同时，我持续维护一个用于数据采集与分析支持的传染病情报平台。长期研究议程致力于打通宏观传播格局与微观病毒进化之间的联系，将流行病学信号与系统发育动力学证据纳入统一的早期预警框架，为公共卫生准备与决策提供可靠的多尺度证据支持。',
+  zh: '我当前的博士阶段研究以多模态传染病预测预警为核心，包括面向呼吸道疾病活动的 MAESTRO 框架、流感共流行分析，以及面向小样本疫情场景（如 2025 年佛山基孔肯雅热疫情）的 ODE/Petri Net 双框架建模。与此同时，我持续维护一个用于数据采集与分析支持的传染病情报平台。长期研究议程致力于打通宏观传播格局与微观病毒进化之间的联系，将流行病学信号与系统发育动力学证据纳入统一的早期预警框架。',
 };
 
 export const keywords = [
@@ -81,7 +81,7 @@ export const researchNarrative = {
 export const selectedHighlights = [
   {
     en: 'Developed the MAESTRO multimodal forecasting framework for respiratory disease activity; in the documented evaluation context, the reported R² reached 0.956 on a 10-year Hong Kong influenza dataset.',
-    zh: '开发了面向呼吸道疾病活动预测的多模态框架 MAESTRO；在文档所述评估场景下，其在香港十年流感数据上的报告 R² 为 0.956。',
+    zh: '开发了面向呼吸道疾病活动预测的多模态框架 MAESTRO；在香港十一年以上流感数据（不含 COVID-19 期间）上报告 R² = 0.956。',
   },
   {
     en: 'Built an ODE and Petri Net dual-model workflow for the 2025 Foshan chikungunya outbreak to compare intervention phases, transmission indicators, and sensitivity under small-sample conditions.',
@@ -89,7 +89,7 @@ export const selectedHighlights = [
   },
   {
     en: 'Designed an analytical pipeline for influenza co-circulation and subtype interaction signals, leveraging interpretable time-series decomposition and multiscale frequency-domain coupling patterns.',
-    zh: '设计了针对流感共流行与共感染信号的分析管线，借助可解释的时序分解与多尺度频域耦合模式提取动态特征。',
+    zh: '设计了针对流感共流行与亚型交互信号的分析管线，借助可解释的时序分解与多尺度频域耦合模式提取动态特征。',
   },
   {
     en: 'Independently developed and continuously maintained an infectious-disease news collection, database, and visualization platform that supports research-oriented data acquisition and monitoring workflows.',
@@ -101,7 +101,7 @@ export const selectedAchievements = [
   {
     label: 'Current stage',
     en: 'Ph.D. student in Epidemiology and Health Statistics at Xiamen University (2026–present), holding an M.Sc. in Computer Science and Technology from Macau University of Science and Technology.',
-    zh: '厦门大学流行病与卫生统计学博士在读（2026 年入学），已获澳门科技大学计算机科学与技术硕士学位。',
+    zh: '厦门大学流行病与卫生统计学博士在读（2026 年入学），已获澳门科技大学智能技术硕士学位。',
   },
   {
     label: 'Representative outputs',
