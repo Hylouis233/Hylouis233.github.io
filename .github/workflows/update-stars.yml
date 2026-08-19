@@ -1,0 +1,79 @@
+name: Sync GitHub stars
+
+# The `on` key needs to be quoted so PyYAML does not parse it as a boolean.
+# GitHub Actions itself tolerates both forms.
+"on":
+  schedule:
+    # Run daily at 03:00 UTC = 11:00 Asia/Singapore.
+    - cron: "0 3 * * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Print what would change without committing"
+        required: false
+        default: "false"
+        type: choice
+        options: ["false", "true"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: stars-sync
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    name: Refresh stars in src/data/academic.ts
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install gh CLI (already on the runner, but pin the version)
+        run: |
+          gh --version
+
+      - name: Run update-stars.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
+            echo "[dry_run] would run scripts/update-stars.py and report diff without commit"
+            python scripts/update-stars.py || echo "(no-op)"
+            git diff --stat -- src/data/academic.ts || true
+          else
+            python scripts/update-stars.py
+          fi
+
+      - name: Show updated values
+        if: always()
+        run: |
+          git diff --stat -- src/data/academic.ts || true
+
+      - name: Commit and push (if changed)
+        if: github.event.inputs.dry_run != 'true'
+        run: |
+          set -e
+          if git diff --quiet -- src/data/academic.ts; then
+            echo "No changes; nothing to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/data/academic.ts
+          ts=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+          # Summarize the updated entries in the commit message
+          msg=$(git diff --unified=0 -- src/data/academic.ts \
+            | awk '/^[-+]    stars: / { sub(/^[-+]/, ""); print }' \
+            | sort -u | head -50)
+          git commit -m "chore(stars): refresh GitHub star counts" \
+            -m "Auto-updated by the Sync GitHub stars workflow at $ts." \
+            -m "$msg"
+          git push origin HEAD:main
+          echo "Pushed commit $(git rev-parse --short HEAD)"
