@@ -50,6 +50,8 @@ export type ProjectItem = {
   isPrivate?: boolean;
   type: ProjectType;
   featured?: boolean;
+  /** Live GitHub star count. Updated by deployment scripts; not authoritative. */
+  stars?: number;
   tags?: string[];
   impactSummary?: LocalizedText;
   relatedPublicationTitles?: string[];
@@ -453,8 +455,8 @@ export const projects: ProjectItem[] = [
       zh: 'MAESTRO',
     },
     summary: {
-      en: 'Multimodal forecasting framework for respiratory disease activity and early-warning-oriented time-series analysis.',
-      zh: '面向呼吸道疾病活动与预警场景的多模态时间序列预测框架。',
+      en: 'Multimodal time-series forecasting framework for respiratory disease activity and early-warning scenarios, with reported R² = 0.956 on a 10-year Hong Kong influenza dataset.',
+      zh: '面向呼吸道疾病活动与预警场景的多模态时间序列预测框架；在香港十年流感数据上报告 R² = 0.956。',
     },
     status: {
       en: 'Public repository',
@@ -463,6 +465,7 @@ export const projects: ProjectItem[] = [
     repoUrl: 'https://github.com/Hylouis233/MAESTRO',
     type: 'research-code',
     featured: true,
+    stars: 0,
     tags: ['Forecasting', 'Early warning', 'Multimodal modelling', 'Time series'],
     impactSummary: {
       en: 'Research framework connecting multimodal respiratory disease forecasting with documented evaluation and paper output.',
@@ -477,8 +480,8 @@ export const projects: ProjectItem[] = [
       zh: 'ODE-Petri-Chikungunya',
     },
     summary: {
-      en: 'Research workflow comparing ODE and Petri Net perspectives for the 2025 Foshan chikungunya outbreak.',
-      zh: '面向 2025 年佛山基孔肯雅热疫情的 ODE 与 Petri Net 双模型研究流程。',
+      en: 'ODE and Petri Net dual-model research workflow for the 2025 Foshan chikungunya outbreak, published in BMC Public Health 26 (2026).',
+      zh: '面向 2025 年佛山基孔肯雅热疫情的 ODE 与 Petri Net 双模型研究流程，已发表于 BMC Public Health 26 (2026)。',
     },
     status: {
       en: 'Public repository',
@@ -487,6 +490,7 @@ export const projects: ProjectItem[] = [
     repoUrl: 'https://github.com/Hylouis233/ODE-Petri-Chikungunya',
     type: 'research-code',
     featured: true,
+    stars: 0,
     tags: ['Mechanistic modelling', 'ODE', 'Petri Net', 'Outbreak analysis'],
     impactSummary: {
       en: 'Dual-model outbreak analysis workflow linking mechanistic interpretation, intervention phases, and manuscript development.',
@@ -501,8 +505,8 @@ export const projects: ProjectItem[] = [
       zh: '传染病数据平台 / 情报平台',
     },
     summary: {
-      en: 'Crawler, database, ETL, and visualization workflow for infectious-disease news collection, monitoring, and research-oriented data support.',
-      zh: '涵盖爬虫、数据库、ETL 与可视化的传染病新闻采集、监测与科研支持平台。',
+      en: 'Crawler, database, ETL, and visualization stack for infectious-disease news collection, monitoring, and research support. Includes public and private components.',
+      zh: '涵盖爬虫、数据库、ETL 与可视化的传染病新闻采集、监测与科研支持平台。含公开与私有代码。',
     },
     status: {
       en: 'Mixed public/private codebases; selected components are private',
@@ -523,8 +527,8 @@ export const projects: ProjectItem[] = [
       zh: 'bibverify',
     },
     summary: {
-      en: 'BibTeX validation and metadata completion tool for DOI, author, year, deduplication, and citation normalization workflows.',
-      zh: '用于 DOI、作者、年份校验、去重与引用规范化的 BibTeX 文献检查与补全工具。',
+      en: 'Cross-platform BibTeX verification and metadata-completion tool for researchers and AI assistants. CLI, Python API, MCP server, and explainable multi-source matching. Published on PyPI.',
+      zh: '面向研究者与 AI 助手的跨平台 BibTeX 校验与元数据补全工具；CLI、Python API、MCP server、可解释多源匹配。已发布到 PyPI。',
     },
     status: {
       en: 'Referenced public repository',
@@ -533,6 +537,7 @@ export const projects: ProjectItem[] = [
     repoUrl: 'https://github.com/Hylouis233/bibverify',
     type: 'software',
     featured: true,
+    stars: 48,
     tags: ['Bibliographic tooling', 'DOI validation', 'Metadata completion'],
     impactSummary: {
       en: 'Utility for reference verification, metadata completion, deduplication, and citation cleanup across writing workflows.',
@@ -546,8 +551,8 @@ export const projects: ProjectItem[] = [
       zh: '布雷图指数预测模型',
     },
     summary: {
-      en: 'Supplementary codebase for machine learning-based dengue vector Breteau Index prediction.',
-      zh: '基于机器学习的登革热媒介布雷图指数预测研究补充代码。',
+      en: 'Supplementary codebase for the Fujian dengue-vector Breteau Index prediction study, published as a Research Square preprint.',
+      zh: '福建省登革热媒介布雷图指数预测研究的配套代码，已发布为 Research Square 预印本。',
     },
     status: {
       en: 'Public repository',
@@ -555,6 +560,7 @@ export const projects: ProjectItem[] = [
     },
     repoUrl: 'https://github.com/Hylouis233/Breteau-Index-Prediction-Model-using-machine-learning',
     type: 'research-code',
+    stars: 1,
     tags: ['Machine Learning', 'Prediction Model', 'Breteau Index'],
     relatedPublicationTitles: ['Three machine-learning models to predict dengue vectors Breteau Index based on meteorology and biotope in Fujian China'],
   },
@@ -565,8 +571,8 @@ export const projects: ProjectItem[] = [
       zh: '2023美赛C题解决方案',
     },
     summary: {
-      en: 'Team solution and codebase for the Mathematical Contest in Modeling (MCM) 2023 Problem C.',
-      zh: '2023年美国大学生数学建模竞赛（MCM）C题的团队解决方案及代码库。',
+      en: 'Team solution and codebase for the 2023 Mathematical Contest in Modeling (MCM) Problem C.',
+      zh: '2023 年美国大学生数学建模竞赛（MCM）C 题的团队解决方案与代码库。',
     },
     status: {
       en: 'Public repository',
@@ -574,6 +580,7 @@ export const projects: ProjectItem[] = [
     },
     repoUrl: 'https://github.com/Hylouis233/MCM2023C',
     type: 'analysis-project',
+    stars: 0,
     tags: ['Mathematical Modeling', 'MCM', 'Data Analysis'],
   },
   {
@@ -583,8 +590,8 @@ export const projects: ProjectItem[] = [
       zh: '百度指数爬虫',
     },
     summary: {
-      en: 'A Baidu Index scraping tool equipped with a graphical user interface (GUI).',
-      zh: '一款带图形用户界面（GUI）的百度指数数据采集爬虫工具。',
+      en: 'GUI-equipped Baidu Index scraping tool for data collection workflows.',
+      zh: '带图形用户界面的百度指数数据采集爬虫工具。',
     },
     status: {
       en: 'Public repository',
@@ -592,6 +599,7 @@ export const projects: ProjectItem[] = [
     },
     repoUrl: 'https://github.com/Hylouis233/baidu-index-spider',
     type: 'software',
+    stars: 0,
     tags: ['Spider', 'Data Collection', 'GUI'],
   },
   {
@@ -601,8 +609,8 @@ export const projects: ProjectItem[] = [
       zh: '研赛 LaTeX 模板',
     },
     summary: {
-      en: 'Refactored LaTeX templates for the China Graduate Mathematical Contest in Modeling.',
-      zh: '中国研究生数学建模竞赛（华为杯）LaTeX 模板重构版。',
+      en: 'Refactored LaTeX template for the China Graduate Mathematical Contest in Modeling (Huawei Cup).',
+      zh: '中国研究生数学建模竞赛（华为杯）LaTeX 模板的重构版本。',
     },
     status: {
       en: 'Public repository',
@@ -610,6 +618,7 @@ export const projects: ProjectItem[] = [
     },
     repoUrl: 'https://github.com/Hylouis233/GMCM_LaTeX',
     type: 'software',
+    stars: 0,
     tags: ['LaTeX', 'Template', 'Mathematical Modeling'],
   },
   {
@@ -628,6 +637,7 @@ export const projects: ProjectItem[] = [
     },
     repoUrl: 'https://github.com/Hylouis233/phsciencedata_crawler_region',
     type: 'research-code',
+    stars: 5,
     tags: ['Public health data', 'Crawler', 'Regional surveillance', 'Fujian'],
   },
   {
@@ -646,6 +656,7 @@ export const projects: ProjectItem[] = [
     },
     repoUrl: 'https://github.com/Hylouis233/epic-site-pages',
     type: 'platform',
+    stars: 0,
     tags: ['Static site', 'Public dashboard', 'Infectious disease'],
   },
   {
@@ -655,8 +666,8 @@ export const projects: ProjectItem[] = [
       zh: 'openscience 研究工作流',
     },
     summary: {
-      en: 'Evidence-first research workflow toolkit with literature search, citation verification, human-gated research stages, and an `science-epi` skill for outbreak analysis.',
-      zh: '证据优先的研究工作流工具集，覆盖文献检索、引用核验、人工把关的研究阶段以及面向疫情分析的 `science-epi` 子套件。',
+      en: 'Evidence-first research workflow harness with six plugins (science-core / science-compute / science-data / science-epi / science-literature / science-verify), human-gated research stages, and append-only provenance logs.',
+      zh: '证据优先的研究工作流 harness，含 6 个子套件（science-core / science-compute / science-data / science-epi / science-literature / science-verify），提供阶段门控与追加式 provenance 日志。',
     },
     status: {
       en: 'Public repository',
@@ -664,6 +675,7 @@ export const projects: ProjectItem[] = [
     },
     repoUrl: 'https://github.com/Hylouis233/openscience',
     type: 'software',
+    stars: 0,
     tags: ['Research workflow', 'AI4Science', 'Citation verification', 'MCP'],
   },
   {
@@ -673,8 +685,8 @@ export const projects: ProjectItem[] = [
       zh: 'mcodeforlegal 法律工作流',
     },
     summary: {
-      en: 'Mainland China-first legal workflow plugins for Claude Code, including contract review, litigation support, compliance, corporate, labor, and IP with statute checks and citation gates.',
-      zh: '面向中国大陆法律场景的 Claude Code 工作流插件，覆盖合同审查、诉讼支持、合规、公司、劳动与知产等模块，集成法条核查与引用把关。',
+      en: 'Mainland China-first legal workflow plugin pack for Claude Code (contract review, litigation support, compliance, corporate, labor, IP) with statute checks and citation gates.',
+      zh: '面向中国大陆法律场景的 Claude Code 工作流插件包（合同审查、诉讼支持、合规、公司、劳动、知产），集成法条核查与引用把关。',
     },
     status: {
       en: 'Public repository',
@@ -682,6 +694,7 @@ export const projects: ProjectItem[] = [
     },
     repoUrl: 'https://github.com/Hylouis233/mcodeforlegal',
     type: 'software',
+    stars: 1,
     tags: ['LegalTech', 'Claude Code', 'Compliance', 'Cross-discipline'],
   },
   {
@@ -691,8 +704,8 @@ export const projects: ProjectItem[] = [
       zh: 'EpicIntel 评测与改进工具集',
     },
     summary: {
-      en: 'Local-first research environment for building, benchmarking, and improving auditable outbreak-intelligence agents under deterministic public-health safety constraints (fail-closed publication, evidence binding, no autonomous approval).',
-      zh: '面向疫情智能体的本地化研究环境：构建、评测、改进可审计的传染病暴发智能体，遵循确定性公共卫生安全约束（fail-closed 发文、证据绑定、禁止自主审批）。',
+      en: 'Local-first research harness for building, benchmarking, and improving auditable outbreak-intelligence agents under deterministic public-health safety constraints (fail-closed publication, evidence binding, no autonomous approval).',
+      zh: '面向疫情智能体的本地化研究 harness：构建、评测、改进可审计的传染病暴发智能体，遵循确定性公共卫生安全约束（fail-closed 发文、证据绑定、禁止自主审批）。',
     },
     status: {
       en: 'Public repository',
@@ -700,6 +713,7 @@ export const projects: ProjectItem[] = [
     },
     repoUrl: 'https://github.com/Hylouis233/epic-intel-harness',
     type: 'research-code',
+    stars: 0,
     tags: ['Agent benchmarking', 'Outbreak intelligence', 'Deterministic safety', 'Public-health AI'],
   },
   {
@@ -709,8 +723,8 @@ export const projects: ProjectItem[] = [
       zh: '汉坦病毒 / 埃博拉研究工作区',
     },
     summary: {
-      en: 'Monorepo for reproducible, auditable viral outbreak research (Hantavirus, Ebola) with DVC, Snakemake, and MLflow-based ResearchOps, including data-provenance grading.',
-      zh: '可复现、可审计的病毒暴发研究 monorepo（汉坦病毒、埃博拉），采用 DVC、Snakemake 与 MLflow 的 ResearchOps 流程，含数据真实性分级。',
+      en: 'Reproducible, auditable viral-outbreak research workspace (Hantavirus, Ebola) with DVC + Snakemake + MLflow ResearchOps and data-provenance grading.',
+      zh: '可复现、可审计的病毒暴发研究 workspace（汉坦病毒、埃博拉），采用 DVC + Snakemake + MLflow 的 ResearchOps 流程，含数据真实性分级。',
     },
     status: {
       en: 'Public repository',
@@ -718,6 +732,7 @@ export const projects: ProjectItem[] = [
     },
     repoUrl: 'https://github.com/Hylouis233/hanta-scientific-data-resource',
     type: 'research-code',
+    stars: 0,
     tags: ['ResearchOps', 'Hantavirus', 'Ebola', 'Snakemake', 'DVC'],
   },
   {
@@ -727,8 +742,8 @@ export const projects: ProjectItem[] = [
       zh: 'MultiCoPat',
     },
     summary: {
-      en: 'Multi-region and multi-window influenza co-circulation analysis and prediction workflows.',
-      zh: '多地区、多时间窗流感共流行分析与预测流程。',
+      en: 'Multi-region and multi-window influenza co-circulation analysis and prediction workflows, published in npj Systems Biology and Applications (2026).',
+      zh: '多地区、多时间窗流感共流行分析与预测流程，已发表于 npj Systems Biology and Applications (2026)。',
     },
     status: {
       en: 'Public repository',
@@ -737,6 +752,7 @@ export const projects: ProjectItem[] = [
     repoUrl: 'https://github.com/Hylouis233/MultiCoPat',
     type: 'research-code',
     featured: true,
+    stars: 0,
     tags: ['Influenza', 'Co-circulation', 'Prediction', 'Time series'],
     impactSummary: {
       en: 'Analytical pipeline supporting work on influenza co-circulation and co-infection signals.',
