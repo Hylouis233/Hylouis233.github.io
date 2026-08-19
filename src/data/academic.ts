@@ -1,4 +1,4 @@
-export type LocalizedText = {
+﻿export type LocalizedText = {
   en: string;
   zh: string;
 };
@@ -430,7 +430,7 @@ export const projects: ProjectItem[] = [
     stars: 0,
     tags: ['Forecasting', 'Early warning', 'Multimodal modelling', 'Time series'],
     impactSummary: {
-      en: 'Research framework connecting multimodal respiratory disease forecasting with documented evaluation and paper output.',
+      en: 'Research framework connecting multimodal respiratory-disease forecasting with transparent model-evaluation and published output.',
       zh: '连接多模态呼吸道疾病预测、文档化评估与论文产出的研究框架。',
     },
     relatedPublicationTitles: ['Multi-modal Adaptive Estimation for Temporal Respiratory Disease Outbreak'],
@@ -984,3 +984,4 @@ export const publicationGroups: Array<{
     },
   },
 ];
+
