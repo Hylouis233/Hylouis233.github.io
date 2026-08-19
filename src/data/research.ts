@@ -21,12 +21,12 @@
   },
   {
     title: {
-      en: 'Small-sample outbreak modelling',
-      zh: '小样本疫情建模',
+      en: 'Mechanistic Outbreak Modelling',
+      zh: '机制疫情建模',
     },
     body: {
-      en: 'Recent work on the 2025 Foshan chikungunya outbreak combines ODE and Petri Net formulations to compare transmission interpretation, intervention effects, and uncertainty under small-sample conditions.',
-      zh: '近期围绕 2025 年佛山基孔肯雅热疫情的研究结合 ODE 与 Petri Net 双框架，在小样本条件下比较传播解释、干预效果与不确定性。',
+      en: 'Recent work on the 2025 Foshan chikungunya outbreak combines ODE and Petri Net formulations to compare transmission interpretation, intervention effects, and uncertainty under data-limited conditions.',
+      zh: '近期围绕 2025 年佛山基孔肯雅热疫情的研究结合 ODE 与 Petri Net 双框架，在数据有限条件下比较传播解释、干预效果与不确定性。',
     },
   },
   {
@@ -42,8 +42,8 @@
 ];
 
 export const currentFocus = {
-  en: 'My current doctoral-stage work centres on multimodal infectious-disease forecasting and early warning, including the MAESTRO framework for respiratory-disease activity, influenza co-circulation analysis, and dual-framework ODE / Petri Net modelling for small-sample outbreak settings such as the 2025 Foshan chikungunya outbreak. Alongside these lines, I maintain an infectious-disease intelligence platform for data collection and analytical support. The longer-term agenda links macroscopic epidemic patterns with microscopic viral evolution, integrating epidemiological signals with phylodynamic evidence toward a coherent early-warning framework.',
-  zh: '我当前的博士阶段研究以多模态传染病预测预警为核心，包括面向呼吸道疾病活动的 MAESTRO 框架、流感共流行分析，以及面向小样本疫情场景（如 2025 年佛山基孔肯雅热疫情）的 ODE/Petri Net 双框架建模。与此同时，我持续维护一个用于数据采集与分析支持的传染病情报平台。长期研究议程致力于打通宏观传播格局与微观病毒进化之间的联系，将流行病学信号与系统发育动力学证据纳入统一的早期预警框架。',
+  en: 'My current doctoral-stage work centres on multimodal infectious-disease forecasting and early warning, including the MAESTRO framework for respiratory-disease activity, influenza co-circulation analysis, and dual-framework ODE / Petri Net modelling for mechanistic-modelling outbreak settings such as the 2025 Foshan chikungunya outbreak. Alongside these lines, I maintain an infectious-disease intelligence platform for data collection and analytical support. The longer-term agenda links macroscopic epidemic patterns with microscopic viral evolution, integrating epidemiological signals with phylodynamic evidence toward a coherent early-warning framework.',
+  zh: '我当前的博士阶段研究以多模态传染病预测预警为核心，包括面向呼吸道疾病活动的 MAESTRO 框架、流感共流行分析，以及面向机制建模场景（如 2025 年佛山基孔肯雅热疫情）的 ODE/Petri Net 双框架建模。与此同时，我持续维护一个用于数据采集与分析支持的传染病情报平台。长期研究议程致力于打通宏观传播格局与微观病毒进化之间的联系，将流行病学信号与系统发育动力学证据纳入统一的早期预警框架。',
 };
 
 export const keywords = [
@@ -85,7 +85,7 @@ export const selectedHighlights = [
   },
   {
     en: 'Built an ODE and Petri Net dual-model workflow for the 2025 Foshan chikungunya outbreak to compare intervention phases, transmission indicators, and sensitivity under small-sample conditions.',
-    zh: '围绕 2025 年佛山基孔肯雅热疫情构建了 ODE 与 Petri Net 双模型流程，用于在小样本条件下比较干预阶段、传播指标与敏感性结果。',
+    zh: '围绕 2025 年佛山基孔肯雅热疫情构建了 ODE 与 Petri Net 双模型流程，用于在数据有限条件下比较干预阶段、传播指标与敏感性结果。',
   },
   {
     en: 'Designed an analytical pipeline for influenza co-circulation and subtype interaction signals, leveraging interpretable time-series decomposition and multiscale frequency-domain coupling patterns.',

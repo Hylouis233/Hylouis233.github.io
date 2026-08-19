@@ -89,8 +89,8 @@ export const researchInterests: LocalizedText[] = [
     zh: '流感共流行分析、共流行信号识别与非平稳时间序列建模。',
   },
   {
-    en: 'Spatiotemporal transmission dynamics, small-sample outbreak modelling, and viral evolution.',
-    zh: '传染病时空传播动力学、小样本疫情建模与病毒进化。',
+    en: 'Spatiotemporal transmission dynamics, mechanistic outbreak modelling, and viral evolution.',
+    zh: '传染病时空传播动力学、机制疫情建模与病毒进化。',
   },
 ];
 
@@ -461,6 +461,31 @@ export const projects: ProjectItem[] = [
     relatedPublicationTitles: ['Dual-Model Framework for CHIKV Transmission Modeling: ODE and Petri Net Analysis of the 2025 Foshan Outbreak'],
   },
   {
+    key: 'multicopat',
+    name: {
+      en: 'MultiCoPat',
+      zh: 'MultiCoPat',
+    },
+    summary: {
+      en: 'Multi-region and multi-window influenza co-circulation analysis workflow, published in npj Systems Biology and Applications (2026).',
+      zh: '多地区、多时间窗流感共流行分析与预测流程，已发表于 npj Systems Biology and Applications (2026)。',
+    },
+    status: {
+      en: 'Public repository',
+      zh: '公开仓库',
+    },
+    repoUrl: 'https://github.com/Hylouis233/MultiCoPat',
+    type: 'research-code',
+    featured: true,
+    stars: 0,
+    tags: ['Influenza', 'Co-circulation', 'Prediction', 'Time series'],
+    impactSummary: {
+      en: 'Analytical pipeline supporting work on influenza co-circulation, multi-subtype interaction, and non-stationary time-series modelling.',
+      zh: '支撑流感共流行与共流行信号相关研究的分析管线。',
+    },
+    relatedPublicationTitles: ['Spatiotemporal instability of influenza seasonality during viral co-circulation'],
+  },
+  {
     key: 'infectious-disease-intelligence-platform',
     name: {
       en: 'Infectious disease intelligence platform',
@@ -498,7 +523,6 @@ export const projects: ProjectItem[] = [
     },
     repoUrl: 'https://github.com/Hylouis233/bibverify',
     type: 'software',
-    featured: true,
     stars: 48,
     tags: ['Bibliographic tooling', 'DOI validation', 'Metadata completion'],
     impactSummary: {
@@ -697,31 +721,7 @@ export const projects: ProjectItem[] = [
     stars: 0,
     tags: ['ResearchOps', 'Hantavirus', 'Ebola', 'Snakemake', 'DVC'],
   },
-  {
-    key: 'multicopat',
-    name: {
-      en: 'MultiCoPat',
-      zh: 'MultiCoPat',
-    },
-    summary: {
-      en: 'Multi-region and multi-window influenza co-circulation analysis workflow, published in npj Systems Biology and Applications (2026).',
-      zh: '多地区、多时间窗流感共流行分析与预测流程，已发表于 npj Systems Biology and Applications (2026)。',
-    },
-    status: {
-      en: 'Public repository',
-      zh: '公开仓库',
-    },
-    repoUrl: 'https://github.com/Hylouis233/MultiCoPat',
-    type: 'research-code',
-    featured: true,
-    stars: 0,
-    tags: ['Influenza', 'Co-circulation', 'Prediction', 'Time series'],
-    impactSummary: {
-      en: 'Analytical pipeline supporting work on influenza co-circulation, multi-subtype interaction, and non-stationary time-series modelling.',
-      zh: '支撑流感共流行与共流行信号相关研究的分析管线。',
-    },
-    relatedPublicationTitles: ['Spatiotemporal instability of influenza seasonality during viral co-circulation'],
-  },
+
 ];
 
 export const awards: AwardItem[] = [
