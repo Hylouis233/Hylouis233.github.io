@@ -35,14 +35,14 @@ export const researchThemes = [
       zh: '传播动力学与病毒进化',
     },
     body: {
-      en: 'My broader research narrative links macroscopic epidemic patterns with microscopic viral evolution, and the longer-term agenda extends toward connecting epidemiological signals, phylodynamic evidence, and future early-warning models within a coherent framework.',
-      zh: '更广义的研究叙事关注宏观传播格局与微观病毒进化之间的联系，希望将流行病学信号、系统发育动力学证据与未来预警模型纳入统一框架。',
+      en: 'My broader agenda is to link macroscopic epidemic patterns with microscopic viral evolution, integrating epidemiological signals, phylodynamic evidence, and early-warning models within a single framework.',
+      zh: '更广义的研究方向是打通宏观传播格局与微观病毒进化之间的联系，将流行病学信号、系统发育动力学证据与预警模型纳入统一框架。',
     },
   },
 ];
 
 export const currentFocus = {
-  en: 'My current doctoral-stage work centers on multimodal infectious disease forecasting and early warning, including the MAESTRO framework for respiratory disease activity, influenza co-circulation and co-infection analysis, and dual-framework ODE/Petri Net modelling for small-sample outbreak settings such as the 2025 Foshan chikungunya outbreak. Alongside these lines, I maintain an infectious-disease intelligence platform for data collection and analytical support. The longer-term agenda links macroscopic epidemic patterns with microscopic viral evolution, integrating epidemiological signals with phylodynamic evidence toward a coherent early-warning framework that offers reliable, multi-scale insights for public health preparedness and decision-making.',
+  en: 'My current doctoral-stage work centres on multimodal infectious-disease forecasting and early warning, including the MAESTRO framework for respiratory-disease activity, influenza co-circulation analysis, and dual-framework ODE / Petri Net modelling for small-sample outbreak settings such as the 2025 Foshan chikungunya outbreak. Alongside these lines, I maintain an infectious-disease intelligence platform for data collection and analytical support. The longer-term agenda links macroscopic epidemic patterns with microscopic viral evolution, integrating epidemiological signals with phylodynamic evidence toward a coherent early-warning framework.',
   zh: '我当前的博士阶段研究以多模态传染病预测预警为核心，包括面向呼吸道疾病活动的 MAESTRO 框架、流感共流行与共感染分析，以及面向小样本疫情场景（如 2025 年佛山基孔肯雅热疫情）的 ODE/Petri Net 双框架建模。与此同时，我持续维护一个用于数据采集与分析支持的传染病情报平台。长期研究议程致力于打通宏观传播格局与微观病毒进化之间的联系，将流行病学信号与系统发育动力学证据纳入统一的早期预警框架，为公共卫生准备与决策提供可靠的多尺度证据支持。',
 };
 
@@ -88,7 +88,7 @@ export const selectedHighlights = [
     zh: '围绕 2025 年佛山基孔肯雅热疫情构建了 ODE 与 Petri Net 双模型流程，用于在小样本条件下比较干预阶段、传播指标与敏感性结果。',
   },
   {
-    en: 'Designed an analytical pipeline for influenza co-circulation and co-infection signals, leveraging interpretable time-series decomposition and multiscale frequency-domain coupling patterns.',
+    en: 'Designed an analytical pipeline for influenza co-circulation and subtype interaction signals, leveraging interpretable time-series decomposition and multiscale frequency-domain coupling patterns.',
     zh: '设计了针对流感共流行与共感染信号的分析管线，借助可解释的时序分解与多尺度频域耦合模式提取动态特征。',
   },
   {
@@ -117,7 +117,7 @@ export const selectedAchievements = [
 
 export const researchApproach = [
   {
-    title: { en: 'Multimodal evidence', zh: '多模态证据' },
+    title: { en: 'Multimodal data integration', zh: '多模态数据融合' },
     body: {
       en: 'I work with surveillance records, environmental information, behavioral or news-derived signals, and, in longer-term plans, genomic data, aiming to turn heterogeneous public-health information into coherent analytical inputs.',
       zh: '我会结合监测记录、环境信息、行为或新闻信号，并在未来研究中进一步纳入基因组数据，努力将异质公共卫生信息转化为统一分析输入。',
@@ -131,10 +131,10 @@ export const researchApproach = [
     },
   },
   {
-    title: { en: 'Stage-aware narrative', zh: '阶段边界清晰' },
+    title: { en: 'Reproducibility and validation', zh: '可复现与模型验证' },
     body: {
-      en: 'I distinguish completed outputs, work under review, work in preparation, software artifacts, and forward-looking doctoral plans, so that the research narrative stays aligned with documented evidence.',
-      zh: '我会明确区分已完成成果、在审工作、准备中的工作、软件产出以及面向未来的攻博计划，使整体研究叙事始终与可追溯文档保持一致。',
+      en: 'I emphasise reproducible pipelines, strong baselines, sensitivity analysis, and transparent reporting of model limitations.',
+      zh: '强调可复现的流程、强基线、敏感性分析以及对模型局限性的透明报告。',
     },
   },
 ];

@@ -85,8 +85,8 @@ export const researchInterests: LocalizedText[] = [
     zh: '多模态传染病预测预警。',
   },
   {
-    en: 'Influenza co-circulation analysis, co-infection signals, and non-stationary time-series modelling.',
-    zh: '流感共流行分析、共感染信号识别与非平稳时间序列建模。',
+    en: 'Influenza co-circulation analysis, co-circulation signals, and non-stationary time-series modelling.',
+    zh: '流感共流行分析、共流行信号识别与非平稳时间序列建模。',
   },
   {
     en: 'Spatiotemporal transmission dynamics, small-sample outbreak modelling, and viral evolution.',
@@ -408,7 +408,7 @@ export const publications: PublicationItem[] = [
       en: 'Questionnaire-based collaborative study using CFA, SEM, and bootstrap analysis.',
       zh: '基于问卷数据的合作研究，采用 CFA、SEM 与 Bootstrap 分析。',
     },
-    manuscriptId: '251802',
+    manuscriptId: '',
     authorship: {
       en: 'Co-author (2/6)',
       zh: '合作作者（2/6）',
@@ -455,8 +455,8 @@ export const projects: ProjectItem[] = [
       zh: 'MAESTRO',
     },
     summary: {
-      en: 'Multimodal time-series forecasting framework for respiratory disease activity and early-warning scenarios, with reported R² = 0.956 on a 10-year Hong Kong influenza dataset.',
-      zh: '面向呼吸道疾病活动与预警场景的多模态时间序列预测框架；在香港十年流感数据上报告 R² = 0.956。',
+      en: 'Multimodal time-series forecasting framework for respiratory disease activity and early-warning scenarios, reporting R² = 0.956 on over 11 years of Hong Kong influenza data (excluding COVID-19).',
+      zh: '面向呼吸道疾病活动与预警场景的多模态时间序列预测框架；在香港十一年以上流感数据（不含 COVID-19 期间）上报告 R² = 0.956。',
     },
     status: {
       en: 'Public repository',
@@ -742,7 +742,7 @@ export const projects: ProjectItem[] = [
       zh: 'MultiCoPat',
     },
     summary: {
-      en: 'Multi-region and multi-window influenza co-circulation analysis and prediction workflows, published in npj Systems Biology and Applications (2026).',
+      en: 'Multi-region and multi-window influenza co-circulation analysis workflow, published in npj Systems Biology and Applications (2026).',
       zh: '多地区、多时间窗流感共流行分析与预测流程，已发表于 npj Systems Biology and Applications (2026)。',
     },
     status: {
@@ -755,8 +755,8 @@ export const projects: ProjectItem[] = [
     stars: 0,
     tags: ['Influenza', 'Co-circulation', 'Prediction', 'Time series'],
     impactSummary: {
-      en: 'Analytical pipeline supporting work on influenza co-circulation and co-infection signals.',
-      zh: '支撑流感共流行与共感染信号相关研究的分析管线。',
+      en: 'Analytical pipeline supporting work on influenza co-circulation and co-circulation signals.',
+      zh: '支撑流感共流行与共流行信号相关研究的分析管线。',
     },
     relatedPublicationTitles: ['Spatiotemporal instability of influenza seasonality during viral co-circulation'],
   },
