@@ -613,6 +613,78 @@ export const projects: ProjectItem[] = [
     tags: ['LaTeX', 'Template', 'Mathematical Modeling'],
   },
   {
+    key: 'phsciencedata-crawler-region',
+    name: {
+      en: 'PHScienceData Region Crawler',
+      zh: '公共卫生数据科学中心疾病数据分地区爬虫',
+    },
+    summary: {
+      en: 'Crawler for the Public Health Science Data Center (phsciencedata.cn) regional and age-stratified disease datasets.',
+      zh: '面向公共卫生数据科学中心（phsciencedata.cn）地区与年龄分层疾病数据的爬虫工具。',
+    },
+    status: {
+      en: 'Public repository',
+      zh: '公开仓库',
+    },
+    repoUrl: 'https://github.com/Hylouis233/phsciencedata_crawler_region',
+    type: 'research-code',
+    tags: ['Public health data', 'Crawler', 'Regional surveillance', 'Fujian'],
+  },
+  {
+    key: 'epic-site-pages',
+    name: {
+      en: 'EPIC public infectious-disease dashboard',
+      zh: 'EPIC 公共卫生信息站点',
+    },
+    summary: {
+      en: 'Static deployment of the public EPIC dashboard for infectious-disease situational awareness.',
+      zh: '面向传染病态势感知的 EPIC 公开信息站点静态版本。',
+    },
+    status: {
+      en: 'Public repository',
+      zh: '公开仓库',
+    },
+    repoUrl: 'https://github.com/Hylouis233/epic-site-pages',
+    type: 'platform',
+    tags: ['Static site', 'Public dashboard', 'Infectious disease'],
+  },
+  {
+    key: 'openscience',
+    name: {
+      en: 'openscience',
+      zh: 'openscience 研究工作流',
+    },
+    summary: {
+      en: 'Evidence-first research workflow toolkit with literature search, citation verification, human-gated research stages, and an `science-epi` skill for outbreak analysis.',
+      zh: '证据优先的研究工作流工具集，覆盖文献检索、引用核验、人工把关的研究阶段以及面向疫情分析的 `science-epi` 子套件。',
+    },
+    status: {
+      en: 'Public repository',
+      zh: '公开仓库',
+    },
+    repoUrl: 'https://github.com/Hylouis233/openscience',
+    type: 'software',
+    tags: ['Research workflow', 'AI4Science', 'Citation verification', 'MCP'],
+  },
+  {
+    key: 'mcodeforlegal',
+    name: {
+      en: 'mcodeforlegal',
+      zh: 'mcodeforlegal 法律工作流',
+    },
+    summary: {
+      en: 'Mainland China-first legal workflow plugins for Claude Code, including contract review, litigation support, compliance, corporate, labor, and IP with statute checks and citation gates.',
+      zh: '面向中国大陆法律场景的 Claude Code 工作流插件，覆盖合同审查、诉讼支持、合规、公司、劳动与知产等模块，集成法条核查与引用把关。',
+    },
+    status: {
+      en: 'Public repository',
+      zh: '公开仓库',
+    },
+    repoUrl: 'https://github.com/Hylouis233/mcodeforlegal',
+    type: 'software',
+    tags: ['LegalTech', 'Claude Code', 'Compliance', 'Cross-discipline'],
+  },
+  {
     key: 'multicopat',
     name: {
       en: 'MultiCoPat',
