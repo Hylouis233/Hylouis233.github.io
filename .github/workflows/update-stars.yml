@@ -6,13 +6,16 @@ name: Sync GitHub stars (and auto-deploy intro site)
 #
 # Required GitHub Actions secrets (Settings -> Secrets and variables ->
 # Actions -> New repository secret):
-#   VPS_HOST    : the VPS SSH host (e.g. aliyun-icp-resume or the IP)
+#   VPS_HOST    : the VPS IP (e.g. 100.67.175.65) — use IP, not hostname,
+#                 because the runner cannot resolve Tailnet / custom DNS
 #   VPS_USER    : the SSH user (e.g. root)
 #   VPS_SSH_KEY : the SSH private key used to log in
 #
 # The deploy step is skipped when:
 #   - the workflow was triggered with `dry_run=true`
-#   - no star counts actually changed (so src/data/academic.ts had no diff)
+#   - `force_deploy` is false AND no star counts actually changed
+#   - `force_deploy` is true forces a fresh build + deploy even if no
+#     star count changed (useful after manual edits to academic.ts)
 
 "on":
   schedule:
@@ -22,6 +25,12 @@ name: Sync GitHub stars (and auto-deploy intro site)
     inputs:
       dry_run:
         description: "Print what would change without committing or deploying"
+        required: false
+        default: "false"
+        type: choice
+        options: ["false", "true"]
+      force_deploy:
+        description: "Force a fresh build + deploy even if no star counts changed"
         required: false
         default: "false"
         type: choice
@@ -84,27 +93,37 @@ jobs:
           echo "changed=true" >> "$GITHUB_OUTPUT"
 
       - name: Set up Node.js (deploy only)
-        if: github.event.inputs.dry_run != 'true' && steps.commit.outputs.changed == 'true'
+        if: |
+          github.event.inputs.dry_run != 'true' &&
+          (steps.commit.outputs.changed == 'true' || github.event.inputs.force_deploy == 'true')
         uses: actions/setup-node@v5
         with:
           node-version: "20"
 
       - name: Install npm dependencies (deploy only)
-        if: github.event.inputs.dry_run != 'true' && steps.commit.outputs.changed == 'true'
+        if: |
+          github.event.inputs.dry_run != 'true' &&
+          (steps.commit.outputs.changed == 'true' || github.event.inputs.force_deploy == 'true')
         run: npm ci --no-audit
 
       - name: Build top variant (deploy only)
-        if: github.event.inputs.dry_run != 'true' && steps.commit.outputs.changed == 'true'
+        if: |
+          github.event.inputs.dry_run != 'true' &&
+          (steps.commit.outputs.changed == 'true' || github.event.inputs.force_deploy == 'true')
         run: npm run build:top
 
       - name: Tar dist-top/ (deploy only)
-        if: github.event.inputs.dry_run != 'true' && steps.commit.outputs.changed == 'true'
+        if: |
+          github.event.inputs.dry_run != 'true' &&
+          (steps.commit.outputs.changed == 'true' || github.event.inputs.force_deploy == 'true')
         run: |
           tar -czf dist-top.tar.gz -C dist-top .
           ls -la dist-top.tar.gz
 
       - name: Copy dist-top.tar.gz to VPS (deploy only)
-        if: github.event.inputs.dry_run != 'true' && steps.commit.outputs.changed == 'true'
+        if: |
+          github.event.inputs.dry_run != 'true' &&
+          (steps.commit.outputs.changed == 'true' || github.event.inputs.force_deploy == 'true')
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.VPS_HOST }}
@@ -114,7 +133,9 @@ jobs:
           target: "/root/"
 
       - name: Extract, swap live site, and reload nginx on VPS (deploy only)
-        if: github.event.inputs.dry_run != 'true' && steps.commit.outputs.changed == 'true'
+        if: |
+          github.event.inputs.dry_run != 'true' &&
+          (steps.commit.outputs.changed == 'true' || github.event.inputs.force_deploy == 'true')
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.VPS_HOST }}
