@@ -35,6 +35,7 @@ const ui = {
       firstAuthor: 'First-author studies',
       published: 'Published papers',
       repositories: 'Public repositories',
+      stars: 'Cumulative stars',
     },
     heroLinksLabel: 'Profiles and quick routes',
     profileLinksAria: 'Academic profile links',
@@ -139,6 +140,7 @@ const ui = {
       firstAuthor: '第一作者研究',
       published: '已发表论文',
       repositories: '公开代码仓库',
+      stars: '累计 Star',
     },
     heroLinksLabel: '学术档案与快捷入口',
     profileLinksAria: '学术档案链接',
@@ -229,11 +231,13 @@ const copy = ui[lang];
 const firstAuthorCount = publications.filter((item) => item.authorshipRank === 'lead').length;
 const publishedCount = publications.filter((item) => item.category === 'publication').length;
 const repositoryCount = projects.filter((item) => item.repoUrl).length;
+const totalStars = projects.reduce((acc, item) => acc + (item.stars || 0), 0);
 
 const heroEvidence = [
   { value: firstAuthorCount, label: copy.evidence.firstAuthor },
   { value: publishedCount, label: copy.evidence.published },
   { value: repositoryCount, label: copy.evidence.repositories },
+  { value: totalStars, label: copy.evidence.stars },
 ];
 
 const outputStats = [
