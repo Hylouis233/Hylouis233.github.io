@@ -58,7 +58,7 @@ export const profile = {
     },
     {
       label: 'ResearchGate',
-      href: 'https://www.researchgate.net/profile/Hong-Liu-79',
+      href: 'https://www.researchgate.net/profile/Hong-Liu-79/publications?sorting=recentlyAdded&editMode=1',
       icon: 'researchgate',
     },
     {

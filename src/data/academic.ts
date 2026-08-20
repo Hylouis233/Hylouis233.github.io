@@ -500,7 +500,6 @@ export const projects: ProjectItem[] = [
       zh: '含公开与私有代码；部分组件为私有仓库',
     },
     type: 'platform',
-    featured: true,
     tags: ['ETL', 'Crawler', 'Database', 'Visualization'],
     impactSummary: {
       en: 'Operational data pipeline for infectious-disease intelligence, from collection and cleaning to monitoring-oriented visualization.',
@@ -523,6 +522,7 @@ export const projects: ProjectItem[] = [
     },
     repoUrl: 'https://github.com/Hylouis233/bibverify',
     type: 'software',
+    featured: true,
     stars: 52,
     tags: ['Bibliographic tooling', 'DOI validation', 'Metadata completion'],
     impactSummary: {
