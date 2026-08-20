@@ -1,15 +1,27 @@
-name: Sync GitHub stars
+name: Sync GitHub stars (and auto-deploy intro site)
 
-# The `on` key needs to be quoted so PyYAML does not parse it as a boolean.
-# GitHub Actions itself tolerates both forms.
+# Refresh GitHub star counts in src/data/academic.ts on a daily schedule
+# and, if anything changed, rebuild dist-top/ and deploy it to the VPS
+# that serves https://introduction.hylouis.top/.
+#
+# Required GitHub Actions secrets (Settings -> Secrets and variables ->
+# Actions -> New repository secret):
+#   VPS_HOST    : the VPS SSH host (e.g. aliyun-icp-resume or the IP)
+#   VPS_USER    : the SSH user (e.g. root)
+#   VPS_SSH_KEY : the SSH private key used to log in
+#
+# The deploy step is skipped when:
+#   - the workflow was triggered with `dry_run=true`
+#   - no star counts actually changed (so src/data/academic.ts had no diff)
+
 "on":
   schedule:
-    # Run daily at 03:00 UTC = 11:00 Asia/Singapore.
+    # Daily at 03:00 UTC = 11:00 Asia/Singapore.
     - cron: "0 3 * * *"
   workflow_dispatch:
     inputs:
       dry_run:
-        description: "Print what would change without committing"
+        description: "Print what would change without committing or deploying"
         required: false
         default: "false"
         type: choice
@@ -35,40 +47,32 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install gh CLI (already on the runner, but pin the version)
-        run: |
-          gh --version
-
       - name: Run update-stars.py
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
-            echo "[dry_run] would run scripts/update-stars.py and report diff without commit"
-            python scripts/update-stars.py || echo "(no-op)"
+            echo "[dry_run] preview of changes that would be made:"
+            python scripts/update-stars.py
             git diff --stat -- src/data/academic.ts || true
           else
             python scripts/update-stars.py
           fi
 
-      - name: Show updated values
-        if: always()
-        run: |
-          git diff --stat -- src/data/academic.ts || true
-
       - name: Commit and push (if changed)
+        id: commit
         if: github.event.inputs.dry_run != 'true'
         run: |
           set -e
           if git diff --quiet -- src/data/academic.ts; then
             echo "No changes; nothing to commit."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add src/data/academic.ts
           ts=$(date -u +%Y-%m-%dT%H:%M:%SZ)
-          # Summarize the updated entries in the commit message
           msg=$(git diff --unified=0 -- src/data/academic.ts \
             | awk '/^[-+]    stars: / { sub(/^[-+]/, ""); print }' \
             | sort -u | head -50)
@@ -77,3 +81,57 @@ jobs:
             -m "$msg"
           git push origin HEAD:main
           echo "Pushed commit $(git rev-parse --short HEAD)"
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Set up Node.js (deploy only)
+        if: github.event.inputs.dry_run != 'true' && steps.commit.outputs.changed == 'true'
+        uses: actions/setup-node@v5
+        with:
+          node-version: "20"
+
+      - name: Install npm dependencies (deploy only)
+        if: github.event.inputs.dry_run != 'true' && steps.commit.outputs.changed == 'true'
+        run: npm ci --no-audit
+
+      - name: Build top variant (deploy only)
+        if: github.event.inputs.dry_run != 'true' && steps.commit.outputs.changed == 'true'
+        run: npm run build:top
+
+      - name: Tar dist-top/ (deploy only)
+        if: github.event.inputs.dry_run != 'true' && steps.commit.outputs.changed == 'true'
+        run: |
+          tar -czf dist-top.tar.gz -C dist-top .
+          ls -la dist-top.tar.gz
+
+      - name: Copy dist-top.tar.gz to VPS (deploy only)
+        if: github.event.inputs.dry_run != 'true' && steps.commit.outputs.changed == 'true'
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          source: "dist-top.tar.gz"
+          target: "/root/"
+
+      - name: Extract, swap live site, and reload nginx on VPS (deploy only)
+        if: github.event.inputs.dry_run != 'true' && steps.commit.outputs.changed == 'true'
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            set -e
+            cd /var/www
+            ts=$(date -u +%Y%m%dT%H%M%SZ)
+            if [ -d introduction.hylouis.top ]; then
+              mv introduction.hylouis.top introduction.hylouis.top.bak-${ts}
+            fi
+            mkdir -p introduction.hylouis.top
+            cd introduction.hylouis.top
+            tar -xzf /root/dist-top.tar.gz
+            chown -R www-data:www-data /var/www/introduction.hylouis.top
+            rm -f /root/dist-top.tar.gz
+            nginx -t
+            nginx -s reload
+            echo "DEPLOYED at $ts"
