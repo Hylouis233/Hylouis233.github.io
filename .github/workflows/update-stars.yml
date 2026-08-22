@@ -13,23 +13,15 @@ name: Sync GitHub stars (and auto-deploy intro site)
 #                 Raw multiline keys and values containing literal \n are accepted.
 #   TAILSCALE_AUTHKEY : required only when VPS_HOST is a Tailscale IP.
 #                 Prefer a tagged, reusable, ephemeral auth key.
-#
-# The deploy step is skipped when:
-#   - the workflow was triggered with `dry_run=true`
-#   - `force_deploy` is false AND no star counts actually changed
-#   - `force_deploy` is true forces a fresh build + deploy even if no
-#     star count changed (useful after manual edits to academic.ts)
 
 "on":
-  # Temporary diagnostic trigger: a change to this workflow or academic.ts
-  # starts the latest workflow definition so we can test the VPS deploy path.
+  # Temporary diagnostic trigger. Removed after verification.
   push:
     branches: [main]
     paths:
       - ".github/workflows/update-stars.yml"
       - "src/data/academic.ts"
   schedule:
-    # Daily at 03:00 UTC = 11:00 Asia/Singapore.
     - cron: "0 3 * * *"
   workflow_dispatch:
     inputs:
@@ -143,18 +135,16 @@ jobs:
         run: |
           set -euo pipefail
 
-          if [ -z "${VPS_HOST:-}" ]; then
-            echo "::error::Missing repository secret VPS_HOST"
+          diag="$GITHUB_WORKSPACE/.github/deploy-test-detail.txt"
+          fail_diag() {
+            printf '%s\n' "$1" > "$diag"
+            echo "::error::$1"
             exit 1
-          fi
-          if [ -z "${VPS_USER:-}" ]; then
-            echo "::error::Missing repository secret VPS_USER"
-            exit 1
-          fi
-          if [ -z "${VPS_SSH_KEY:-}" ]; then
-            echo "::error::Missing repository secret VPS_SSH_KEY"
-            exit 1
-          fi
+          }
+
+          [ -n "${VPS_HOST:-}" ] || fail_diag "missing VPS_HOST"
+          [ -n "${VPS_USER:-}" ] || fail_diag "missing VPS_USER"
+          [ -n "${VPS_SSH_KEY:-}" ] || fail_diag "missing VPS_SSH_KEY"
 
           python - <<'PY'
           import ipaddress
@@ -164,25 +154,14 @@ jobs:
           host = os.environ["VPS_HOST"].strip().strip("[]")
           try:
               ip = ipaddress.ip_address(host)
-              use_tailscale = (
-                  ip.version == 4
-                  and ip in ipaddress.ip_network("100.64.0.0/10")
-              )
+              use_tailscale = ip.version == 4 and ip in ipaddress.ip_network("100.64.0.0/10")
           except ValueError:
               use_tailscale = False
 
           with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as f:
               f.write(f"use_tailscale={'true' if use_tailscale else 'false'}\n")
 
-          if use_tailscale and not os.environ.get("TAILSCALE_AUTHKEY", "").strip():
-              raise SystemExit(
-                  "VPS_HOST is a Tailscale CGNAT address (100.64.0.0/10), but "
-                  "TAILSCALE_AUTHKEY is missing. A GitHub-hosted runner cannot "
-                  "route to that address until it joins the tailnet."
-              )
-
           key = os.environ["VPS_SSH_KEY"].strip()
-          # Also tolerate secrets pasted with literal backslash-n separators.
           if "\\n" in key and "\n" not in key:
               key = key.replace("\\n", "\n")
           key = key.replace("\r\n", "\n").replace("\r", "\n") + "\n"
@@ -192,12 +171,18 @@ jobs:
           key_path.chmod(0o600)
           PY
 
-          if ! ssh-keygen -y -P "" -f "$RUNNER_TEMP/vps_deploy_key" >/dev/null 2>&1; then
-            echo "::error::VPS_SSH_KEY is not a valid unencrypted private SSH key. Store the complete private key (not the .pub key) in the secret."
-            exit 1
+          if [ "$(cat "$GITHUB_OUTPUT" | tail -1)" = "use_tailscale=true" ] && [ -z "${TAILSCALE_AUTHKEY:-}" ]; then
+            fail_diag "VPS_HOST is a Tailscale IP but TAILSCALE_AUTHKEY is missing"
           fi
 
+          if ! ssh-keygen -y -P "" -f "$RUNNER_TEMP/vps_deploy_key" >/dev/null 2>&1; then
+            fail_diag "VPS_SSH_KEY is not a valid unencrypted private SSH key"
+          fi
+
+          printf '%s\n' "config validation passed" > "$diag"
+
       - name: Connect GitHub runner to Tailscale
+        id: tailscale
         if: |
           github.event.inputs.dry_run != 'true' &&
           (github.event_name == 'push' || steps.commit.outputs.changed == 'true' || github.event.inputs.force_deploy == 'true') &&
@@ -208,6 +193,7 @@ jobs:
           ping: ${{ secrets.VPS_HOST }}
 
       - name: Verify SSH connectivity
+        id: ssh
         if: |
           github.event.inputs.dry_run != 'true' &&
           (github.event_name == 'push' || steps.commit.outputs.changed == 'true' || github.event.inputs.force_deploy == 'true')
@@ -226,6 +212,7 @@ jobs:
             'echo "SSH_OK $(hostname)"'
 
       - name: Copy dist-top.tar.gz to VPS
+        id: copy
         if: |
           github.event.inputs.dry_run != 'true' &&
           (github.event_name == 'push' || steps.commit.outputs.changed == 'true' || github.event.inputs.force_deploy == 'true')
@@ -245,6 +232,7 @@ jobs:
             "$VPS_USER@$VPS_HOST:$remote_archive"
 
       - name: Extract, atomically swap live site, and reload nginx
+        id: deploy
         if: |
           github.event.inputs.dry_run != 'true' &&
           (github.event_name == 'push' || steps.commit.outputs.changed == 'true' || github.event.inputs.force_deploy == 'true')
@@ -263,36 +251,25 @@ jobs:
             "$VPS_USER@$VPS_HOST" \
             "DEPLOY_ARCHIVE='$remote_archive' bash -s" <<'REMOTE'
           set -euo pipefail
-
           live=/var/www/introduction.hylouis.top
           ts=$(date -u +%Y%m%dT%H%M%SZ)
           staged="/var/www/introduction.hylouis.top.new-${ts}"
           backup="/var/www/introduction.hylouis.top.bak-${ts}"
-
-          cleanup() {
-            rm -rf "$staged"
-            rm -f "$DEPLOY_ARCHIVE"
-          }
+          cleanup() { rm -rf "$staged"; rm -f "$DEPLOY_ARCHIVE"; }
           trap cleanup EXIT
-
           mkdir -p "$staged"
           tar -xzf "$DEPLOY_ARCHIVE" -C "$staged"
           chown -R www-data:www-data "$staged"
-
-          # Validate nginx before touching the live directory.
           nginx -t
-
           had_live=false
           if [ -e "$live" ]; then
             mv "$live" "$backup"
             had_live=true
           fi
           mv "$staged" "$live"
-
           if nginx -s reload; then
             echo "DEPLOYED at $ts"
           else
-            echo "nginx reload failed; rolling back" >&2
             rm -rf "$live"
             if [ "$had_live" = true ]; then
               mv "$backup" "$live"
@@ -300,9 +277,29 @@ jobs:
             fi
             exit 1
           fi
-
-          # Keep recent rollback copies, but avoid unbounded accumulation.
-          find /var/www -maxdepth 1 -type d \
-            -name 'introduction.hylouis.top.bak-*' -mtime +14 \
-            -exec rm -rf {} + || true
+          find /var/www -maxdepth 1 -type d -name 'introduction.hylouis.top.bak-*' -mtime +14 -exec rm -rf {} + || true
           REMOTE
+
+      - name: Record deploy diagnostic result
+        if: always() && github.event_name == 'push'
+        run: |
+          set -e
+          cat > .github/deploy-test-result.txt <<EOF
+          tested_sha=${GITHUB_SHA}
+          job_status=${{ job.status }}
+          config=${{ steps.deploy-config.outcome }}
+          tailscale=${{ steps.tailscale.outcome }}
+          ssh=${{ steps.ssh.outcome }}
+          copy=${{ steps.copy.outcome }}
+          deploy=${{ steps.deploy.outcome }}
+          EOF
+          if [ ! -f .github/deploy-test-detail.txt ]; then
+            echo "no config-level diagnostic recorded" > .github/deploy-test-detail.txt
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .github/deploy-test-result.txt .github/deploy-test-detail.txt
+          if ! git diff --cached --quiet; then
+            git commit -m "ci: record intro deploy verification result"
+            git push origin HEAD:main
+          fi
