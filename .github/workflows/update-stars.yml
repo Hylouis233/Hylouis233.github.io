@@ -21,6 +21,13 @@ name: Sync GitHub stars (and auto-deploy intro site)
 #     star count changed (useful after manual edits to academic.ts)
 
 "on":
+  # Temporary diagnostic trigger: a change to this workflow or academic.ts
+  # starts the latest workflow definition so we can test the VPS deploy path.
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/update-stars.yml"
+      - "src/data/academic.ts"
   schedule:
     # Daily at 03:00 UTC = 11:00 Asia/Singapore.
     - cron: "0 3 * * *"
