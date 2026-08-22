@@ -1,0 +1,1 @@
+VPS_HOST is a Tailscale IP but TAILSCALE_AUTHKEY is missing

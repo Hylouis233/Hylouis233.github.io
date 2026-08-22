@@ -1,0 +1,7 @@
+tested_sha=8d3fa4c97cd5b975f163aa99b6dfd1664f1dc2a6
+job_status=failure
+config=failure
+tailscale=skipped
+ssh=skipped
+copy=skipped
+deploy=skipped
