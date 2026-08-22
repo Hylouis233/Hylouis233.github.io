@@ -22,9 +22,9 @@ Variant behaviour is centralized in `src/i18n.ts` (`siteVariant`, `defaultLang`,
 
 `.github/workflows/update-stars.yml` refreshes GitHub star counts every day and
 deploys the `top` variant only when the counts change (or when a manual run sets
-`force_deploy` to `true`). When stars change, it also dispatches `pages.yml`
-explicitly so the commit made with `GITHUB_TOKEN` is published to GitHub Pages.
-It requires these repository Actions secrets:
+`force_deploy` to `true`). When stars change or a deployment is forced, it also
+dispatches `pages.yml` explicitly so the commit made with `GITHUB_TOKEN` is
+published to GitHub Pages. It requires these repository Actions secrets:
 
 - `VPS_HOST`: a stable public hostname/IP reachable over SSH. A Tailscale IP is
   also supported, but then `TAILSCALE_AUTHKEY` is required.

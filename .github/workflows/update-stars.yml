@@ -107,10 +107,10 @@ jobs:
       # A push made with GITHUB_TOKEN does not start another push-triggered
       # workflow. Dispatch Pages explicitly so the GitHub-hosted site receives
       # the same refreshed star counts as the VPS-hosted site.
-      - name: Trigger GitHub Pages deployment (if stars changed)
+      - name: Trigger GitHub Pages deployment (if needed)
         if: |
           github.event.inputs.dry_run != 'true' &&
-          steps.commit.outputs.changed == 'true'
+          (steps.commit.outputs.changed == 'true' || github.event.inputs.force_deploy == 'true')
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
