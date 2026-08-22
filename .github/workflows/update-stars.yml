@@ -104,6 +104,19 @@ jobs:
           echo "Pushed commit $(git rev-parse --short HEAD)"
           echo "changed=true" >> "$GITHUB_OUTPUT"
 
+      # A push made with GITHUB_TOKEN does not start another push-triggered
+      # workflow. Dispatch Pages explicitly so the GitHub-hosted site receives
+      # the same refreshed star counts as the VPS-hosted site.
+      - name: Trigger GitHub Pages deployment (if stars changed)
+        if: |
+          github.event.inputs.dry_run != 'true' &&
+          steps.commit.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api --method POST "repos/$GITHUB_REPOSITORY/dispatches" \
+            -f event_type=stars-updated
+
       - name: Set up Node.js (deploy only)
         if: |
           github.event.inputs.dry_run != 'true' &&
