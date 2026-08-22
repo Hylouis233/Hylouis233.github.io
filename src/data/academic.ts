@@ -523,7 +523,7 @@ export const projects: ProjectItem[] = [
     repoUrl: 'https://github.com/Hylouis233/bibverify',
     type: 'software',
     featured: true,
-    stars: 66,
+    stars: 72,
     tags: ['Bibliographic tooling', 'DOI validation', 'Metadata completion'],
     impactSummary: {
       en: 'Utility for reference verification, metadata completion, deduplication, and citation cleanup across writing workflows.',
