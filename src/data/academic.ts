@@ -1,4 +1,4 @@
-﻿export type LocalizedText = {
+export type LocalizedText = {
   en: string;
   zh: string;
 };
@@ -137,8 +137,8 @@ export const education: EducationItem[] = [
       zh: '厦门大学',
     },
     program: {
-      en: 'B.Med. in Preventive Medicine (School of Public Health) & B.Sc. in Mathematical Statistics (Wang Yanan Institute for Studies in Economics)',
-      zh: '公共卫生学院预防医学系与王亚南经济研究院数理统计专业双学位本科',
+      en: 'B.Med. in Preventive Medicine (School of Public Health), with a minor in Mathematical Statistics (Wang Yanan Institute for Studies in Economics, WISE)',
+      zh: '公共卫生学院预防医学本科（医学学士），辅修王亚南经济研究院数理统计',
     },
     meta: {
       en: 'Preventive Medicine supervised by Prof. Tianmu Chen',
@@ -325,8 +325,8 @@ export const publications: PublicationItem[] = [
   },
   {
     title: {
-      en: 'Dual-Model Framework for CHIKV Transmission Modeling: ODE and Petri Net Analysis of the 2025 Foshan Outbreak',
-      zh: 'Dual-Model Framework for CHIKV Transmission Modeling: ODE and Petri Net Analysis of the 2025 Foshan Outbreak',
+      en: 'Dual-Model framework for CHIKV transmission modeling: ODE and Petri Net Analysis of the 2025 Foshan outbreak',
+      zh: 'Dual-Model framework for CHIKV transmission modeling: ODE and Petri Net Analysis of the 2025 Foshan outbreak',
     },
     year: 2026,
     venue: {
@@ -458,7 +458,7 @@ export const projects: ProjectItem[] = [
       en: 'Dual-model outbreak analysis workflow linking mechanistic interpretation, intervention phases, and manuscript development.',
       zh: '连接机制解释、干预阶段与论文撰写的双模型疫情分析流程。',
     },
-    relatedPublicationTitles: ['Dual-Model Framework for CHIKV Transmission Modeling: ODE and Petri Net Analysis of the 2025 Foshan Outbreak'],
+    relatedPublicationTitles: ['Dual-Model framework for CHIKV transmission modeling: ODE and Petri Net Analysis of the 2025 Foshan outbreak'],
   },
   {
     key: 'multicopat',
