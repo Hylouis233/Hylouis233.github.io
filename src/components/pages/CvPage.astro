@@ -1,4 +1,4 @@
-﻿---
+---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { profile, iconMap } from '../../data/profile';
 import { cvData, publicationGroups } from '../../data/academic';
@@ -30,6 +30,7 @@ const ui = {
       projects: { title: 'Research Software and Projects', subtitle: 'Code, tooling, and data platforms' },
       awards: { title: 'Awards', subtitle: 'Selected honors and competition results' },
       experience: { title: 'Experience', subtitle: 'Research, coursework, and service' },
+      contributions: { title: 'Open-Source Contributions', subtitle: 'Merged pull requests to external repositories' },
     },
     pubStatus: {
       publication: 'Published',
@@ -57,6 +58,7 @@ const ui = {
       projects: { title: '研究软件与项目', subtitle: '科研代码、工具与数据平台' },
       awards: { title: '荣誉与获奖', subtitle: '主要荣誉与竞赛奖项' },
       experience: { title: '实践经历', subtitle: '科研、课程、竞赛与服务经历' },
+      contributions: { title: '开源贡献', subtitle: '向外部仓库提交并已合并的 PR' },
     },
     pubStatus: {
       publication: '已发表',
@@ -110,6 +112,15 @@ const sortedProjects = [...cvData.projects].sort((a, b) => {
 });
 
 const sortedAwards = [...cvData.awards].sort((a, b) => b.year - a.year);
+
+
+// Verified merged pull requests to repositories owned by others (GitHub search, Oct 2026).
+const contributions = [
+  { repo: 'MiniMax-AI/MiniMax-Code-Plugins', year: 2026, detail: { en: 'Contributed plugins to the official MiniMax Code plugin registry: openscience, mcodeforlegal, open-protein-binder-design, minimax-token-plan, document-skills, cli-agent-bridge (6 merged PRs, Aug–Sep 2026).', zh: '向 MiniMax Code 官方插件注册表贡献插件：openscience、mcodeforlegal、open-protein-binder-design、minimax-token-plan、document-skills、cli-agent-bridge（6 个 PR 已合并，2026 年 8–9 月）。' }, href: 'https://github.com/MiniMax-AI/MiniMax-Code-Plugins/pulls?q=is%3Apr+author%3AHylouis233+is%3Amerged' },
+  { repo: 'hetaoBackend/MiniMax-Code-Plugins', year: 2026, detail: { en: 'Added plugins search-first, verification-loop and mcp-server-patterns (3 merged PRs, Aug 2026).', zh: '贡献 search-first、verification-loop、mcp-server-patterns 插件（3 个 PR 已合并，2026 年 8 月）。' }, href: 'https://github.com/hetaoBackend/MiniMax-Code-Plugins/pulls?q=is%3Apr+author%3AHylouis233+is%3Amerged' },
+  { repo: 'lidge-jun/opencodex', year: 2026, detail: { en: 'Test isolation: provider-fixture DNS isolation and bounded child-process lifetime (merged Oct 2026).', zh: '测试隔离：provider fixture DNS 隔离与子进程生命周期约束（2026 年 10 月合并）。' }, href: 'https://github.com/lidge-jun/opencodex/pull/6578' },
+  { repo: 'Poiig/sgcc_electricity', year: 2026, detail: { en: 'Fix: conditionally skip CDP stealth injection on Docker/Linux (merged May 2026).', zh: '修复：在 Docker/Linux 环境下按条件跳过 CDP stealth 注入（2026 年 5 月合并）。' }, href: 'https://github.com/Poiig/sgcc_electricity/pull/1' },
+];
 
 const sectionNumber = (index: number) => String(index).padStart(2, '0');
 ---
@@ -311,6 +322,25 @@ const sectionNumber = (index: number) => String(index).padStart(2, '0');
               <p class="timeline-detail">{t(item.detail, lang)}</p>
             </div>
           </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="cv-section" aria-labelledby="cv-contributions">
+      <div class="cv-section-head">
+        <p class="eyebrow cv-section-eyebrow">{sectionNumber(8)}</p>
+        <h2 class="section-title cv-section-title" id="cv-contributions">{text.sections.contributions.title}</h2>
+        <p class="section-subtitle">{text.sections.contributions.subtitle}</p>
+      </div>
+      <div class="award-list">
+        {contributions.map((item) => (
+          <div class="award-row">
+            <span class="award-year">{item.year}</span>
+            <div class="award-main">
+              <p class="award-title"><a href={item.href} target="_blank" rel="noreferrer">{item.repo}</a></p>
+              <p class="award-issuer">{t(item.detail, lang)}</p>
+            </div>
+          </div>
         ))}
       </div>
     </section>

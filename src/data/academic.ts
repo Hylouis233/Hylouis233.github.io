@@ -137,8 +137,8 @@ export const education: EducationItem[] = [
       zh: '厦门大学',
     },
     program: {
-      en: 'B.Med. in Preventive Medicine (School of Public Health), with a minor in Mathematical Statistics (Wang Yanan Institute for Studies in Economics, WISE)',
-      zh: '公共卫生学院预防医学本科（医学学士），辅修王亚南经济研究院数理统计',
+      en: 'B.Med. in Preventive Medicine; B.Sc. in Mathematical Statistics (second degree), WISE, Xiamen University',
+      zh: '预防医学医学学士；数理统计理学学士（第二学位，王亚南经济研究院）',
     },
     meta: {
       en: 'Preventive Medicine supervised by Prof. Tianmu Chen',
