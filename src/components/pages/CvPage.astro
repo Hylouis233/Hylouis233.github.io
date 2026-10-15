@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { profile, iconMap } from '../../data/profile';
-import { cvData, publicationGroups } from '../../data/academic';
+import { cvData, publicationGroups, languages } from '../../data/academic';
 import { t, type Lang } from '../../i18n';
 
 interface Props {
@@ -18,7 +18,7 @@ const ui = {
     downloadAria: 'Download the CV as a PDF file',
     contactGroupAria: 'Contact and academic profiles',
     profileParagraph:
-      'I am a Ph.D. student in Epidemiology and Health Statistics at the School of Public Health, Xiamen University (admitted 2026, supervised by Prof. Tianmu Chen), and I hold an M.Sc. in Computer Science and Technology from Macau University of Science and Technology. My research focuses on infectious-disease forecasting, influenza co-circulation analysis, mechanistic outbreak modelling, and related research software.',
+      'I am a Ph.D. student in Epidemiology and Health Statistics at the School of Public Health, Xiamen University (admitted 2026, supervised by Prof. Tianmu Chen), and I hold an M.Sc. in Computer Science and Technology from the joint training programme of Macau University of Science and Technology (Faculty of Innovation Engineering) and Xiamen University (Supervisor Prof. Chitin Hon; Lab director Academician Nanshan Zhong). My research focuses on infectious-disease forecasting, influenza co-circulation analysis, mechanistic outbreak modelling, and related research software.',
     statusPrefix: 'Status:',
     manuscriptId: 'Manuscript ID:',
     noRepo: 'No public repository link is shown for this item.',
@@ -46,7 +46,7 @@ const ui = {
     downloadAria: '下载履历 PDF 文件',
     contactGroupAria: '联系方式与学术主页',
     profileParagraph:
-      '我现为厦门大学公共卫生学院流行病与卫生统计学博士研究生（2026 年入学，师从陈田木教授），硕士毕业于澳门科技大学计算机科学与技术专业。研究聚焦传染病预测预警、流感共流行分析、疫情机制建模，以及相关研究软件的开发。',
+      '我现为厦门大学公共卫生学院流行病与卫生统计学博士研究生（2026 年入学，师从陈田木教授），硕士毕业于澳门科技大学创新工程学院、厦门大学联合培养计算机科学与技术专业（导师：韩子天教授；实验室主任：钟南山院士）。研究聚焦传染病预测预警、流感共流行分析、疫情机制建模，以及相关研究软件的开发。',
     statusPrefix: '状态：',
     manuscriptId: '稿件编号：',
     noRepo: '该项目暂无公开仓库链接。',
@@ -119,7 +119,6 @@ const contributions = [
   { repo: 'MiniMax-AI/MiniMax-Code-Plugins', year: 2026, detail: { en: 'Contributed plugins to the official MiniMax Code plugin registry: openscience, mcodeforlegal, open-protein-binder-design, minimax-token-plan, document-skills, cli-agent-bridge (6 merged PRs, Aug–Sep 2026).', zh: '向 MiniMax Code 官方插件注册表贡献插件：openscience、mcodeforlegal、open-protein-binder-design、minimax-token-plan、document-skills、cli-agent-bridge（6 个 PR 已合并，2026 年 8–9 月）。' }, href: 'https://github.com/MiniMax-AI/MiniMax-Code-Plugins/pulls?q=is%3Apr+author%3AHylouis233+is%3Amerged' },
   { repo: 'hetaoBackend/MiniMax-Code-Plugins', year: 2026, detail: { en: 'Added plugins search-first, verification-loop and mcp-server-patterns (3 merged PRs, Aug 2026).', zh: '贡献 search-first、verification-loop、mcp-server-patterns 插件（3 个 PR 已合并，2026 年 8 月）。' }, href: 'https://github.com/hetaoBackend/MiniMax-Code-Plugins/pulls?q=is%3Apr+author%3AHylouis233+is%3Amerged' },
   { repo: 'lidge-jun/opencodex', year: 2026, detail: { en: 'PR #6578 (merged Oct 2026): fixed tests that interfered with each other and hung when child processes did not exit.', zh: 'PR #6578（2026 年 10 月合并）：修复相互干扰的测试，以及子进程不退出时测试挂起的问题。' }, href: 'https://github.com/lidge-jun/opencodex/pull/6578' },
-  { repo: 'CTModelling-LLMdev', year: 2026, detail: { en: 'Several contributions merged across the platform, services, evaluation, knowledge-base and mini-program repositories of a public-health AI platform (Sept–Oct 2026).', zh: '公共卫生 AI 平台相关仓库（平台、服务、评测、知识库、小程序）多项贡献已合并（2026 年 9–10 月）。' }, href: 'https://github.com/CTModelling-LLMdev' },
 ];
 
 const sectionNumber = (index: number) => String(index).padStart(2, '0');
@@ -302,6 +301,7 @@ const sectionNumber = (index: number) => String(index).padStart(2, '0');
           </div>
         ))}
       </div>
+      <p class="award-issuer cv-languages"><strong>{lang === 'zh' ? '语言：' : 'Languages: '}</strong>{t(languages, lang)}</p>
     </section>
 
     <section class="cv-section" aria-labelledby="cv-experience">
