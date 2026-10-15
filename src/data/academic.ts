@@ -154,6 +154,29 @@ export const education: EducationItem[] = [
 export const publications: PublicationItem[] = [
   {
     title: {
+      en: 'Dengue transmission dynamics in China’s border regions adjacent to Myanmar',
+      zh: 'Dengue transmission dynamics in China’s border regions adjacent to Myanmar',
+    },
+    year: 2026,
+    venue: {
+      en: 'Infectious Diseases of Poverty',
+      zh: 'Infectious Diseases of Poverty',
+    },
+    status: {
+      en: 'Published',
+      zh: '已发表',
+    },
+    doi: '10.1186/s40249-026-01440-x',
+    url: 'https://doi.org/10.1186/s40249-026-01440-x',
+    authorship: {
+      en: 'Co-author (7/11)',
+      zh: '合作作者（7/11）',
+    },
+    authorshipRank: 'collaborative',
+    category: 'publication',
+  },
+  {
+    title: {
       en: 'Temporal shifts in 24 notifiable infectious diseases in China before and during the COVID-19 pandemic',
       zh: 'Temporal shifts in 24 notifiable infectious diseases in China before and during the COVID-19 pandemic',
     },
