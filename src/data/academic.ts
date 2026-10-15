@@ -115,20 +115,20 @@ export const education: EducationItem[] = [
   },
   {
     institution: {
-      en: 'Macau University of Science and Technology',
-      zh: '澳门科技大学',
+      en: 'Macau University of Science and Technology (Faculty of Innovation Engineering) and Xiamen University — joint training programme',
+      zh: '澳门科技大学创新工程学院、厦门大学联合培养',
     },
     program: {
-      en: 'M.Sc. in Computer Science and Technology, Faculty of Innovation Engineering',
-      zh: '计算机科学与技术硕士，创新工程学院',
+      en: 'M.Sc., Computer Science and Technology',
+      zh: '计算机科学与技术 硕士',
     },
     meta: {
-      en: 'Graduated | GPA 3.63/4 | Full scholarship and living allowance',
-      zh: '已毕业 | GPA 3.63/4 | 全额奖学金及生活津贴',
+      en: 'Graduated | GPA 3.63/4 | Full Scholarship and living allowance',
+      zh: '已毕业 | GPA 3.63/4 | 全额奖学金及生活补助津贴',
     },
     detail: {
-      en: 'Completed M.Sc. training in Computer Science and Technology at MUST, under Academician Nanshan Zhong and Prof. Chitin Hon. Joint doctoral-stage research training at Xiamen University with Prof. Tianmu Chen, focused on infectious-disease forecasting and early warning. Graduate coursework covered intelligent control technology, fundamentals of AI, numerical analysis, statistics, pattern recognition, algorithms, and optimization methods.',
-      zh: '已在钟南山院士与韩子天教授指导下完成计算机科学与技术硕士阶段训练，并由厦门大学联合培养（联合导师陈田木教授），主要从事传染病预测预警研究。研究生阶段训练重点包括智能控制技术、人工智能基础、数值分析、统计学导论、模式识别、算法理论基础与优化方法基础。',
+      en: 'M.Sc. in Computer Science and Technology through the joint training programme of Macau University of Science and Technology (Faculty of Innovation Engineering) and Xiamen University. Supervisor: Prof. Chitin Hon; Lab director: Academician Nanshan Zhong; Xiamen University supervisor: Prof. Tianmu Chen. Research focused on infectious-disease forecasting and early warning. Graduate coursework covered intelligent control technology, fundamentals of AI, numerical analysis, statistics, pattern recognition, algorithms, and optimization methods.',
+      zh: '澳门科技大学创新工程学院、厦门大学联合培养计算机科学与技术硕士。导师：韩子天教授；实验室主任：钟南山院士；厦门大学合作导师：陈田木教授。主要从事传染病预测预警研究。研究生阶段训练重点包括智能控制技术、人工智能基础、数值分析、统计学导论、模式识别、算法理论基础与优化方法基础。',
     },
   },
   {
@@ -724,6 +724,11 @@ export const projects: ProjectItem[] = [
 
 ];
 
+export const languages = {
+  en: 'Mandarin (native); English (CET-4, CET-6, IELTS Academic 6.5)',
+  zh: '普通话（母语）；英语（大学英语四级、六级，雅思学术类 6.5）',
+};
+
 export const awards: AwardItem[] = [
   {
     title: {
@@ -775,7 +780,7 @@ export const awards: AwardItem[] = [
   },
   {
     title: {
-      en: 'Second Prize, 20th Citibank Financial Innovation Application Competition',
+      en: 'Second Prize, 20th Citi Cup Financial Innovation Application Competition',
       zh: '第二十届“花旗杯”金融创新应用大赛二等奖',
     },
     year: 2025,
@@ -783,6 +788,46 @@ export const awards: AwardItem[] = [
       en: 'Shanghai University Student Science and Technology Entrepreneurship Foundation; Citigroup Financial Information Services (China) Co., Ltd.',
       zh: '上海市大学生科技创业基金会；花旗金融信息服务（中国）有限公司',
     },
+    category: 'competition',
+  },
+  {
+    title: {
+      en: 'National Second Prize, East China Regional First Prize and Shanshu Operations Research Fund Award, 14th MathorCup Mathematical Application Challenge (project lead)',
+      zh: '第十四届 MathorCup 数学应用挑战赛全国二等奖、华东赛区一等奖、杉数运筹优化应用基金奖（项目负责人）',
+    },
+    year: 2024,
+    category: 'competition',
+  },
+  {
+    title: {
+      en: 'National Bronze Award; Preventive Medicine Track First Prize, 9th National Undergraduate Basic Medical Innovation Research and Experimental Design Forum',
+      zh: '第九届全国大学生基础医学创新研究暨实验设计论坛全国铜奖；预防医学赛道一等奖',
+    },
+    year: 2023,
+    category: 'competition',
+  },
+  {
+    title: {
+      en: 'Honorable Mention, Mathematical Contest in Modeling (MCM)',
+      zh: '美国大学生数学建模竞赛（MCM）Honorable Mention',
+    },
+    year: 2023,
+    category: 'competition',
+  },
+  {
+    title: {
+      en: 'Third Prize, 10th Xiamen University Public Economics and Policy Paper Competition',
+      zh: '厦门大学第十届公共经济与政策论文大赛三等奖',
+    },
+    year: 2022,
+    category: 'competition',
+  },
+  {
+    title: {
+      en: 'Gold Award, 5th China Youth Volunteer Service Project Competition',
+      zh: '第五届中国青年志愿服务项目大赛金奖',
+    },
+    year: 2021,
     category: 'competition',
   },
 ];
@@ -936,7 +981,7 @@ export const experience: ExperienceItem[] = [
     },
     category: 'competition',
     detail: {
-      en: 'Contributed modelling, optimization, software implementation, and evaluation work in the Huawei Cup, MathorCup, Citibank competition, and related innovation contests.',
+      en: 'Contributed modelling, optimization, software implementation, and evaluation work in the Huawei Cup, MathorCup, Citi Cup, and related innovation contests.',
       zh: '在华为杯、MathorCup、花旗杯及相关创新竞赛中承担建模、优化、软件实现与评估工作。',
     },
   },
