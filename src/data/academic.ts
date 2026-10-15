@@ -1,4 +1,4 @@
-﻿export type LocalizedText = {
+export type LocalizedText = {
   en: string;
   zh: string;
 };
@@ -119,16 +119,16 @@ export const education: EducationItem[] = [
       zh: '澳门科技大学',
     },
     program: {
-      en: 'M.Sc. in Intelligent Technology, Faculty of Innovation Engineering',
-      zh: '智能技术硕士，创新工程学院',
+      en: 'M.Sc. in Computer Science and Technology, Faculty of Innovation Engineering',
+      zh: '计算机科学与技术硕士，创新工程学院',
     },
     meta: {
       en: 'Graduated | GPA 3.63/4 | Full scholarship and living allowance',
       zh: '已毕业 | GPA 3.63/4 | 全额奖学金及生活津贴',
     },
     detail: {
-      en: 'Completed M.Sc. training in Intelligent Technology at MUST, under Academician Nanshan Zhong and Prof. Chitin Hon. Joint doctoral-stage research training at Xiamen University with Prof. Tianmu Chen, focused on infectious-disease forecasting and early warning. Graduate coursework covered intelligent control technology, fundamentals of AI, numerical analysis, statistics, pattern recognition, algorithms, and optimization methods.',
-      zh: '已在钟南山院士与韩子天教授指导下完成智能技术硕士阶段训练，并由厦门大学联合培养（联合导师陈田木教授），主要从事传染病预测预警研究。研究生阶段训练重点包括智能控制技术、人工智能基础、数值分析、统计学导论、模式识别、算法理论基础与优化方法基础。',
+      en: 'Completed M.Sc. training in Computer Science and Technology at MUST, under Academician Nanshan Zhong and Prof. Chitin Hon. Joint doctoral-stage research training at Xiamen University with Prof. Tianmu Chen, focused on infectious-disease forecasting and early warning. Graduate coursework covered intelligent control technology, fundamentals of AI, numerical analysis, statistics, pattern recognition, algorithms, and optimization methods.',
+      zh: '已在钟南山院士与韩子天教授指导下完成计算机科学与技术硕士阶段训练，并由厦门大学联合培养（联合导师陈田木教授），主要从事传染病预测预警研究。研究生阶段训练重点包括智能控制技术、人工智能基础、数值分析、统计学导论、模式识别、算法理论基础与优化方法基础。',
     },
   },
   {
@@ -137,8 +137,8 @@ export const education: EducationItem[] = [
       zh: '厦门大学',
     },
     program: {
-      en: 'B.Med. in Preventive Medicine (School of Public Health) & B.Sc. in Mathematical Statistics (Wang Yanan Institute for Studies in Economics)',
-      zh: '公共卫生学院预防医学系与王亚南经济研究院数理统计专业双学位本科',
+      en: 'B.Med. in Preventive Medicine; B.Sc. in Mathematical Statistics (second degree), WISE, Xiamen University',
+      zh: '预防医学医学学士；数理统计理学学士（第二学位，王亚南经济研究院）',
     },
     meta: {
       en: 'Preventive Medicine supervised by Prof. Tianmu Chen',
@@ -325,8 +325,8 @@ export const publications: PublicationItem[] = [
   },
   {
     title: {
-      en: 'Dual-Model Framework for CHIKV Transmission Modeling: ODE and Petri Net Analysis of the 2025 Foshan Outbreak',
-      zh: 'Dual-Model Framework for CHIKV Transmission Modeling: ODE and Petri Net Analysis of the 2025 Foshan Outbreak',
+      en: 'Dual-Model framework for CHIKV transmission modeling: ODE and Petri Net Analysis of the 2025 Foshan outbreak',
+      zh: 'Dual-Model framework for CHIKV transmission modeling: ODE and Petri Net Analysis of the 2025 Foshan outbreak',
     },
     year: 2026,
     venue: {
@@ -338,14 +338,14 @@ export const publications: PublicationItem[] = [
       zh: '已发表',
     },
     note: {
-      en: 'First-author dual-framework outbreak modelling study for the 2025 Foshan chikungunya outbreak, published in BMC Public Health on 29 June 2026. An arXiv preprint (arXiv:2512.12577) is also openly accessible.',
-      zh: '第一作者基孔肯雅热双框架疫情建模研究，面向 2025 年佛山疫情场景，2026 年 6 月 29 日发表于 BMC Public Health；arXiv 预印本（arXiv:2512.12577）同步公开可查。',
+      en: 'Co-first author (listed first). Study of how fast chikungunya spread in the 2025 Foshan outbreak and how well control worked, published in BMC Public Health on 29 June 2026. An arXiv preprint (arXiv:2512.12577) is also openly accessible.',
+      zh: '共同第一作者（第一署名）。研究 2025 年佛山基孔肯雅热疫情的传播速度与防控效果，2026 年 6 月 29 日发表于 BMC Public Health；arXiv 预印本（arXiv:2512.12577）同步公开可查。',
     },
     doi: '10.1186/s12889-026-28110-9',
     url: 'https://doi.org/10.1186/s12889-026-28110-9',
     authorship: {
-      en: 'First author',
-      zh: '第一作者',
+      en: 'Co-first author (listed first)',
+      zh: '共同第一作者（第一署名）',
     },
     authorshipRank: 'lead',
     featured: true,
@@ -393,12 +393,12 @@ export const publications: PublicationItem[] = [
       zh: '已发表',
     },
     note: {
-      en: 'First-author npj Systems Biology and Applications article. Accepted on 17 April 2026 and published online on 04 May 2026.',
-      zh: '第一作者 npj Systems Biology and Applications 论文；2026 年 4 月 17 日接收，2026 年 5 月 4 日在线发表。',
+      en: 'Co-first author (listed first). How flu seasons change when several virus strains circulate together. Accepted on 17 April 2026 and published online on 04 May 2026.',
+      zh: '共同第一作者（第一署名）。研究多种流感病毒株同时流行时流感季节如何变化；2026 年 4 月 17 日接收，2026 年 5 月 4 日在线发表。',
     },
     authorship: {
-      en: 'First author',
-      zh: '第一作者',
+      en: 'Co-first author (listed first)',
+      zh: '共同第一作者（第一署名）',
     },
     authorshipRank: 'lead',
     featured: true,
@@ -458,7 +458,7 @@ export const projects: ProjectItem[] = [
       en: 'Dual-model outbreak analysis workflow linking mechanistic interpretation, intervention phases, and manuscript development.',
       zh: '连接机制解释、干预阶段与论文撰写的双模型疫情分析流程。',
     },
-    relatedPublicationTitles: ['Dual-Model Framework for CHIKV Transmission Modeling: ODE and Petri Net Analysis of the 2025 Foshan Outbreak'],
+    relatedPublicationTitles: ['Dual-Model framework for CHIKV transmission modeling: ODE and Petri Net Analysis of the 2025 Foshan outbreak'],
   },
   {
     key: 'multicopat',
