@@ -100,8 +100,8 @@ export const selectedHighlights = [
 export const selectedAchievements = [
   {
     label: 'Current status',
-    en: 'Ph.D. student in Epidemiology and Health Statistics at Xiamen University (2026–present), holding an M.Sc. in Computer Science and Technology from Macau University of Science and Technology.',
-    zh: '厦门大学流行病与卫生统计学博士在读（2026 年入学），已获澳门科技大学计算机科学与技术硕士学位。',
+    en: 'Ph.D. student in Epidemiology and Health Statistics at Xiamen University (2026–present), holding an M.Sc. in Computer Science and Technology from the joint training programme of Macau University of Science and Technology (Faculty of Innovation Engineering) and Xiamen University.',
+    zh: '厦门大学流行病与卫生统计学博士在读（2026 年入学），已获澳门科技大学创新工程学院、厦门大学联合培养计算机科学与技术硕士学位。',
   },
   {
     label: 'Representative outputs',
