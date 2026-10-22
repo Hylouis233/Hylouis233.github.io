@@ -6,15 +6,11 @@ name: Sync GitHub stars (and auto-deploy intro site)
 #
 # Required GitHub Actions secrets (Settings -> Secrets and variables ->
 # Actions -> New repository secret):
-#   VPS_HOST    : the VPS hostname or IP. Prefer a stable public hostname when
-#                 SSH is publicly reachable. If this is a Tailscale IP
-#                 (100.64.0.0/10), the workflow joins the tailnet first.
-#   VPS_USER    : the SSH user (normally root for the current deploy script)
-#   VPS_SSH_KEY : the complete, unencrypted private SSH key, including
-#                 BEGIN/END lines. Raw multiline keys and values containing
-#                 literal \n separators are both accepted.
-#   TAILSCALE_AUTHKEY : required only when VPS_HOST is a Tailscale IP.
-#                 Prefer a tagged, reusable, ephemeral auth key.
+#   VPS_HOST    : public VPS hostname or IP; this runner does not join the tailnet.
+#   VPS_SSH_KEY : dedicated intro-site key, accepted only by deploy-intro.
+# Install scripts/install-intro-deploy.sh on the VPS before enabling deployment.
+# The account accepts only intro-status and a bounded static archive publish;
+# it has no shell, forwarding, sudo, or nginx reload permission.
 
 "on":
   schedule:
@@ -146,179 +142,56 @@ jobs:
           tar -czf dist-top.tar.gz -C dist-top .
           ls -lh dist-top.tar.gz
 
-      - name: Validate deploy config and prepare SSH key
-        id: deploy-config
+      - name: Prepare restricted deployment key
         if: |
           github.event.inputs.dry_run != 'true' &&
           (steps.commit.outputs.changed == 'true' || github.event.inputs.force_deploy == 'true')
         env:
           VPS_HOST: ${{ secrets.VPS_HOST }}
-          VPS_USER: ${{ secrets.VPS_USER }}
           VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
-          TAILSCALE_AUTHKEY: ${{ secrets.TAILSCALE_AUTHKEY }}
         run: |
           set -euo pipefail
-
-          if [ -z "${VPS_HOST:-}" ]; then
-            echo "::error::Missing repository secret VPS_HOST"
-            exit 1
-          fi
-          if [ -z "${VPS_USER:-}" ]; then
-            echo "::error::Missing repository secret VPS_USER"
-            exit 1
-          fi
-          if [ -z "${VPS_SSH_KEY:-}" ]; then
-            echo "::error::Missing repository secret VPS_SSH_KEY"
-            exit 1
-          fi
-
-          python - <<'PY'
-          import ipaddress
+          test -n "$VPS_HOST"
+          python - <<'PYKEY'
           import os
           from pathlib import Path
-
-          host = os.environ["VPS_HOST"].strip().strip("[]")
-          try:
-              ip = ipaddress.ip_address(host)
-              use_tailscale = (
-                  ip.version == 4
-                  and ip in ipaddress.ip_network("100.64.0.0/10")
-              )
-          except ValueError:
-              use_tailscale = False
-
-          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as f:
-              f.write(f"use_tailscale={'true' if use_tailscale else 'false'}\n")
-
-          if use_tailscale and not os.environ.get("TAILSCALE_AUTHKEY", "").strip():
-              raise SystemExit(
-                  "VPS_HOST is a Tailscale CGNAT address (100.64.0.0/10), but "
-                  "TAILSCALE_AUTHKEY is missing. A GitHub-hosted runner cannot "
-                  "route to that address until it joins the tailnet."
-              )
-
           key = os.environ["VPS_SSH_KEY"].strip()
-          # Tolerate secrets pasted with literal backslash-n separators.
           if "\\n" in key and "\n" not in key:
               key = key.replace("\\n", "\n")
-          key = key.replace("\r\n", "\n").replace("\r", "\n") + "\n"
+          path = Path(os.environ["RUNNER_TEMP"]) / "vps_deploy_key"
+          path.write_text(key.replace("\r\n", "\n").replace("\r", "\n") + "\n")
+          path.chmod(0o600)
+          PYKEY
+          ssh-keygen -y -P "" -f "$RUNNER_TEMP/vps_deploy_key" >/dev/null
 
-          key_path = Path(os.environ["RUNNER_TEMP"]) / "vps_deploy_key"
-          key_path.write_text(key, encoding="utf-8")
-          key_path.chmod(0o600)
-          PY
-
-          if ! ssh-keygen -y -P "" -f "$RUNNER_TEMP/vps_deploy_key" >/dev/null 2>&1; then
-            echo "::error::VPS_SSH_KEY is not a valid unencrypted private SSH key. Store the complete private key (not the .pub key) in the secret."
-            exit 1
-          fi
-
-      - name: Connect GitHub runner to Tailscale
-        if: |
-          github.event.inputs.dry_run != 'true' &&
-          (steps.commit.outputs.changed == 'true' || github.event.inputs.force_deploy == 'true') &&
-          steps.deploy-config.outputs.use_tailscale == 'true'
-        uses: tailscale/github-action@v4
-        with:
-          authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
-          ping: ${{ secrets.VPS_HOST }}
-
-      - name: Verify SSH connectivity
+      - name: Verify restricted deployment identity
         if: |
           github.event.inputs.dry_run != 'true' &&
           (steps.commit.outputs.changed == 'true' || github.event.inputs.force_deploy == 'true')
         env:
           VPS_HOST: ${{ secrets.VPS_HOST }}
-          VPS_USER: ${{ secrets.VPS_USER }}
         run: |
           set -euo pipefail
-          ssh \
-            -i "$RUNNER_TEMP/vps_deploy_key" \
-            -o BatchMode=yes \
-            -o ConnectTimeout=15 \
-            -o ServerAliveInterval=10 \
+          ssh -i "$RUNNER_TEMP/vps_deploy_key" \
+            -o BatchMode=yes -o IdentitiesOnly=yes -o IdentityAgent=none -o ConnectTimeout=15 \
+            -o ControlMaster=no -o ControlPath=none \
             -o StrictHostKeyChecking=accept-new \
-            "$VPS_USER@$VPS_HOST" \
-            'echo "SSH_OK $(hostname)"'
+            "deploy-intro@$VPS_HOST" intro-status
 
-      - name: Copy dist-top.tar.gz to VPS
+      - name: Publish static site through forced command
         if: |
           github.event.inputs.dry_run != 'true' &&
           (steps.commit.outputs.changed == 'true' || github.event.inputs.force_deploy == 'true')
         env:
           VPS_HOST: ${{ secrets.VPS_HOST }}
-          VPS_USER: ${{ secrets.VPS_USER }}
         run: |
           set -euo pipefail
-          remote_archive="/tmp/dist-top-${GITHUB_RUN_ID}.tar.gz"
-          scp \
-            -i "$RUNNER_TEMP/vps_deploy_key" \
-            -o BatchMode=yes \
-            -o ConnectTimeout=15 \
-            -o ServerAliveInterval=10 \
-            -o StrictHostKeyChecking=accept-new \
-            dist-top.tar.gz \
-            "$VPS_USER@$VPS_HOST:$remote_archive"
+          ssh -i "$RUNNER_TEMP/vps_deploy_key" \
+            -o BatchMode=yes -o IdentitiesOnly=yes -o IdentityAgent=none -o ConnectTimeout=15 \
+            -o ControlMaster=no -o ControlPath=none \
+            -o ServerAliveInterval=10 -o StrictHostKeyChecking=accept-new \
+            "deploy-intro@$VPS_HOST" "intro-deploy $GITHUB_RUN_ID" < dist-top.tar.gz
 
-      - name: Extract, atomically swap live site, and reload nginx
-        if: |
-          github.event.inputs.dry_run != 'true' &&
-          (steps.commit.outputs.changed == 'true' || github.event.inputs.force_deploy == 'true')
-        env:
-          VPS_HOST: ${{ secrets.VPS_HOST }}
-          VPS_USER: ${{ secrets.VPS_USER }}
-        run: |
-          set -euo pipefail
-          remote_archive="/tmp/dist-top-${GITHUB_RUN_ID}.tar.gz"
-          ssh \
-            -i "$RUNNER_TEMP/vps_deploy_key" \
-            -o BatchMode=yes \
-            -o ConnectTimeout=15 \
-            -o ServerAliveInterval=10 \
-            -o StrictHostKeyChecking=accept-new \
-            "$VPS_USER@$VPS_HOST" \
-            "DEPLOY_ARCHIVE='$remote_archive' bash -s" <<'REMOTE'
-          set -euo pipefail
-
-          live=/var/www/introduction.hylouis.top
-          ts=$(date -u +%Y%m%dT%H%M%SZ)
-          staged="/var/www/introduction.hylouis.top.new-${ts}"
-          backup="/var/www/introduction.hylouis.top.bak-${ts}"
-
-          cleanup() {
-            rm -rf "$staged"
-            rm -f "$DEPLOY_ARCHIVE"
-          }
-          trap cleanup EXIT
-
-          mkdir -p "$staged"
-          tar -xzf "$DEPLOY_ARCHIVE" -C "$staged"
-          chown -R www-data:www-data "$staged"
-
-          # Validate nginx before touching the live directory.
-          nginx -t
-
-          had_live=false
-          if [ -e "$live" ]; then
-            mv "$live" "$backup"
-            had_live=true
-          fi
-          mv "$staged" "$live"
-
-          if nginx -s reload; then
-            echo "DEPLOYED at $ts"
-          else
-            echo "nginx reload failed; rolling back" >&2
-            rm -rf "$live"
-            if [ "$had_live" = true ]; then
-              mv "$backup" "$live"
-              nginx -s reload || true
-            fi
-            exit 1
-          fi
-
-          # Keep recent rollback copies, but avoid unbounded accumulation.
-          find /var/www -maxdepth 1 -type d \
-            -name 'introduction.hylouis.top.bak-*' -mtime +14 \
-            -exec rm -rf {} + || true
-          REMOTE
+      - name: Remove temporary deployment key
+        if: always()
+        run: rm -f "$RUNNER_TEMP/vps_deploy_key"

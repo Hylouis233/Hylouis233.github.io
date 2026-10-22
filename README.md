@@ -26,11 +26,30 @@ deploys the `top` variant only when the counts change (or when a manual run sets
 dispatches `pages.yml` explicitly so the commit made with `GITHUB_TOKEN` is
 published to GitHub Pages. It requires these repository Actions secrets:
 
-- `VPS_HOST`: a stable public hostname/IP reachable over SSH. A Tailscale IP is
-  also supported, but then `TAILSCALE_AUTHKEY` is required.
-- `VPS_USER`: the SSH user used for deployment.
-- `VPS_SSH_KEY`: the complete, unencrypted private SSH key.
-- `TAILSCALE_AUTHKEY`: required only when `VPS_HOST` is in `100.64.0.0/10`.
+- `VPS_HOST`: the public hostname/IP reachable over SSH. The runner does not
+  join the tailnet.
+- `VPS_SSH_KEY`: a dedicated private key for this static site, accepted only by
+  the `deploy-intro` account. Do not reuse a personal or server management key.
+
+The VPS uses `scripts/intro-deploy-server.py` as a forced SSH command. The
+account accepts only `intro-status` and `intro-deploy <numeric-run-id>`, with
+the static `.tar.gz` archive on standard input. It cannot run a shell, forward
+ports, use sudo, or reload nginx. Archive extraction rejects links, traversal,
+special files, duplicates, and oversized uploads before switching the current
+release. Nginx serves `/var/www/introduction.hylouis.top` through the managed
+`/var/www/intro-deploy/current` symlink.
+
+To install, copy `scripts/install-intro-deploy.sh`,
+`scripts/intro-deploy-server.py`, and the dedicated **public** key into a
+root-owned directory on the VPS, then run:
+
+```sh
+sh install-intro-deploy.sh /path/to/dedicated-key.pub
+```
+
+The installer preserves the previous site directory and SSH configuration.
+The deployment protocol can be checked locally with
+`python3 scripts/test_intro_deploy_server.py`.
 
 For a failed historical run, start a new `workflow_dispatch` run from `main`
 after changing the workflow. Re-running the historical attempt uses that run's
