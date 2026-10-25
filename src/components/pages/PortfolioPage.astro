@@ -299,7 +299,10 @@ const cardIndex = (i: number) => String(i + 1).padStart(2, '0');
         </div>
 
         <div class="stats-grid-2">
-          <img class="blend-multiply" loading="lazy" src="https://raw.githubusercontent.com/Hylouis233/Hylouis233/main/github-metrics/base.svg" alt={copy.statsAlts.metricsBase} />
+          <span class="metrics-base">
+            <img class="blend-multiply" loading="lazy" src="https://raw.githubusercontent.com/Hylouis233/Hylouis233/main/github-metrics/base.svg" alt={copy.statsAlts.metricsBase} />
+            <img class="metrics-base-avatar" src={profile.profileImage} alt="" aria-hidden="true" />
+          </span>
           <img class="blend-multiply" loading="lazy" src="https://raw.githubusercontent.com/Hylouis233/Hylouis233/main/github-metrics/languages.indepth.svg" alt={copy.statsAlts.metricsLanguages} />
         </div>
 
@@ -344,7 +347,10 @@ const cardIndex = (i: number) => String(i + 1).padStart(2, '0');
 
         <h3 class="stats-minor-title">{copy.statsHeadings.metricsGallery}</h3>
         <div class="stats-center stats-metrics-stack">
-          <img class="blend-multiply" loading="lazy" src="https://raw.githubusercontent.com/Hylouis233/Hylouis233/main/github-metrics/base.svg" alt={copy.statsAlts.metricsBase} />
+          <span class="metrics-base">
+            <img class="blend-multiply" loading="lazy" src="https://raw.githubusercontent.com/Hylouis233/Hylouis233/main/github-metrics/base.svg" alt={copy.statsAlts.metricsBase} />
+            <img class="metrics-base-avatar" src={profile.profileImage} alt="" aria-hidden="true" />
+          </span>
           <img class="blend-multiply" loading="lazy" src="https://raw.githubusercontent.com/Hylouis233/Hylouis233/main/github-metrics/languages.indepth.svg" alt={copy.statsAlts.metricsLanguages} />
           <img class="blend-multiply" loading="lazy" src="https://raw.githubusercontent.com/Hylouis233/Hylouis233/main/github-metrics/repositories.pinned.svg" alt={copy.statsAlts.pinnedRepos} />
         </div>
@@ -677,13 +683,39 @@ const cardIndex = (i: number) => String(i + 1).padStart(2, '0');
     border-radius: var(--radius-sm);
   }
   .blend-multiply {
-    /* These SVGs are authored for light backdrops; a white card keeps them
-       legible in both the light and the dark scheme (multiply would make
-       them vanish on the dark background). */
-    background: #ffffff;
-    padding: 14px;
+    /* Light scheme: these SVGs are authored for light backdrops. */
     border-radius: var(--radius-sm);
-    box-shadow: var(--shadow-soft);
+  }
+  /* Dark scheme: photo-free graphics follow the page background. */
+  @media (prefers-color-scheme: dark) {
+    .blend-multiply {
+      filter: invert(1) hue-rotate(180deg);
+    }
+  }
+  /* base.svg embeds the avatar photo, which must not be inverted. The photo
+     is re-laid over the inverted card at the position measured in the
+     metrics classic template (avatar circle at ~2.3% left, ~2.9% top,
+     ~4.2% width of the 480px-wide SVG; the workflow pins lowlighter/metrics
+     to a fixed version, so the template layout is stable). */
+  .metrics-base {
+    position: relative;
+    display: inline-block;
+    max-width: 100%;
+    line-height: 0;
+  }
+  .stats-container img.metrics-base-avatar {
+    position: absolute;
+    left: 2.29%;
+    top: 2.89%;
+    width: 4.17%;
+    height: auto;
+    border-radius: 50%;
+    display: none;
+  }
+  @media (prefers-color-scheme: dark) {
+    .stats-container img.metrics-base-avatar {
+      display: block;
+    }
   }
 
   /* Chinese typography: no uppercase/letter-spacing tricks on CJK labels */
