@@ -65,7 +65,6 @@ const ui = {
     statsHeadings: {
       repositories: 'Featured Research Repositories',
       techStack: 'Tech Stack',
-      activityGraph: 'Live Activity Graph',
       snake: 'Contribution Snake',
       threeD: '3D Contribution Profile',
       metricsGallery: 'Metrics Gallery',
@@ -78,7 +77,6 @@ const ui = {
       trophies: 'GitHub trophies',
       streak: 'GitHub contribution streak',
       pinnedRepos: 'Pinned repository metrics',
-      activityGraph: 'Live GitHub activity graph',
       snake: 'GitHub contribution snake',
       threeD: '3D contribution profile',
     },
@@ -132,7 +130,6 @@ const ui = {
     statsHeadings: {
       repositories: '重点研究仓库',
       techStack: '技术栈',
-      activityGraph: '实时活动图',
       snake: '贡献贪吃蛇',
       threeD: '3D 贡献档案',
       metricsGallery: '指标图集',
@@ -145,7 +142,6 @@ const ui = {
       trophies: 'GitHub 奖杯墙',
       streak: 'GitHub 连续贡献统计图',
       pinnedRepos: '置顶仓库指标图',
-      activityGraph: 'GitHub 实时活动图',
       snake: 'GitHub 贡献贪吃蛇图',
       threeD: 'GitHub 3D 贡献档案图',
     },
@@ -336,11 +332,6 @@ const cardIndex = (i: number) => String(i + 1).padStart(2, '0');
 
         <hr class="stats-divider" />
 
-        <h3 class="stats-minor-title">{copy.statsHeadings.activityGraph}</h3>
-        <div class="stats-center">
-          <img loading="lazy" src="https://github-readme-activity-graph.vercel.app/graph?username=Hylouis233&theme=transparent&hide_border=true&bg_color=transparent" alt={copy.statsAlts.activityGraph} />
-        </div>
-
         <h3 class="stats-minor-title">{copy.statsHeadings.snake}</h3>
         <div class="stats-center">
           <img class="blend-multiply" loading="lazy" alt={copy.statsAlts.snake} src="https://raw.githubusercontent.com/Hylouis233/Hylouis233/main/profile-snake-contrib/github-contribution-grid-snake.svg" />
@@ -410,7 +401,7 @@ const cardIndex = (i: number) => String(i + 1).padStart(2, '0');
   /* Coverage stats */
   .coverage-grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 20px;
     margin-top: 32px;
   }
@@ -686,7 +677,13 @@ const cardIndex = (i: number) => String(i + 1).padStart(2, '0');
     border-radius: var(--radius-sm);
   }
   .blend-multiply {
-    mix-blend-mode: multiply;
+    /* These SVGs are authored for light backdrops; a white card keeps them
+       legible in both the light and the dark scheme (multiply would make
+       them vanish on the dark background). */
+    background: #ffffff;
+    padding: 14px;
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-soft);
   }
 
   /* Chinese typography: no uppercase/letter-spacing tricks on CJK labels */
@@ -702,6 +699,9 @@ const cardIndex = (i: number) => String(i + 1).padStart(2, '0');
     .capability-grid {
       grid-template-columns: 1fr;
     }
+    .coverage-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
   @media (max-width: 720px) {
     .page-section {
@@ -712,8 +712,8 @@ const cardIndex = (i: number) => String(i + 1).padStart(2, '0');
       margin-bottom: 22px;
     }
     .coverage-grid {
-      grid-template-columns: 1fr;
-      gap: 16px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
     }
     .featured-row {
       grid-template-columns: 1fr;
